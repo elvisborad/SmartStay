@@ -1,0 +1,169 @@
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Hotel {
+  id              String   @id @default(uuid())
+  name            String
+  address         String
+  wifiName        String   @default("GrandHorizon-Guest")
+  wifiPassword    String   @default("Horizon2026!")
+  breakfastHours  String   @default("06:30 AM - 10:30 AM")
+  poolHours       String   @default("07:00 AM - 09:00 PM")
+  spaHours        String   @default("09:00 AM - 08:00 PM")
+  checkoutTime    String   @default("11:00 AM")
+  contactPhone    String   @default("+1 (800) 555-0199")
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  rooms           Room[]
+  staff           Staff[]
+  categories      ServiceCategory[]
+  knowledgeItems  KnowledgeBaseItem[]
+}
+
+model Room {
+  id          String   @id @default(uuid())
+  roomNumber  String   @unique
+  floor       Int
+  type        String   @default("Deluxe King")
+  status      String   @default("Occupied")
+  hotelId     String
+  hotel       Hotel    @relation(fields: [hotelId], references: [id])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model GuestSession {
+  id           String    @id @default(uuid())
+  guestName    String
+  roomNumber   String
+  pin          String    @default("1234")
+  checkInDate  DateTime  @default(now())
+  checkOutDate DateTime
+  active       Boolean   @default(true)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  tickets      Ticket[]
+  orders       Order[]
+}
+
+model Staff {
+  id          String   @id @default(uuid())
+  name        String
+  email       String   @unique
+  password    String   @default("")
+  role        String   @default("STAFF")
+  department  String   @default("HOUSEKEEPING") // HOUSEKEEPING, MAINTENANCE, KITCHEN, FRONT_DESK, MANAGEMENT
+  dutyStatus  String   @default("ON_DUTY")      // ON_DUTY, OFF_DUTY, ON_BREAK
+  avatar      String?
+  hotelId     String
+  hotel       Hotel    @relation(fields: [hotelId], references: [id])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  tickets     Ticket[]
+}
+
+model ServiceCategory {
+  id          String        @id @default(uuid())
+  name        String
+  icon        String        @default("Briefcase")
+  department  String        @default("HOUSEKEEPING")
+  hotelId     String
+  hotel       Hotel         @relation(fields: [hotelId], references: [id])
+  items       ServiceItem[]
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+}
+
+model ServiceItem {
+  id               String          @id @default(uuid())
+  name             String
+  description      String
+  price            Float           @default(0.0)
+  estimatedMinutes Int             @default(15)
+  available        Boolean         @default(true)
+  categoryId       String
+  category         ServiceCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  createdAt        DateTime        @default(now())
+  updatedAt        DateTime        @updatedAt
+
+  orderItems       OrderItem[]
+}
+
+model Ticket {
+  id              String        @id @default(uuid())
+  ticketNumber    String        @unique
+  title           String
+  description     String
+  department      String        @default("HOUSEKEEPING") // HOUSEKEEPING, MAINTENANCE, KITCHEN, FRONT_DESK, MANAGEMENT
+  category        String        @default("General")
+  priority        String        @default("MEDIUM")       // LOW, MEDIUM, HIGH, URGENT
+  status          String        @default("PENDING")      // PENDING, ASSIGNED, IN_PROGRESS, COMPLETED, CANCELLED
+  slaMinutes      Int           @default(30)
+  roomNumber      String
+  guestName       String
+  guestSessionId  String?
+  guestSession    GuestSession? @relation(fields: [guestSessionId], references: [id])
+  assignedStaffId String?
+  assignedStaff   Staff?        @relation(fields: [assignedStaffId], references: [id])
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  completedAt     DateTime?
+
+  logs            TicketLog[]
+}
+
+model TicketLog {
+  id          String   @id @default(uuid())
+  ticketId    String
+  ticket      Ticket   @relation(fields: [ticketId], references: [id], onDelete: Cascade)
+  action      String
+  notes       String?
+  performedBy String   @default("System")
+  createdAt   DateTime @default(now())
+}
+
+model Order {
+  id             String        @id @default(uuid())
+  orderNumber    String        @unique
+  roomNumber     String
+  guestName      String
+  totalAmount    Float
+  status         String        @default("RECEIVED")
+  guestSessionId String?
+  guestSession   GuestSession? @relation(fields: [guestSessionId], references: [id])
+  items          OrderItem[]
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+}
+
+model OrderItem {
+  id            String       @id @default(uuid())
+  orderId       String
+  order         Order        @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  serviceItemId String?
+  serviceItem   ServiceItem? @relation(fields: [serviceItemId], references: [id])
+  itemName      String
+  quantity      Int
+  price         Float
+}
+
+model KnowledgeBaseItem {
+  id        String   @id @default(uuid())
+  category  String   @default("General FAQs")
+  question  String
+  answer    String
+  keywords  String   @default("")
+  hotelId   String
+  hotel     Hotel    @relation(fields: [hotelId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

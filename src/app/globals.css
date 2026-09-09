@@ -1,0 +1,85 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-primary: #0F9F91;
+  --color-primary-hover: #0B857A;
+  --color-primary-active: #086F66;
+  --color-primary-bg: #E8F7F5;
+  --color-primary-text: #0F5F59;
+
+  --color-bg-main: #F8FAFC;
+  --color-bg-secondary: #F1F5F9;
+  --color-bg-card: #FFFFFF;
+  --color-bg-soft: #EEF4F7;
+
+  --color-text-primary: #172033;
+  --color-text-secondary: #526174;
+  --color-text-muted: #8290A3;
+  --color-text-disabled: #A8B2C0;
+
+  --color-gold: #C9A45C;
+  --color-gold-bg: #FBF5E8;
+  --color-gold-text: #8A6A2F;
+
+  --color-border-default: #E2E8F0;
+  --color-border-input: #CBD5E1;
+  
+  --color-status-success: #16A34A;
+  --color-status-success-bg: #EAF8EF;
+  --color-status-info: #2563EB;
+  --color-status-info-bg: #EFF6FF;
+  --color-status-warning: #D97706;
+  --color-status-warning-bg: #FFF7E6;
+  --color-status-error: #DC2626;
+  --color-status-error-bg: #FEF2F2;
+  --color-status-disabled: #64748B;
+}
+
+body {
+  color: #172033;
+  background-color: #F8FAFC;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  min-height: 100vh;
+}
+
+/* Accessibility & Focus States */
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+  outline: 2px solid #0F9F91 !important;
+  outline-offset: 2px;
+}
+
+/* Custom Light Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #F1F5F9;
+}
+::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94A3B8;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Custom Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}

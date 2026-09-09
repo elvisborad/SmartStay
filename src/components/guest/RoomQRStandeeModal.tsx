@@ -1,0 +1,158 @@
+'use client';
+
+import { useState } from 'react';
+import { QrCode, X, Printer, Copy, Check, Hotel, Sparkles } from 'lucide-react';
+
+interface RoomQRStandeeModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  initialRoomNumber?: string;
+  initialGuestName?: string;
+  isStaffMode?: boolean;
+}
+
+export default function RoomQRStandeeModal({
+  isOpen,
+  onClose,
+  initialRoomNumber = '204',
+  initialGuestName = 'Alex Sharma',
+  isStaffMode = false,
+}: RoomQRStandeeModalProps) {
+  const [roomNumber, setRoomNumber] = useState(initialRoomNumber);
+  const [guestName, setGuestName] = useState(initialGuestName);
+  const [copied, setCopied] = useState(false);
+
+  if (!isOpen) return null;
+
+  const roomUrl = typeof window !== 'undefined'
+    ? `${window.location.origin}/guest/login?room=${encodeURIComponent(roomNumber)}`
+    : `http://localhost:3000/guest/login?room=${roomNumber}`;
+
+  const qrImageUrl = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(roomUrl)}`;
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(roomUrl);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  const handlePrint = () => {
+    window.print();
+  };
+
+  return (
+    <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
+      <div className="bg-white rounded-3xl p-6 max-w-md w-full border border-[#E2E8F0] shadow-2xl space-y-5 animate-fade-in relative">
+        {/* Modal Header */}
+        <div className="flex items-center justify-between border-b border-[#E2E8F0] pb-3">
+          <div className="flex items-center gap-2">
+            <div className="w-8 h-8 rounded-xl bg-[#0F9F91] flex items-center justify-center text-white shadow-sm">
+              <QrCode className="w-4 h-4" />
+            </div>
+            <div>
+              <h3 className="font-extrabold text-base text-[#172033]">
+                {isStaffMode ? 'Printable Room QR Standee Generator' : `My Room Standee — Room ${roomNumber}`}
+              </h3>
+              <p className="text-xs text-[#526174]">In-room contactless QR entry for SmartStay Concierge</p>
+            </div>
+          </div>
+          <button
+            onClick={onClose}
+            className="p-1.5 text-[#526174] hover:text-[#172033] hover:bg-[#F1F5F9] rounded-lg transition"
+          >
+            <X className="w-5 h-5" />
+          </button>
+        </div>
+
+        {/* Staff Room Selector Input */}
+        {isStaffMode && (
+          <div className="grid grid-cols-2 gap-3 bg-[#F8FAFC] p-3 rounded-2xl border border-[#CBD5E1]">
+            <div>
+              <label className="text-[11px] font-bold text-[#526174] block mb-1">Room Number:</label>
+              <select
+                value={roomNumber}
+                onChange={(e) => {
+                  setRoomNumber(e.target.value);
+                  if (e.target.value === '204') setGuestName('Alex Sharma');
+                  else if (e.target.value === '301') setGuestName('Sarah Connor');
+                  else setGuestName('Valued Guest');
+                }}
+                className="w-full bg-white border border-[#CBD5E1] rounded-xl px-3 py-1.5 text-xs text-[#172033] font-bold focus:outline-none focus:border-[#0F9F91]"
+              >
+                <option value="204">Room 204 (Deluxe King)</option>
+                <option value="301">Suite 301 (Presidential)</option>
+                <option value="101">Room 101 (Executive Twin)</option>
+                <option value="405">Room 405 (Ocean Suite)</option>
+              </select>
+            </div>
+
+            <div>
+              <label className="text-[11px] font-bold text-[#526174] block mb-1">Guest Name:</label>
+              <input
+                type="text"
+                value={guestName}
+                onChange={(e) => setGuestName(e.target.value)}
+                className="w-full bg-white border border-[#CBD5E1] rounded-xl px-3 py-1.5 text-xs text-[#172033] font-bold focus:outline-none focus:border-[#0F9F91]"
+              />
+            </div>
+          </div>
+        )}
+
+        {/* Acrylic Standee Preview Card */}
+        <div className="bg-gradient-to-b from-[#F8FAFC] to-[#E8F7F5] border-2 border-[#0F9F91]/40 rounded-3xl p-6 text-center space-y-4 shadow-sm relative overflow-hidden">
+          <div className="flex items-center justify-center gap-1.5 text-[10px] font-black text-[#0F9F91] uppercase tracking-widest">
+            <Hotel className="w-3.5 h-3.5" /> Grand Horizon Hotel
+          </div>
+
+          <div>
+            <div className="text-3xl font-black text-[#172033] tracking-tight">
+              Room {roomNumber}
+            </div>
+            <div className="text-xs font-semibold text-[#526174]">
+              Guest: {guestName}
+            </div>
+          </div>
+
+          {/* QR Image Box */}
+          <div className="bg-white p-4 rounded-2xl border border-[#CBD5E1] inline-block shadow-md my-1">
+            <img
+              src={qrImageUrl}
+              alt={`Room ${roomNumber} QR Code`}
+              className="w-44 h-44 mx-auto object-contain"
+            />
+            <div className="text-[10px] text-[#8290A3] mt-1 font-mono">
+              Token: #QR-{roomNumber}-SEC
+            </div>
+          </div>
+
+          <div className="space-y-1">
+            <p className="text-xs font-bold text-[#172033] flex items-center justify-center gap-1">
+              <Sparkles className="w-3.5 h-3.5 text-[#0F9F91]" /> Point Smartphone Camera Here
+            </p>
+            <p className="text-[11px] text-[#526174] max-w-xs mx-auto">
+              Scan for 1-tap room service, 24/7 AI Concierge, dining menu, & housekeeping in 17 languages.
+            </p>
+          </div>
+        </div>
+
+        {/* Action Buttons */}
+        <div className="flex items-center justify-between gap-3 pt-2">
+          <button
+            onClick={handleCopy}
+            className="flex-1 bg-[#F1F5F9] hover:bg-[#E2E8F0] border border-[#CBD5E1] text-[#172033] font-bold text-xs py-2.5 rounded-xl transition flex items-center justify-center gap-1.5"
+          >
+            {copied ? <Check className="w-4 h-4 text-[#16A34A]" /> : <Copy className="w-4 h-4 text-[#526174]" />}
+            {copied ? 'Copied!' : 'Copy Direct Link'}
+          </button>
+
+          <button
+            onClick={handlePrint}
+            className="flex-1 bg-[#0F9F91] hover:bg-[#0B857A] text-white font-bold text-xs py-2.5 rounded-xl transition flex items-center justify-center gap-1.5 shadow-md shadow-[#0F9F91]/20"
+          >
+            <Printer className="w-4 h-4" /> Print QR Standee
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
