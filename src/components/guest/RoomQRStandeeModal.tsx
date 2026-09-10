@@ -52,9 +52,10 @@ export default function RoomQRStandeeModal({
 
   if (!isOpen) return null;
 
+  const currentPin = dynamicGuests.find(g => String(g.roomNumber) === String(roomNumber) && g.active)?.pin || '1234';
   const roomUrl = typeof window !== 'undefined'
-    ? `${window.location.origin}/guest/login?room=${encodeURIComponent(roomNumber)}`
-    : `http://localhost:3000/guest/login?room=${roomNumber}`;
+    ? `${window.location.origin}/guest/login?room=${encodeURIComponent(roomNumber)}&pin=${encodeURIComponent(currentPin)}`
+    : `http://localhost:3000/guest/login?room=${roomNumber}&pin=${currentPin}`;
 
   const qrImageUrl = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(roomUrl)}`;
 

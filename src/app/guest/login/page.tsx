@@ -14,12 +14,12 @@ function GuestLoginContent() {
   const [autoStatus, setAutoStatus] = useState<string | null>(null);
 
   useEffect(() => {
-    // If QR code passed ?room=204 or ?room=301, perform instant QR token authentication
+    // If QR code passed ?room=1001 or ?room=1001&pin=1234, perform instant QR token authentication
     if (roomParam) {
-      const defaultPin = roomParam === '301' ? '3010' : '1234';
-      handleQRAuth(roomParam, defaultPin);
+      const pinParam = searchParams.get('pin') || (roomParam === '301' ? '3010' : roomParam === '204' ? '1234' : '');
+      handleQRAuth(roomParam, pinParam);
     }
-  }, [roomParam]);
+  }, [roomParam, searchParams]);
 
   const handleQRAuth = async (room: string, passPin: string) => {
     setLoading(true);

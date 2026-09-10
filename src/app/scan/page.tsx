@@ -142,10 +142,10 @@ export default function QRScanPage() {
 
   const parseQRContent = (qrText: string): { roomNumber: string; pin: string } => {
     let roomNumber = '204';
-    let pin = '1234';
+    let pin = '';
 
     try {
-      // 1. Try URL format: http://.../guest/login?room=204&pin=1234 or ?room=204
+      // 1. Try URL format: http://.../guest/login?room=204&pin=1234 or ?room=1001
       if (qrText.includes('room=') || qrText.startsWith('http://') || qrText.startsWith('https://')) {
         const urlObj = new URL(qrText, window.location.origin);
         const rParam = urlObj.searchParams.get('room');
@@ -161,13 +161,13 @@ export default function QRScanPage() {
         if (parsed.roomNumber) roomNumber = parsed.roomNumber;
         if (parsed.pin) pin = parsed.pin;
       }
-      // 3. Raw room string format e.g. "204", "301"
+      // 3. Raw room string format e.g. "204", "1001", "301"
       else {
         const extracted = qrText.replace(/\D/g, '');
         if (extracted) {
           roomNumber = extracted;
           if (extracted === '301') pin = '3010';
-          if (extracted === '204') pin = '1234';
+          else if (extracted === '204') pin = '1234';
         }
       }
     } catch (err) {

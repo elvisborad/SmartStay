@@ -5,28 +5,39 @@ export async function POST(request: Request) {
   try {
     const { roomNumber, pin } = await request.json();
 
-    if (!roomNumber || !pin) {
-      return NextResponse.json({ error: 'Room number and PIN are required.' }, { status: 400 });
+    if (!roomNumber) {
+      return NextResponse.json({ error: 'Room number is required.' }, { status: 400 });
     }
 
     const cleanRoom = String(roomNumber).trim();
-    const cleanPin = String(pin).trim();
+    const cleanPin = pin ? String(pin).trim() : '';
 
-    // First check for active guest session
-    const session = await db.guestSession.findFirst({
-      where: {
-        roomNumber: cleanRoom,
-        pin: cleanPin,
-        active: true,
-      },
-    });
+    // 1. Try to find active session matching roomNumber and pin
+    let session = cleanPin
+      ? await db.guestSession.findFirst({
+          where: {
+            roomNumber: cleanRoom,
+            pin: cleanPin,
+            active: true,
+          },
+        })
+      : null;
+
+    // 2. Fallback: Find current active session for this room
+    if (!session) {
+      session = await db.guestSession.findFirst({
+        where: {
+          roomNumber: cleanRoom,
+          active: true,
+        },
+      });
+    }
 
     if (!session) {
-      // Check if there was an inactive (checked-out) session for this room/PIN
+      // Check if there was an inactive (checked-out) session for this room
       const inactiveSession = await db.guestSession.findFirst({
         where: {
           roomNumber: cleanRoom,
-          pin: cleanPin,
           active: false,
         },
       });
