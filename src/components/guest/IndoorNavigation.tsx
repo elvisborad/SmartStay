@@ -21,6 +21,10 @@ interface IndoorNavigationProps {
 export default function IndoorNavigation({ roomNumber, onClose }: IndoorNavigationProps) {
   const [selectedDestination, setSelectedDestination] = useState<string>('pool');
 
+  const formatStep = (stepText: string) => {
+    return stepText.replace(/Room 204/gi, `Room ${roomNumber}`).replace(/\b204\b/g, roomNumber);
+  };
+
   const destinations = [
     {
       id: 'pool',
@@ -29,7 +33,7 @@ export default function IndoorNavigation({ roomNumber, onClose }: IndoorNavigati
       iconComponent: Waves,
       walkTime: '3 mins (120m)',
       steps: [
-        'Exit Room 204 and turn right toward the main corridor.',
+        `Exit Room ${roomNumber} and turn right toward the main corridor.`,
         'Take Elevator B to the 4th Floor.',
         'Turn left out of the elevator and follow the blue poolside signage for 40 meters.',
         'Arrive at the Infinity Pool Entrance (Towel counter on your right).',
@@ -42,7 +46,7 @@ export default function IndoorNavigation({ roomNumber, onClose }: IndoorNavigati
       iconComponent: Utensils,
       walkTime: '2 mins (80m)',
       steps: [
-        'Exit Room 204 and head to Elevator A or B.',
+        `Exit Room ${roomNumber} and head to Elevator A or B.`,
         'Descend to the 1st Floor Lobby Level.',
         'Turn right past the reception desk.',
         'Skyline Restaurant is straight ahead through the glass doors.',
@@ -55,8 +59,8 @@ export default function IndoorNavigation({ roomNumber, onClose }: IndoorNavigati
       iconComponent: Dumbbell,
       walkTime: '1 min (30m)',
       steps: [
-        'Exit Room 204 onto the 2nd Floor hallway.',
-        'Turn left and walk 30 meters past Room 210.',
+        `Exit Room ${roomNumber} onto the hallway corridor.`,
+        'Turn left and walk 30 meters past the main elevator bank.',
         'Fitness Center is on your right. Use room keycard for access.',
       ],
     },
@@ -67,7 +71,7 @@ export default function IndoorNavigation({ roomNumber, onClose }: IndoorNavigati
       iconComponent: Sparkles,
       walkTime: '2 mins (90m)',
       steps: [
-        'Take Elevator B to the 3rd Floor.',
+        `Exit Room ${roomNumber} and take Elevator B to the 3rd Floor.`,
         'Follow the aromatic lavender hallway to the east wing.',
         'Spa Reception desk is at the end of the hall.',
       ],
@@ -79,7 +83,7 @@ export default function IndoorNavigation({ roomNumber, onClose }: IndoorNavigati
       iconComponent: Bell,
       walkTime: '2 mins (75m)',
       steps: [
-        'Take Elevator A or central stairs to Floor 1.',
+        `Exit Room ${roomNumber} and take Elevator A or central stairs to Floor 1.`,
         'Walk straight across the main atrium.',
         'Front Desk & Concierge desk is located directly in front.',
       ],
@@ -91,7 +95,7 @@ export default function IndoorNavigation({ roomNumber, onClose }: IndoorNavigati
       iconComponent: Car,
       walkTime: '4 mins (160m)',
       steps: [
-        'Take Elevator A down to Basement Level B1.',
+        `Exit Room ${roomNumber} and take Elevator A down to Basement Level B1.`,
         'Follow green line on floor toward Valet Kiosk.',
         'Show room keycard or parking ticket to valet staff.',
       ],
@@ -177,7 +181,7 @@ export default function IndoorNavigation({ roomNumber, onClose }: IndoorNavigati
               <span className="w-5 h-5 rounded-full bg-[#171717] text-[#C6A15B] font-bold flex items-center justify-center shrink-0 text-[11px] border border-[#C6A15B]/30">
                 {idx + 1}
               </span>
-              <span className="leading-relaxed font-medium mt-0.5">{step}</span>
+              <span className="leading-relaxed font-medium mt-0.5">{formatStep(step)}</span>
             </div>
           ))}
         </div>
