@@ -63,8 +63,8 @@ export default function RoomChangeModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-xs flex items-center justify-center p-4">
-      <div className="bg-white text-[#172033] w-full max-w-lg rounded-3xl p-6 border border-[#E2E8F0] shadow-2xl space-y-6">
+    <div className="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-xs flex items-center justify-center p-2 sm:p-4 overflow-y-auto">
+      <div className="bg-white text-[#172033] w-full max-w-lg rounded-3xl p-5 sm:p-6 border border-[#E2E8F0] shadow-2xl space-y-4 sm:space-y-6 max-h-[92vh] overflow-y-auto my-auto">
         <div className="flex items-center justify-between border-b border-[#E2E8F0] pb-4">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-2xl bg-[#EFF6FF] text-[#2563EB] border border-[#2563EB]/30 flex items-center justify-center font-bold">

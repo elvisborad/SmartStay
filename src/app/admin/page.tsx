@@ -729,8 +729,8 @@ export default function AdminAnalyticsPage() {
 
             {/* Set/Reset Password Modal */}
             {selectedStaffForPassword && (
-              <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
-                <div className="bg-white rounded-3xl p-6 max-w-md w-full border border-[#E2E8F0] shadow-2xl space-y-5 animate-fade-in">
+              <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-2 sm:p-4 overflow-y-auto">
+                <div className="bg-white rounded-3xl p-4 sm:p-6 max-w-md w-full border border-[#E2E8F0] shadow-2xl space-y-4 animate-fade-in max-h-[92vh] overflow-y-auto my-auto">
                   <div className="flex items-center justify-between border-b border-[#E2E8F0] pb-3">
                     <div className="flex items-center gap-2">
                       <KeyRound className="w-5 h-5 text-[#0F9F91]" />
@@ -794,8 +794,8 @@ export default function AdminAnalyticsPage() {
 
             {/* Add New Staff Modal */}
             {showAddStaffModal && (
-              <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
-                <div className="bg-white rounded-3xl p-6 max-w-lg w-full border border-[#E2E8F0] shadow-2xl space-y-5 animate-fade-in">
+              <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-2 sm:p-4 overflow-y-auto">
+                <div className="bg-white rounded-3xl p-4 sm:p-6 max-w-lg w-full border border-[#E2E8F0] shadow-2xl space-y-4 animate-fade-in max-h-[92vh] overflow-y-auto my-auto">
                   <div className="flex items-center justify-between border-b border-[#E2E8F0] pb-3">
                     <div className="flex items-center gap-2">
                       <UserPlus className="w-5 h-5 text-[#0F9F91]" />

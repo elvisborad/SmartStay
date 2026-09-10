@@ -21,6 +21,7 @@ import {
   Users,
   X,
   Plus,
+  Truck,
 } from 'lucide-react';
 import RoomQRStandeeModal from '@/components/guest/RoomQRStandeeModal';
 
@@ -31,6 +32,7 @@ export default function StaffDashboardPage() {
   const [loading, setLoading] = useState(true);
   const [updatingId, setUpdatingId] = useState<string | null>(null);
   const [qrModalOpen, setQrModalOpen] = useState(false);
+  const [mobileKanbanTab, setMobileKanbanTab] = useState<'ALL' | 'PENDING' | 'IN_PROGRESS' | 'COMPLETED'>('ALL');
 
   // Staff Login Form state
   const [emailInput, setEmailInput] = useState('maria.garcia@grandhorizon.com');
@@ -380,11 +382,11 @@ export default function StaffDashboardPage() {
         </div>
 
         {/* Staff Duty Profile Bar & Guest Options */}
-        <div className="flex items-center gap-3">
-          <div className="bg-[#F1F5F9] border border-[#CBD5E1] rounded-xl px-3.5 py-1.5 flex items-center gap-2 text-xs">
+        <div className="flex flex-wrap items-center gap-2 sm:gap-3">
+          <div className="bg-[#F1F5F9] border border-[#CBD5E1] rounded-xl px-3 py-1.5 flex items-center gap-2 text-xs">
             <div className="w-2.5 h-2.5 rounded-full bg-[#16A34A] animate-pulse" />
             <span className="font-bold text-[#172033]">{staffUser.name}</span>
-            <span className="text-[#526174]">({staffUser.department})</span>
+            <span className="text-[#526174] text-[11px]">({staffUser.department})</span>
           </div>
 
           <button
@@ -392,48 +394,50 @@ export default function StaffDashboardPage() {
               setGuestModalOpen(true);
               fetchGuestsList();
             }}
-            className="p-2.5 bg-[#EFF6FF] hover:bg-[#DBEAFE] border border-[#2563EB]/30 text-[#2563EB] rounded-xl transition text-xs flex items-center gap-1.5 font-bold shadow-xs"
+            className="p-2 sm:p-2.5 bg-[#EFF6FF] hover:bg-[#DBEAFE] border border-[#2563EB]/30 text-[#2563EB] rounded-xl transition text-xs flex items-center gap-1.5 font-bold shadow-xs"
           >
             <Users className="w-4 h-4" />
-            <span>Manage Guests</span>
+            <span className="hidden sm:inline">Manage Guests</span>
+            <span className="sm:hidden">Guests</span>
           </button>
 
           <button
             onClick={() => setQrModalOpen(true)}
-            className="p-2.5 bg-[#E8F7F5] hover:bg-[#D8F2EE] border border-[#0F9F91]/30 text-[#0F9F91] rounded-xl transition text-xs flex items-center gap-1.5 font-bold shadow-xs"
+            className="p-2 sm:p-2.5 bg-[#E8F7F5] hover:bg-[#D8F2EE] border border-[#0F9F91]/30 text-[#0F9F91] rounded-xl transition text-xs flex items-center gap-1.5 font-bold shadow-xs"
           >
             <QrCode className="w-4 h-4" />
-            <span>Print Room QR</span>
+            <span className="hidden sm:inline">Print Room QR</span>
+            <span className="sm:hidden">QR</span>
           </button>
 
           <button
             onClick={fetchTickets}
-            className="p-2.5 bg-white hover:bg-[#F1F5F9] border border-[#CBD5E1] text-[#526174] hover:text-[#172033] rounded-xl transition text-xs flex items-center gap-1.5 font-semibold shadow-xs"
+            className="p-2 sm:p-2.5 bg-white hover:bg-[#F1F5F9] border border-[#CBD5E1] text-[#526174] hover:text-[#172033] rounded-xl transition text-xs flex items-center gap-1.5 font-semibold shadow-xs"
           >
             <RefreshCw className={`w-4 h-4 text-[#0F9F91] ${loading ? 'animate-spin' : ''}`} />
-            Refresh
+            <span className="hidden sm:inline">Refresh</span>
           </button>
 
           <button
             onClick={handleLogout}
-            className="p-2.5 bg-[#FEF2F2] hover:bg-[#FEE2E2] border border-[#DC2626]/30 text-[#DC2626] rounded-xl transition text-xs flex items-center gap-1.5 font-bold shadow-xs"
+            className="p-2 sm:p-2.5 bg-[#FEF2F2] hover:bg-[#FEE2E2] border border-[#DC2626]/30 text-[#DC2626] rounded-xl transition text-xs flex items-center gap-1.5 font-bold shadow-xs"
             title="Log Out"
           >
             <LogOut className="w-4 h-4" />
-            <span>Log Out</span>
+            <span className="hidden sm:inline">Log Out</span>
           </button>
         </div>
       </header>
 
       {/* Department Filter Tabs Bar */}
-      <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between border-b border-[#E2E8F0] bg-white/80 backdrop-blur">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between border-b border-[#E2E8F0] bg-white/80 backdrop-blur">
         <div className="flex items-center gap-2 overflow-x-auto no-scrollbar">
           <Filter className="w-4 h-4 text-[#526174] mr-1 shrink-0" />
           {departments.map((dept) => (
             <button
               key={dept}
               onClick={() => setSelectedDept(dept)}
-              className={`px-4 py-2 rounded-xl text-xs font-bold transition whitespace-nowrap ${
+              className={`px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-xl text-xs font-bold transition whitespace-nowrap ${
                 selectedDept === dept
                   ? 'bg-[#0F9F91] text-white shadow-md shadow-[#0F9F91]/20'
                   : 'bg-[#F1F5F9] text-[#526174] hover:bg-[#E8F7F5] hover:text-[#172033] border border-[#CBD5E1]'
@@ -451,10 +455,56 @@ export default function StaffDashboardPage() {
         </div>
       </div>
 
+      {/* Mobile Kanban Column View Switcher (Visible on Smartphones < 768px) */}
+      <div className="md:hidden max-w-7xl mx-auto px-4 pt-4 flex gap-1.5 overflow-x-auto no-scrollbar">
+        <button
+          onClick={() => setMobileKanbanTab('ALL')}
+          className={`px-3 py-1.5 rounded-xl text-xs font-bold transition ${
+            mobileKanbanTab === 'ALL'
+              ? 'bg-[#172033] text-white'
+              : 'bg-white text-[#526174] border border-[#CBD5E1]'
+          }`}
+        >
+          All Columns ({tickets.length})
+        </button>
+        <button
+          onClick={() => setMobileKanbanTab('PENDING')}
+          className={`px-3 py-1.5 rounded-xl text-xs font-bold transition ${
+            mobileKanbanTab === 'PENDING'
+              ? 'bg-[#D97706] text-white'
+              : 'bg-white text-[#D97706] border border-[#D97706]/40'
+          }`}
+        >
+          Pending ({pendingTickets.length})
+        </button>
+        <button
+          onClick={() => setMobileKanbanTab('IN_PROGRESS')}
+          className={`px-3 py-1.5 rounded-xl text-xs font-bold transition ${
+            mobileKanbanTab === 'IN_PROGRESS'
+              ? 'bg-[#2563EB] text-white'
+              : 'bg-white text-[#2563EB] border border-[#2563EB]/40'
+          }`}
+        >
+          In Progress ({inProgressTickets.length})
+        </button>
+        <button
+          onClick={() => setMobileKanbanTab('COMPLETED')}
+          className={`px-3 py-1.5 rounded-xl text-xs font-bold transition ${
+            mobileKanbanTab === 'COMPLETED'
+              ? 'bg-[#16A34A] text-white'
+              : 'bg-white text-[#16A34A] border border-[#16A34A]/40'
+          }`}
+        >
+          Completed ({completedTickets.length})
+        </button>
+      </div>
+
       {/* Kanban Board */}
-      <main className="max-w-7xl mx-auto px-6 py-8 grid md:grid-cols-3 gap-6">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8 grid md:grid-cols-3 gap-6">
         {/* Column 1: Incoming Tasks */}
-        <div className="bg-white border border-[#E2E8F0] rounded-2xl p-4 space-y-4 flex flex-col shadow-md">
+        <div className={`bg-white border border-[#E2E8F0] rounded-2xl p-4 space-y-4 flex flex-col shadow-md ${
+          mobileKanbanTab !== 'ALL' && mobileKanbanTab !== 'PENDING' ? 'hidden md:flex' : ''
+        }`}>
           <div className="flex items-center justify-between border-b border-[#E2E8F0] pb-3">
             <h2 className="font-bold text-sm text-[#172033] flex items-center gap-2">
               <span className="w-3 h-3 rounded-full bg-[#D97706]" />
@@ -514,7 +564,9 @@ export default function StaffDashboardPage() {
         </div>
 
         {/* Column 2: In Progress */}
-        <div className="bg-white border border-[#E2E8F0] rounded-2xl p-4 space-y-4 flex flex-col shadow-md">
+        <div className={`bg-white border border-[#E2E8F0] rounded-2xl p-4 space-y-4 flex flex-col shadow-md ${
+          mobileKanbanTab !== 'ALL' && mobileKanbanTab !== 'IN_PROGRESS' ? 'hidden md:flex' : ''
+        }`}>
           <div className="flex items-center justify-between border-b border-[#E2E8F0] pb-3">
             <h2 className="font-bold text-sm text-[#172033] flex items-center gap-2">
               <span className="w-3 h-3 rounded-full bg-[#2563EB] animate-ping" />
@@ -535,8 +587,8 @@ export default function StaffDashboardPage() {
                     <span className="text-xs font-mono font-bold text-[#2563EB] bg-[#EFF6FF] px-2 py-0.5 rounded border border-[#2563EB]/30">
                       {t.ticketNumber}
                     </span>
-                    <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-[#EFF6FF] text-[#2563EB]">
-                      🚚 Staff En Route
+                    <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-[#EFF6FF] text-[#2563EB] flex items-center gap-1">
+                      <Truck className="w-3 h-3 text-[#2563EB]" /> Staff En Route
                     </span>
                   </div>
 
@@ -566,7 +618,9 @@ export default function StaffDashboardPage() {
         </div>
 
         {/* Column 3: Recently Completed */}
-        <div className="bg-white border border-[#E2E8F0] rounded-2xl p-4 space-y-4 flex flex-col shadow-md">
+        <div className={`bg-white border border-[#E2E8F0] rounded-2xl p-4 space-y-4 flex flex-col shadow-md ${
+          mobileKanbanTab !== 'ALL' && mobileKanbanTab !== 'COMPLETED' ? 'hidden md:flex' : ''
+        }`}>
           <div className="flex items-center justify-between border-b border-[#E2E8F0] pb-3">
             <h2 className="font-bold text-sm text-[#172033] flex items-center gap-2">
               <span className="w-3 h-3 rounded-full bg-[#16A34A]" />
@@ -607,8 +661,8 @@ export default function StaffDashboardPage() {
 
       {/* Guest Management Modal (Add & Remove Guest Options) */}
       {guestModalOpen && (
-        <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl p-6 max-w-2xl w-full border border-[#E2E8F0] shadow-2xl space-y-5 animate-fade-in max-h-[90vh] flex flex-col">
+        <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-2 sm:p-4 overflow-y-auto">
+          <div className="bg-white rounded-3xl p-4 sm:p-6 max-w-2xl w-full border border-[#E2E8F0] shadow-2xl space-y-4 animate-fade-in max-h-[92vh] flex flex-col my-auto">
             <div className="flex items-center justify-between border-b border-[#E2E8F0] pb-3 shrink-0">
               <div className="flex items-center gap-2">
                 <Users className="w-5 h-5 text-[#2563EB]" />

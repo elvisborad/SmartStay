@@ -107,7 +107,7 @@ export default function AIChatDrawer({
 
   return (
     <div className="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-xs flex justify-end">
-      <div className="w-full max-w-md bg-white text-[#172033] h-full flex flex-col justify-between shadow-2xl border-l border-[#E2E8F0] animate-fade-in">
+      <div className="w-full max-w-full sm:max-w-md bg-white text-[#172033] h-full flex flex-col justify-between shadow-2xl border-l border-[#E2E8F0] animate-fade-in">
         {/* Header */}
         <div className="px-5 py-4 bg-white border-b border-[#E2E8F0] flex items-center justify-between shadow-xs">
           <div className="flex items-center gap-3">
