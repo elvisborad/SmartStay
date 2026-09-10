@@ -27,9 +27,10 @@ export default function RoomQRStandeeModal({
 
   // Sync state when initial props or guestsList update
   useEffect(() => {
-    if (initialRoomNumber) setRoomNumber(initialRoomNumber);
-    if (initialGuestName) setGuestName(initialGuestName);
-  }, [initialRoomNumber, initialGuestName]);
+    if (Array.isArray(guestsList) && guestsList.length > 0) {
+      setDynamicGuests(guestsList);
+    }
+  }, [guestsList]);
 
   // Fetch active guests from DB whenever modal opens to catch newly added guests
   useEffect(() => {
@@ -37,12 +38,20 @@ export default function RoomQRStandeeModal({
       fetch('/api/staff/guests')
         .then((res) => res.json())
         .then((data) => {
-          if (data.success && Array.isArray(data.guests)) {
+          if (data.success && Array.isArray(data.guests) && data.guests.length > 0) {
             setDynamicGuests(data.guests);
-            // Auto select latest guest if matching current roomNumber
-            const match = data.guests.find((g: any) => String(g.roomNumber) === String(roomNumber));
+            // Check if current roomNumber is present in loaded active guests
+            const match = data.guests.find(
+              (g: any) => String(g.roomNumber).trim() === String(roomNumber).trim()
+            );
             if (match) {
+              setRoomNumber(String(match.roomNumber).trim());
               setGuestName(match.guestName);
+            } else {
+              // Default to the first available active guest in the list
+              const first = data.guests[0];
+              setRoomNumber(String(first.roomNumber).trim());
+              setGuestName(first.guestName);
             }
           }
         })
@@ -70,13 +79,14 @@ export default function RoomQRStandeeModal({
   };
 
   const handleRoomSelect = (selectedRoom: string) => {
-    setRoomNumber(selectedRoom);
-    const matched = dynamicGuests.find((g) => String(g.roomNumber) === String(selectedRoom));
+    const cleanRoom = String(selectedRoom).trim();
+    setRoomNumber(cleanRoom);
+    const matched = dynamicGuests.find((g) => String(g.roomNumber).trim() === cleanRoom);
     if (matched) {
       setGuestName(matched.guestName);
-    } else if (selectedRoom === '204') {
+    } else if (cleanRoom === '204') {
       setGuestName('Alex Sharma');
-    } else if (selectedRoom === '301') {
+    } else if (cleanRoom === '301') {
       setGuestName('Sarah Connor');
     } else {
       setGuestName('Valued Guest');
