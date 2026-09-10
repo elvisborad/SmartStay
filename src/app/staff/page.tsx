@@ -22,6 +22,7 @@ import {
   X,
   Plus,
   Truck,
+  Sparkles,
 } from 'lucide-react';
 import RoomQRStandeeModal from '@/components/guest/RoomQRStandeeModal';
 
@@ -250,32 +251,32 @@ export default function StaffDashboardPage() {
   // If not logged in, render Staff Login Screen
   if (!staffUser) {
     return (
-      <div className="min-h-screen bg-[#F8FAFC] text-[#172033] flex flex-col justify-between">
-        <header className="border-b border-[#E2E8F0] bg-white px-6 py-4 flex items-center justify-between sticky top-0 z-40 shadow-xs">
+      <div className="min-h-screen bg-[#F8F5EF] text-[#24211E] flex flex-col justify-between selection:bg-[#C6A15B] selection:text-white">
+        <header className="border-b border-[#E5DFD5] bg-[#FFFFFF]/90 backdrop-blur px-6 py-4 flex items-center justify-between sticky top-0 z-40 shadow-xs">
           <div className="flex items-center gap-4">
-            <Link href="/" className="p-2 text-[#526174] hover:text-[#172033] hover:bg-[#F1F5F9] rounded-xl transition">
+            <Link href="/" className="p-2 text-[#7C756B] hover:text-[#24211E] hover:bg-[#F8F5EF] rounded-xl transition">
               <ArrowLeft className="w-5 h-5" />
             </Link>
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-[#0F9F91] flex items-center justify-center shadow-md shadow-[#0F9F91]/20">
-                <Hotel className="w-5 h-5 text-white" />
+              <div className="w-10 h-10 rounded-xl bg-[#171717] border border-[#C6A15B]/30 flex items-center justify-center shadow-md">
+                <Hotel className="w-5 h-5 text-[#C6A15B]" />
               </div>
               <div>
-                <h1 className="font-bold text-lg text-[#172033]">SmartStay Staff Portal</h1>
-                <p className="text-xs text-[#526174] font-medium">Grand Horizon Hotel • Authentication</p>
+                <h1 className="font-bold text-lg text-[#24211E]">SmartStay Staff Portal</h1>
+                <p className="text-xs text-[#7C756B] font-medium">Grand Horizon Hotel • Authentication</p>
               </div>
             </div>
           </div>
         </header>
 
         <main className="max-w-md w-full mx-auto px-6 py-12">
-          <div className="bg-white border border-[#E2E8F0] rounded-3xl p-8 shadow-xl space-y-6">
+          <div className="bg-[#FFFFFF] border border-[#E5DFD5] rounded-3xl p-8 shadow-xl space-y-6">
             <div className="text-center space-y-2">
-              <div className="w-14 h-14 rounded-2xl bg-[#E8F7F5] border border-[#0F9F91]/30 text-[#0F9F91] flex items-center justify-center mx-auto shadow-xs">
+              <div className="w-14 h-14 rounded-2xl bg-[#171717] border border-[#C6A15B]/40 text-[#C6A15B] flex items-center justify-center mx-auto shadow-md">
                 <Lock className="w-7 h-7" />
               </div>
-              <h2 className="text-2xl font-extrabold text-[#172033]">Staff Authentication</h2>
-              <p className="text-xs text-[#526174] font-medium">Enter your credentials set by your Administrator</p>
+              <h2 className="text-2xl font-extrabold text-[#24211E]">Staff Authentication</h2>
+              <p className="text-xs text-[#7C756B] font-medium">Enter your credentials set by your Administrator</p>
             </div>
 
             {loginError && (
@@ -286,70 +287,70 @@ export default function StaffDashboardPage() {
 
             <form onSubmit={handleStaffLogin} className="space-y-4">
               <div>
-                <label className="block text-xs font-bold text-[#172033] mb-1.5">Staff Email Address</label>
+                <label className="block text-xs font-bold text-[#24211E] mb-1.5">Staff Email Address</label>
                 <input
                   type="email"
                   value={emailInput}
                   onChange={(e) => setEmailInput(e.target.value)}
                   placeholder="e.g. maria.garcia@grandhorizon.com"
-                  className="w-full bg-[#F8FAFC] border border-[#CBD5E1] focus:border-[#0F9F91] rounded-xl px-4 py-3 text-sm text-[#172033] outline-none transition font-medium"
+                  className="w-full bg-[#F8F5EF] border border-[#E5DFD5] focus:border-[#C6A15B] rounded-xl px-4 py-3 text-sm text-[#24211E] outline-none transition font-medium"
                   required
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-[#172033] mb-1.5">Password</label>
+                <label className="block text-xs font-bold text-[#24211E] mb-1.5">Password</label>
                 <div className="relative">
                   <input
                     type="password"
                     value={passwordInput}
                     onChange={(e) => setPasswordInput(e.target.value)}
                     placeholder="Enter staff password"
-                    className="w-full bg-[#F8FAFC] border border-[#CBD5E1] focus:border-[#0F9F91] rounded-xl px-4 py-3 text-sm text-[#172033] outline-none transition font-medium pr-10"
+                    className="w-full bg-[#F8F5EF] border border-[#E5DFD5] focus:border-[#C6A15B] rounded-xl px-4 py-3 text-sm text-[#24211E] outline-none transition font-medium pr-10"
                     required
                   />
-                  <KeyRound className="w-4 h-4 text-[#8290A3] absolute right-3.5 top-3.5" />
+                  <KeyRound className="w-4 h-4 text-[#7C756B] absolute right-3.5 top-3.5" />
                 </div>
               </div>
 
               <button
                 type="submit"
                 disabled={authenticating}
-                className="w-full bg-[#0F9F91] hover:bg-[#0B857A] text-white font-bold text-sm py-3.5 rounded-xl transition shadow-lg shadow-[#0F9F91]/25 flex items-center justify-center gap-2 disabled:opacity-50"
+                className="w-full bg-[#171717] hover:bg-[#292724] text-[#C6A15B] font-bold text-sm py-3.5 rounded-xl transition border border-[#C6A15B]/30 shadow-lg shadow-[#171717]/10 flex items-center justify-center gap-2 disabled:opacity-50"
               >
-                <UserCheck className="w-4 h-4" />
+                <UserCheck className="w-4 h-4 text-[#C6A15B]" />
                 {authenticating ? 'Authenticating...' : 'Sign In to Operations'}
               </button>
             </form>
 
-            <div className="pt-4 border-t border-[#E2E8F0] space-y-3">
-              <div className="text-[11px] font-bold text-[#526174] uppercase tracking-wider text-center">
-                Demo Presets (Default Password: <code className="bg-[#F1F5F9] px-1 py-0.5 rounded text-[#0F9F91]">staff123</code>)
+            <div className="pt-4 border-t border-[#E5DFD5] space-y-3">
+              <div className="text-[11px] font-bold text-[#7C756B] uppercase tracking-wider text-center">
+                Demo Presets (Default Password: <code className="bg-[#F8F5EF] px-1 py-0.5 rounded text-[#C6A15B] border border-[#C6A15B]/30">staff123</code>)
               </div>
               <div className="grid grid-cols-2 gap-2">
                 <button
                   type="button"
                   onClick={() => handleQuickLogin('maria.garcia@grandhorizon.com', 'staff123')}
-                  className="p-2.5 bg-[#F8FAFC] hover:bg-[#E8F7F5] border border-[#CBD5E1] hover:border-[#0F9F91]/40 rounded-xl text-left transition"
+                  className="p-2.5 bg-[#F8F5EF] hover:bg-[#FFFFFF] border border-[#E5DFD5] hover:border-[#C6A15B]/60 rounded-xl text-left transition"
                 >
-                  <div className="text-xs font-bold text-[#172033]">Maria Garcia</div>
-                  <div className="text-[10px] text-[#526174]">Housekeeping</div>
+                  <div className="text-xs font-bold text-[#24211E]">Maria Garcia</div>
+                  <div className="text-[10px] text-[#7C756B]">Housekeeping</div>
                 </button>
 
                 <button
                   type="button"
                   onClick={() => handleQuickLogin('carlos.rodriguez@grandhorizon.com', 'staff123')}
-                  className="p-2.5 bg-[#F8FAFC] hover:bg-[#E8F7F5] border border-[#CBD5E1] hover:border-[#0F9F91]/40 rounded-xl text-left transition"
+                  className="p-2.5 bg-[#F8F5EF] hover:bg-[#FFFFFF] border border-[#E5DFD5] hover:border-[#C6A15B]/60 rounded-xl text-left transition"
                 >
-                  <div className="text-xs font-bold text-[#172033]">Carlos Rodriguez</div>
-                  <div className="text-[10px] text-[#526174]">Maintenance</div>
+                  <div className="text-xs font-bold text-[#24211E]">Carlos Rodriguez</div>
+                  <div className="text-[10px] text-[#7C756B]">Maintenance</div>
                 </button>
               </div>
             </div>
           </div>
         </main>
 
-        <footer className="py-4 text-center text-xs text-[#8290A3]">
+        <footer className="py-4 text-center text-xs text-[#7C756B]">
           SmartStay Operations Center • Staff Passwords managed by Admin
         </footer>
       </div>
@@ -361,32 +362,32 @@ export default function StaffDashboardPage() {
   const completedTickets = tickets.filter((t) => t.status === 'COMPLETED');
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC] text-[#172033]">
+    <div className="min-h-screen bg-[#F8F5EF] text-[#24211E] selection:bg-[#C6A15B] selection:text-white">
       {/* Top Header */}
-      <header className="border-b border-[#E2E8F0] bg-white px-6 py-4 flex items-center justify-between sticky top-0 z-40 shadow-xs">
+      <header className="border-b border-[#E5DFD5] bg-[#FFFFFF]/90 backdrop-blur px-6 py-4 flex items-center justify-between sticky top-0 z-40 shadow-xs">
         <div className="flex items-center gap-4">
-          <Link href="/" className="p-2 text-[#526174] hover:text-[#172033] hover:bg-[#F1F5F9] rounded-xl transition">
+          <Link href="/" className="p-2 text-[#7C756B] hover:text-[#24211E] hover:bg-[#F8F5EF] rounded-xl transition">
             <ArrowLeft className="w-5 h-5" />
           </Link>
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-[#0F9F91] flex items-center justify-center shadow-md shadow-[#0F9F91]/20">
-              <Hotel className="w-5 h-5 text-white" />
+            <div className="w-10 h-10 rounded-xl bg-[#171717] border border-[#C6A15B]/30 flex items-center justify-center shadow-md">
+              <Hotel className="w-5 h-5 text-[#C6A15B]" />
             </div>
             <div>
-              <h1 className="font-bold text-lg text-[#172033] flex items-center gap-2">
+              <h1 className="font-bold text-lg text-[#24211E] flex items-center gap-2">
                 SmartStay Operations Dashboard
               </h1>
-              <p className="text-xs text-[#526174] font-medium">Grand Horizon Hotel • Real-time Task Dispatch</p>
+              <p className="text-xs text-[#7C756B] font-medium">Grand Horizon Hotel • Real-time Task Dispatch</p>
             </div>
           </div>
         </div>
 
         {/* Staff Duty Profile Bar & Guest Options */}
         <div className="flex flex-wrap items-center gap-2 sm:gap-3">
-          <div className="bg-[#F1F5F9] border border-[#CBD5E1] rounded-xl px-3 py-1.5 flex items-center gap-2 text-xs">
-            <div className="w-2.5 h-2.5 rounded-full bg-[#16A34A] animate-pulse" />
-            <span className="font-bold text-[#172033]">{staffUser.name}</span>
-            <span className="text-[#526174] text-[11px]">({staffUser.department})</span>
+          <div className="bg-[#171717] border border-[#C6A15B]/40 rounded-xl px-3 py-1.5 flex items-center gap-2 text-xs">
+            <div className="w-2.5 h-2.5 rounded-full bg-[#C6A15B] animate-pulse shadow-[0_0_8px_#C6A15B]" />
+            <span className="font-bold text-[#F8F5EF]">{staffUser.name}</span>
+            <span className="text-[#C6A15B] text-[11px] font-semibold">({staffUser.department})</span>
           </div>
 
           <button
@@ -394,33 +395,33 @@ export default function StaffDashboardPage() {
               setGuestModalOpen(true);
               fetchGuestsList();
             }}
-            className="p-2 sm:p-2.5 bg-[#EFF6FF] hover:bg-[#DBEAFE] border border-[#2563EB]/30 text-[#2563EB] rounded-xl transition text-xs flex items-center gap-1.5 font-bold shadow-xs"
+            className="p-2 sm:p-2.5 bg-[#171717] hover:bg-[#292724] border border-[#C6A15B]/40 text-[#C6A15B] rounded-xl transition text-xs flex items-center gap-1.5 font-bold shadow-xs"
           >
-            <Users className="w-4 h-4" />
+            <Users className="w-4 h-4 text-[#C6A15B]" />
             <span className="hidden sm:inline">Manage Guests</span>
             <span className="sm:hidden">Guests</span>
           </button>
 
           <button
             onClick={() => setQrModalOpen(true)}
-            className="p-2 sm:p-2.5 bg-[#E8F7F5] hover:bg-[#D8F2EE] border border-[#0F9F91]/30 text-[#0F9F91] rounded-xl transition text-xs flex items-center gap-1.5 font-bold shadow-xs"
+            className="p-2 sm:p-2.5 bg-[#C6A15B] hover:bg-[#B5904B] text-[#171717] rounded-xl transition text-xs flex items-center gap-1.5 font-bold shadow-xs"
           >
-            <QrCode className="w-4 h-4" />
+            <QrCode className="w-4 h-4 text-[#171717]" />
             <span className="hidden sm:inline">Print Room QR</span>
             <span className="sm:hidden">QR</span>
           </button>
 
           <button
             onClick={fetchTickets}
-            className="p-2 sm:p-2.5 bg-white hover:bg-[#F1F5F9] border border-[#CBD5E1] text-[#526174] hover:text-[#172033] rounded-xl transition text-xs flex items-center gap-1.5 font-semibold shadow-xs"
+            className="p-2 sm:p-2.5 bg-[#FFFFFF] hover:bg-[#F8F5EF] border border-[#E5DFD5] text-[#7C756B] hover:text-[#24211E] rounded-xl transition text-xs flex items-center gap-1.5 font-semibold shadow-xs"
           >
-            <RefreshCw className={`w-4 h-4 text-[#0F9F91] ${loading ? 'animate-spin' : ''}`} />
+            <RefreshCw className={`w-4 h-4 text-[#C6A15B] ${loading ? 'animate-spin' : ''}`} />
             <span className="hidden sm:inline">Refresh</span>
           </button>
 
           <button
             onClick={handleLogout}
-            className="p-2 sm:p-2.5 bg-[#FEF2F2] hover:bg-[#FEE2E2] border border-[#DC2626]/30 text-[#DC2626] rounded-xl transition text-xs flex items-center gap-1.5 font-bold shadow-xs"
+            className="p-2 sm:p-2.5 bg-[#FFF5F5] hover:bg-[#FFE6E6] border border-[#DC2626]/30 text-[#DC2626] rounded-xl transition text-xs flex items-center gap-1.5 font-bold shadow-xs"
             title="Log Out"
           >
             <LogOut className="w-4 h-4" />
@@ -430,17 +431,17 @@ export default function StaffDashboardPage() {
       </header>
 
       {/* Department Filter Tabs Bar */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between border-b border-[#E2E8F0] bg-white/80 backdrop-blur">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between border-b border-[#E5DFD5] bg-[#FFFFFF]/80 backdrop-blur">
         <div className="flex items-center gap-2 overflow-x-auto no-scrollbar">
-          <Filter className="w-4 h-4 text-[#526174] mr-1 shrink-0" />
+          <Filter className="w-4 h-4 text-[#7C756B] mr-1 shrink-0" />
           {departments.map((dept) => (
             <button
               key={dept}
               onClick={() => setSelectedDept(dept)}
               className={`px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-xl text-xs font-bold transition whitespace-nowrap ${
                 selectedDept === dept
-                  ? 'bg-[#0F9F91] text-white shadow-md shadow-[#0F9F91]/20'
-                  : 'bg-[#F1F5F9] text-[#526174] hover:bg-[#E8F7F5] hover:text-[#172033] border border-[#CBD5E1]'
+                  ? 'bg-[#171717] text-[#C6A15B] border border-[#C6A15B]/40 shadow-sm'
+                  : 'bg-[#FFFFFF] text-[#7C756B] hover:bg-[#F8F5EF] hover:text-[#24211E] border border-[#E5DFD5]'
               }`}
             >
               {dept}
@@ -448,21 +449,21 @@ export default function StaffDashboardPage() {
           ))}
         </div>
 
-        <div className="text-xs text-[#526174] font-medium shrink-0 ml-4 hidden md:block">
-          Total Queue: <span className="text-[#172033] font-bold">{tickets.length}</span> (
-          <span className="text-[#D97706] font-bold">{pendingTickets.length} Pending</span> •{' '}
+        <div className="text-xs text-[#7C756B] font-medium shrink-0 ml-4 hidden md:block">
+          Total Queue: <span className="text-[#24211E] font-bold">{tickets.length}</span> (
+          <span className="text-[#C6A15B] font-bold">{pendingTickets.length} Pending</span> •{' '}
           <span className="text-[#2563EB] font-bold">{inProgressTickets.length} In Progress</span>)
         </div>
       </div>
 
-      {/* Mobile Kanban Column View Switcher (Visible on Smartphones < 768px) */}
+      {/* Mobile Kanban Column View Switcher */}
       <div className="md:hidden max-w-7xl mx-auto px-4 pt-4 flex gap-1.5 overflow-x-auto no-scrollbar">
         <button
           onClick={() => setMobileKanbanTab('ALL')}
           className={`px-3 py-1.5 rounded-xl text-xs font-bold transition ${
             mobileKanbanTab === 'ALL'
-              ? 'bg-[#172033] text-white'
-              : 'bg-white text-[#526174] border border-[#CBD5E1]'
+              ? 'bg-[#171717] text-[#C6A15B] border border-[#C6A15B]/40'
+              : 'bg-[#FFFFFF] text-[#7C756B] border border-[#E5DFD5]'
           }`}
         >
           All Columns ({tickets.length})
@@ -471,8 +472,8 @@ export default function StaffDashboardPage() {
           onClick={() => setMobileKanbanTab('PENDING')}
           className={`px-3 py-1.5 rounded-xl text-xs font-bold transition ${
             mobileKanbanTab === 'PENDING'
-              ? 'bg-[#D97706] text-white'
-              : 'bg-white text-[#D97706] border border-[#D97706]/40'
+              ? 'bg-[#C6A15B] text-[#171717]'
+              : 'bg-[#FFFFFF] text-[#C6A15B] border border-[#C6A15B]/40'
           }`}
         >
           Pending ({pendingTickets.length})
@@ -481,8 +482,8 @@ export default function StaffDashboardPage() {
           onClick={() => setMobileKanbanTab('IN_PROGRESS')}
           className={`px-3 py-1.5 rounded-xl text-xs font-bold transition ${
             mobileKanbanTab === 'IN_PROGRESS'
-              ? 'bg-[#2563EB] text-white'
-              : 'bg-white text-[#2563EB] border border-[#2563EB]/40'
+              ? 'bg-[#292724] text-[#F8F5EF]'
+              : 'bg-[#FFFFFF] text-[#292724] border border-[#292724]/40'
           }`}
         >
           In Progress ({inProgressTickets.length})
@@ -492,7 +493,7 @@ export default function StaffDashboardPage() {
           className={`px-3 py-1.5 rounded-xl text-xs font-bold transition ${
             mobileKanbanTab === 'COMPLETED'
               ? 'bg-[#16A34A] text-white'
-              : 'bg-white text-[#16A34A] border border-[#16A34A]/40'
+              : 'bg-[#FFFFFF] text-[#16A34A] border border-[#16A34A]/40'
           }`}
         >
           Completed ({completedTickets.length})
@@ -502,34 +503,34 @@ export default function StaffDashboardPage() {
       {/* Kanban Board */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8 grid md:grid-cols-3 gap-6">
         {/* Column 1: Incoming Tasks */}
-        <div className={`bg-white border border-[#E2E8F0] rounded-2xl p-4 space-y-4 flex flex-col shadow-md ${
+        <div className={`bg-[#FFFFFF] border border-[#E5DFD5] rounded-2xl p-4 space-y-4 flex flex-col shadow-sm ${
           mobileKanbanTab !== 'ALL' && mobileKanbanTab !== 'PENDING' ? 'hidden md:flex' : ''
         }`}>
-          <div className="flex items-center justify-between border-b border-[#E2E8F0] pb-3">
-            <h2 className="font-bold text-sm text-[#172033] flex items-center gap-2">
-              <span className="w-3 h-3 rounded-full bg-[#D97706]" />
+          <div className="flex items-center justify-between border-b border-[#E5DFD5] pb-3">
+            <h2 className="font-bold text-sm text-[#24211E] flex items-center gap-2">
+              <span className="w-3 h-3 rounded-full bg-[#C6A15B]" />
               Incoming / Pending ({pendingTickets.length})
             </h2>
           </div>
 
           <div className="space-y-4 flex-1 overflow-y-auto">
             {pendingTickets.length === 0 ? (
-              <div className="text-center py-8 text-xs text-[#526174] italic">No pending tasks in queue</div>
+              <div className="text-center py-8 text-xs text-[#7C756B] italic">No pending tasks in queue</div>
             ) : (
               pendingTickets.map((t) => (
                 <div
                   key={t.id}
-                  className="bg-[#F8FAFC] border border-[#E2E8F0] hover:border-[#0F9F91] rounded-xl p-4 space-y-3 shadow-xs transition"
+                  className="bg-[#F8F5EF] border border-[#E5DFD5] hover:border-[#C6A15B] rounded-xl p-4 space-y-3 shadow-xs transition"
                 >
                   <div className="flex items-center justify-between">
-                    <span className="text-xs font-mono font-bold text-[#526174] bg-[#F1F5F9] px-2 py-0.5 rounded border border-[#CBD5E1]">
+                    <span className="text-xs font-mono font-bold text-[#7C756B] bg-[#FFFFFF] px-2 py-0.5 rounded border border-[#E5DFD5]">
                       {t.ticketNumber}
                     </span>
                     <span
                       className={`text-[10px] font-extrabold px-2.5 py-0.5 rounded-full uppercase ${
                         t.priority === 'URGENT' || t.priority === 'HIGH'
                           ? 'bg-[#FEF2F2] text-[#DC2626] border border-[#DC2626]/30 animate-pulse'
-                          : 'bg-[#FFF7E6] text-[#D97706] border border-[#D97706]/30'
+                          : 'bg-[#FFF9EC] text-[#C6A15B] border border-[#C6A15B]/30'
                       }`}
                     >
                       {t.department} • {t.priority}
@@ -537,25 +538,25 @@ export default function StaffDashboardPage() {
                   </div>
 
                   <div>
-                    <h3 className="font-bold text-[#172033] text-sm">{t.title}</h3>
-                    <p className="text-xs text-[#526174] mt-1 font-medium">{t.description}</p>
+                    <h3 className="font-bold text-[#24211E] text-sm">{t.title}</h3>
+                    <p className="text-xs text-[#7C756B] mt-1 font-medium">{t.description}</p>
                   </div>
 
-                  <div className="bg-white p-2.5 rounded-lg border border-[#E2E8F0] text-xs flex items-center justify-between text-[#172033]">
+                  <div className="bg-[#FFFFFF] p-2.5 rounded-lg border border-[#E5DFD5] text-xs flex items-center justify-between text-[#24211E]">
                     <span>
-                      Room <strong className="text-[#0F9F91]">{t.roomNumber}</strong> ({t.guestName})
+                      Room <strong className="text-[#C6A15B]">{t.roomNumber}</strong> ({t.guestName})
                     </span>
-                    <span className="text-[11px] text-[#D97706] font-bold flex items-center gap-1">
-                      <Clock className="w-3 h-3 text-[#D97706]" /> SLA ~{t.slaMinutes}m
+                    <span className="text-[11px] text-[#C6A15B] font-bold flex items-center gap-1">
+                      <Clock className="w-3 h-3 text-[#C6A15B]" /> SLA ~{t.slaMinutes}m
                     </span>
                   </div>
 
                   <button
                     onClick={() => handleUpdateTicket(t.id, 'IN_PROGRESS')}
                     disabled={updatingId === t.id}
-                    className="w-full bg-[#0F9F91] hover:bg-[#0B857A] text-white font-bold text-xs py-2 rounded-lg transition flex items-center justify-center gap-1.5 shadow-md shadow-[#0F9F91]/20 disabled:opacity-50"
+                    className="w-full bg-[#171717] hover:bg-[#292724] text-[#C6A15B] border border-[#C6A15B]/30 font-bold text-xs py-2 rounded-lg transition flex items-center justify-center gap-1.5 shadow-md shadow-[#171717]/10 disabled:opacity-50"
                   >
-                    <Play className="w-3.5 h-3.5 fill-current" /> Accept & Start Task
+                    <Play className="w-3.5 h-3.5 fill-current text-[#C6A15B]" /> Accept & Start Task
                   </button>
                 </div>
               ))
@@ -564,44 +565,44 @@ export default function StaffDashboardPage() {
         </div>
 
         {/* Column 2: In Progress */}
-        <div className={`bg-white border border-[#E2E8F0] rounded-2xl p-4 space-y-4 flex flex-col shadow-md ${
+        <div className={`bg-[#FFFFFF] border border-[#E5DFD5] rounded-2xl p-4 space-y-4 flex flex-col shadow-sm ${
           mobileKanbanTab !== 'ALL' && mobileKanbanTab !== 'IN_PROGRESS' ? 'hidden md:flex' : ''
         }`}>
-          <div className="flex items-center justify-between border-b border-[#E2E8F0] pb-3">
-            <h2 className="font-bold text-sm text-[#172033] flex items-center gap-2">
-              <span className="w-3 h-3 rounded-full bg-[#2563EB] animate-ping" />
+          <div className="flex items-center justify-between border-b border-[#E5DFD5] pb-3">
+            <h2 className="font-bold text-sm text-[#24211E] flex items-center gap-2">
+              <span className="w-3 h-3 rounded-full bg-[#292724] animate-pulse shadow-[0_0_8px_#292724]" />
               In Progress ({inProgressTickets.length})
             </h2>
           </div>
 
           <div className="space-y-4 flex-1 overflow-y-auto">
             {inProgressTickets.length === 0 ? (
-              <div className="text-center py-8 text-xs text-[#526174] italic">No tasks currently in progress</div>
+              <div className="text-center py-8 text-xs text-[#7C756B] italic">No tasks currently in progress</div>
             ) : (
               inProgressTickets.map((t) => (
                 <div
                   key={t.id}
-                  className="bg-white border border-[#2563EB]/40 rounded-xl p-4 space-y-3 shadow-sm transition"
+                  className="bg-[#FFFFFF] border border-[#171717]/30 rounded-xl p-4 space-y-3 shadow-xs transition"
                 >
                   <div className="flex items-center justify-between">
-                    <span className="text-xs font-mono font-bold text-[#2563EB] bg-[#EFF6FF] px-2 py-0.5 rounded border border-[#2563EB]/30">
+                    <span className="text-xs font-mono font-bold text-[#171717] bg-[#F8F5EF] px-2 py-0.5 rounded border border-[#E5DFD5]">
                       {t.ticketNumber}
                     </span>
-                    <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-[#EFF6FF] text-[#2563EB] flex items-center gap-1">
-                      <Truck className="w-3 h-3 text-[#2563EB]" /> Staff En Route
+                    <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-[#F8F5EF] text-[#292724] border border-[#C6A15B]/30 flex items-center gap-1">
+                      <Truck className="w-3 h-3 text-[#C6A15B]" /> Staff En Route
                     </span>
                   </div>
 
                   <div>
-                    <h3 className="font-bold text-[#172033] text-sm">{t.title}</h3>
-                    <p className="text-xs text-[#526174] mt-1 font-medium">{t.description}</p>
+                    <h3 className="font-bold text-[#24211E] text-sm">{t.title}</h3>
+                    <p className="text-xs text-[#7C756B] mt-1 font-medium">{t.description}</p>
                   </div>
 
-                  <div className="bg-[#F8FAFC] p-2.5 rounded-lg border border-[#E2E8F0] text-xs flex items-center justify-between text-[#172033]">
+                  <div className="bg-[#F8F5EF] p-2.5 rounded-lg border border-[#E5DFD5] text-xs flex items-center justify-between text-[#24211E]">
                     <span>
-                      Room <strong className="text-[#0F9F91]">{t.roomNumber}</strong> ({t.guestName})
+                      Room <strong className="text-[#C6A15B]">{t.roomNumber}</strong> ({t.guestName})
                     </span>
-                    <span className="text-[11px] text-[#526174] font-medium">Assigned: {t.assignedStaff?.name || 'Staff'}</span>
+                    <span className="text-[11px] text-[#7C756B] font-medium">Assigned: {t.assignedStaff?.name || 'Staff'}</span>
                   </div>
 
                   <button
@@ -618,11 +619,11 @@ export default function StaffDashboardPage() {
         </div>
 
         {/* Column 3: Recently Completed */}
-        <div className={`bg-white border border-[#E2E8F0] rounded-2xl p-4 space-y-4 flex flex-col shadow-md ${
+        <div className={`bg-[#FFFFFF] border border-[#E5DFD5] rounded-2xl p-4 space-y-4 flex flex-col shadow-sm ${
           mobileKanbanTab !== 'ALL' && mobileKanbanTab !== 'COMPLETED' ? 'hidden md:flex' : ''
         }`}>
-          <div className="flex items-center justify-between border-b border-[#E2E8F0] pb-3">
-            <h2 className="font-bold text-sm text-[#172033] flex items-center gap-2">
+          <div className="flex items-center justify-between border-b border-[#E5DFD5] pb-3">
+            <h2 className="font-bold text-sm text-[#24211E] flex items-center gap-2">
               <span className="w-3 h-3 rounded-full bg-[#16A34A]" />
               Recently Completed ({completedTickets.length})
             </h2>
@@ -630,21 +631,21 @@ export default function StaffDashboardPage() {
 
           <div className="space-y-4 flex-1 overflow-y-auto">
             {completedTickets.length === 0 ? (
-              <div className="text-center py-8 text-xs text-[#526174] italic">No completed tasks yet</div>
+              <div className="text-center py-8 text-xs text-[#7C756B] italic">No completed tasks yet</div>
             ) : (
               completedTickets.map((t) => (
                 <div
                   key={t.id}
-                  className="bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl p-4 space-y-2 transition"
+                  className="bg-[#F8F5EF] border border-[#E5DFD5] rounded-xl p-4 space-y-2 transition"
                 >
                   <div className="flex items-center justify-between text-xs">
-                    <span className="font-mono text-[#526174] font-bold">{t.ticketNumber}</span>
+                    <span className="font-mono text-[#7C756B] font-bold">{t.ticketNumber}</span>
                     <span className="text-[#16A34A] font-bold flex items-center gap-1 text-[11px]">
                       <CheckCircle2 className="w-3.5 h-3.5 text-[#16A34A]" /> Completed
                     </span>
                   </div>
-                  <h3 className="font-bold text-[#172033] text-xs">{t.title}</h3>
-                  <div className="text-[11px] text-[#526174] flex items-center justify-between pt-1 font-medium">
+                  <h3 className="font-bold text-[#24211E] text-xs">{t.title}</h3>
+                  <div className="text-[11px] text-[#7C756B] flex items-center justify-between pt-1 font-medium">
                     <span>Room {t.roomNumber} ({t.department})</span>
                     <span>
                       {t.completedAt
@@ -659,14 +660,16 @@ export default function StaffDashboardPage() {
         </div>
       </main>
 
-      {/* Guest Management Modal (Add & Remove Guest Options) */}
+      {/* Guest Management Modal */}
       {guestModalOpen && (
         <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-2 sm:p-4 overflow-y-auto">
-          <div className="bg-white rounded-3xl p-4 sm:p-6 max-w-2xl w-full border border-[#E2E8F0] shadow-2xl space-y-4 animate-fade-in max-h-[92vh] flex flex-col my-auto">
-            <div className="flex items-center justify-between border-b border-[#E2E8F0] pb-3 shrink-0">
+          <div className="bg-[#FFFFFF] rounded-3xl p-4 sm:p-6 max-w-2xl w-full border border-[#E5DFD5] shadow-2xl space-y-4 animate-fade-in max-h-[92vh] flex flex-col my-auto">
+            <div className="flex items-center justify-between border-b border-[#E5DFD5] pb-3 shrink-0">
               <div className="flex items-center gap-2">
-                <Users className="w-5 h-5 text-[#2563EB]" />
-                <h3 className="font-extrabold text-base text-[#172033]">
+                <div className="w-8 h-8 rounded-xl bg-[#171717] border border-[#C6A15B]/30 flex items-center justify-center text-[#C6A15B] shrink-0">
+                  <Users className="w-4 h-4" />
+                </div>
+                <h3 className="font-extrabold text-base text-[#24211E]">
                   Guest Session & Room Management
                 </h3>
               </div>
@@ -675,7 +678,7 @@ export default function StaffDashboardPage() {
                   setGuestModalOpen(false);
                   setShowAddGuestForm(false);
                 }}
-                className="p-1.5 text-[#526174] hover:text-[#172033] hover:bg-[#F1F5F9] rounded-lg"
+                className="p-1.5 text-[#7C756B] hover:text-[#24211E] hover:bg-[#F8F5EF] rounded-lg transition"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -695,12 +698,12 @@ export default function StaffDashboardPage() {
             )}
 
             <div className="flex items-center justify-between shrink-0">
-              <span className="text-xs font-bold text-[#526174]">
+              <span className="text-xs font-bold text-[#7C756B]">
                 Active Guests ({guestsList.filter((g) => g.active).length})
               </span>
               <button
                 onClick={() => setShowAddGuestForm(!showAddGuestForm)}
-                className="bg-[#0F9F91] hover:bg-[#0B857A] text-white font-bold text-xs px-3.5 py-2 rounded-xl transition flex items-center gap-1.5 shadow-xs"
+                className="bg-[#171717] hover:bg-[#292724] text-[#C6A15B] border border-[#C6A15B]/40 font-bold text-xs px-3.5 py-2 rounded-xl transition flex items-center gap-1.5 shadow-xs"
               >
                 {showAddGuestForm ? <X className="w-3.5 h-3.5" /> : <UserPlus className="w-3.5 h-3.5" />}
                 <span>{showAddGuestForm ? 'Cancel Add' : 'Add New Guest'}</span>
@@ -709,31 +712,31 @@ export default function StaffDashboardPage() {
 
             {/* Add Guest Form */}
             {showAddGuestForm && (
-              <form onSubmit={handleAddGuest} className="bg-[#F8FAFC] border border-[#0F9F91]/30 rounded-2xl p-4 space-y-3 shrink-0 shadow-xs">
-                <h4 className="text-xs font-bold text-[#0F9F91] uppercase tracking-wider">
-                  Check-In New Guest
+              <form onSubmit={handleAddGuest} className="bg-[#F8F5EF] border border-[#C6A15B]/30 rounded-2xl p-4 space-y-3 shrink-0 shadow-xs">
+                <h4 className="text-xs font-bold text-[#C6A15B] uppercase tracking-wider flex items-center gap-1.5">
+                  <Sparkles className="w-3.5 h-3.5 text-[#C6A15B]" /> Check-In New Guest
                 </h4>
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="block text-[11px] font-bold text-[#172033] mb-1">Guest Full Name</label>
+                    <label className="block text-[11px] font-bold text-[#24211E] mb-1">Guest Full Name</label>
                     <input
                       type="text"
                       value={newGuestName}
                       onChange={(e) => setNewGuestName(e.target.value)}
                       placeholder="e.g. Alex Sharma"
-                      className="w-full bg-white border border-[#CBD5E1] focus:border-[#0F9F91] rounded-xl p-2.5 text-xs text-[#172033] font-medium"
+                      className="w-full bg-[#FFFFFF] border border-[#E5DFD5] focus:border-[#C6A15B] rounded-xl p-2.5 text-xs text-[#24211E] font-medium outline-none"
                       required
                     />
                   </div>
 
                   <div>
-                    <label className="block text-[11px] font-bold text-[#172033] mb-1">Room Number</label>
+                    <label className="block text-[11px] font-bold text-[#24211E] mb-1">Room Number</label>
                     <input
                       type="text"
                       value={newGuestRoom}
                       onChange={(e) => setNewGuestRoom(e.target.value)}
                       placeholder="e.g. 204"
-                      className="w-full bg-white border border-[#CBD5E1] focus:border-[#0F9F91] rounded-xl p-2.5 text-xs text-[#172033] font-medium"
+                      className="w-full bg-[#FFFFFF] border border-[#E5DFD5] focus:border-[#C6A15B] rounded-xl p-2.5 text-xs text-[#24211E] font-medium outline-none"
                       required
                     />
                   </div>
@@ -741,24 +744,24 @@ export default function StaffDashboardPage() {
 
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="block text-[11px] font-bold text-[#172033] mb-1">Access PIN</label>
+                    <label className="block text-[11px] font-bold text-[#24211E] mb-1">Access PIN</label>
                     <input
                       type="text"
                       value={newGuestPin}
                       onChange={(e) => setNewGuestPin(e.target.value)}
                       placeholder="Default 1234"
-                      className="w-full bg-white border border-[#CBD5E1] focus:border-[#0F9F91] rounded-xl p-2.5 text-xs text-[#172033] font-medium"
+                      className="w-full bg-[#FFFFFF] border border-[#E5DFD5] focus:border-[#C6A15B] rounded-xl p-2.5 text-xs text-[#24211E] font-medium outline-none"
                       required
                     />
                   </div>
 
                   <div>
-                    <label className="block text-[11px] font-bold text-[#172033] mb-1">Check-Out Date</label>
+                    <label className="block text-[11px] font-bold text-[#24211E] mb-1">Check-Out Date</label>
                     <input
                       type="date"
                       value={newGuestCheckout}
                       onChange={(e) => setNewGuestCheckout(e.target.value)}
-                      className="w-full bg-white border border-[#CBD5E1] focus:border-[#0F9F91] rounded-xl p-2.5 text-xs text-[#172033] font-medium"
+                      className="w-full bg-[#FFFFFF] border border-[#E5DFD5] focus:border-[#C6A15B] rounded-xl p-2.5 text-xs text-[#24211E] font-medium outline-none"
                       required
                     />
                   </div>
@@ -768,7 +771,7 @@ export default function StaffDashboardPage() {
                   <button
                     type="submit"
                     disabled={addingGuest}
-                    className="bg-[#0F9F91] hover:bg-[#0B857A] text-white font-bold text-xs px-4 py-2 rounded-xl transition shadow-xs disabled:opacity-50"
+                    className="bg-[#171717] hover:bg-[#292724] text-[#C6A15B] border border-[#C6A15B]/30 font-bold text-xs px-4 py-2 rounded-xl transition shadow-xs disabled:opacity-50"
                   >
                     {addingGuest ? 'Checking In...' : 'Confirm Guest Check-In'}
                   </button>
@@ -779,38 +782,38 @@ export default function StaffDashboardPage() {
             {/* Guests Roster List */}
             <div className="space-y-3 flex-1 overflow-y-auto pr-1">
               {guestsLoading ? (
-                <div className="text-center py-6 text-xs text-[#526174] font-bold">Loading guest list...</div>
+                <div className="text-center py-6 text-xs text-[#7C756B] font-bold">Loading guest list...</div>
               ) : guestsList.length === 0 ? (
-                <div className="text-center py-6 text-xs text-[#526174] italic">No guest sessions recorded yet</div>
+                <div className="text-center py-6 text-xs text-[#7C756B] italic">No guest sessions recorded yet</div>
               ) : (
                 guestsList.map((g) => (
                   <div
                     key={g.id}
                     className={`p-3.5 rounded-xl border flex items-center justify-between text-xs transition ${
                       g.active
-                        ? 'bg-white border-[#E2E8F0] hover:border-[#2563EB]/40 shadow-xs'
-                        : 'bg-[#F8FAFC] border-[#E2E8F0] opacity-60'
+                        ? 'bg-[#FFFFFF] border-[#E5DFD5] hover:border-[#C6A15B]/50 shadow-xs'
+                        : 'bg-[#F8F5EF] border-[#E5DFD5] opacity-60'
                     }`}
                   >
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-xl bg-[#EFF6FF] text-[#2563EB] font-bold flex items-center justify-center text-sm shrink-0 border border-[#2563EB]/20">
+                      <div className="w-10 h-10 rounded-xl bg-[#171717] text-[#C6A15B] border border-[#C6A15B]/30 font-bold flex items-center justify-center text-sm shrink-0">
                         {g.roomNumber}
                       </div>
                       <div>
-                        <div className="font-bold text-[#172033] text-sm flex items-center gap-2">
+                        <div className="font-bold text-[#24211E] text-sm flex items-center gap-2">
                           {g.guestName}
                           {g.active ? (
                             <span className="text-[10px] font-bold bg-[#EAF8EF] text-[#16A34A] px-2 py-0.5 rounded-full border border-[#16A34A]/30">
                               Active
                             </span>
                           ) : (
-                            <span className="text-[10px] font-bold bg-[#F1F5F9] text-[#64748B] px-2 py-0.5 rounded-full border border-[#CBD5E1]">
+                            <span className="text-[10px] font-bold bg-[#F8F5EF] text-[#7C756B] px-2 py-0.5 rounded-full border border-[#E5DFD5]">
                               Checked Out
                             </span>
                           )}
                         </div>
-                        <div className="text-[11px] text-[#526174] font-medium">
-                          PIN: <strong className="text-[#172033] font-mono">{g.pin}</strong> • Check-out:{' '}
+                        <div className="text-[11px] text-[#7C756B] font-medium">
+                          PIN: <strong className="text-[#24211E] font-mono">{g.pin}</strong> • Check-out:{' '}
                           {new Date(g.checkOutDate).toLocaleDateString()}
                         </div>
                       </div>
