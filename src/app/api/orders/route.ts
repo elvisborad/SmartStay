@@ -75,7 +75,7 @@ export async function POST(request: Request) {
       data: {
         ticketNumber,
         title: `Room Service Order ${orderNumber}`,
-        description: `Items: ${itemDescriptions.join(', ')}. Total: $${totalAmount.toFixed(2)}`,
+        description: `Items: ${itemDescriptions.join(', ')}. Total: ₹${totalAmount.toFixed(2)}`,
         department: 'KITCHEN',
         category: 'In-Room Dining',
         priority: 'HIGH',
@@ -88,7 +88,7 @@ export async function POST(request: Request) {
           create: [
             {
               action: 'CREATED',
-              notes: `Order ${orderNumber} placed via Guest Portal ($${totalAmount.toFixed(2)})`,
+              notes: `Order ${orderNumber} placed via Guest Portal (₹${totalAmount.toFixed(2)})`,
               performedBy: guestName,
             },
           ],

@@ -121,7 +121,7 @@ export default function RoomServiceMenu({
         {Object.keys(cart).length > 0 && (
           <div className="bg-[#FBF5E8] text-[#C6A15B] text-xs font-bold px-3.5 py-1.5 rounded-full border border-[#C6A15B]/40 flex items-center gap-1.5 shadow-sm">
             <ShoppingBag className="w-4 h-4 text-[#C6A15B]" />
-            {Object.values(cart).reduce((sum, e) => sum + e.quantity, 0)} Items (${cartTotal.toFixed(2)})
+            {Object.values(cart).reduce((sum, e) => sum + e.quantity, 0)} Items (₹{cartTotal.toFixed(2)})
           </div>
         )}
       </div>
@@ -145,7 +145,7 @@ export default function RoomServiceMenu({
                     <p className="text-xs text-[#7C756B] mt-0.5 line-clamp-2">{item.description}</p>
                     <div className="mt-2 flex items-center gap-3">
                       <span className="font-bold text-[#C6A15B] text-sm">
-                        ${item.price > 0 ? item.price.toFixed(2) : 'Free'}
+                        {item.price > 0 ? `₹${item.price.toFixed(2)}` : 'Free'}
                       </span>
                       <span className="text-[11px] text-[#7C756B] flex items-center gap-1 font-medium">
                         <Clock className="w-3 h-3 text-[#C6A15B]" /> ~{item.estimatedMinutes}m prep
@@ -192,7 +192,7 @@ export default function RoomServiceMenu({
         <div className="fixed bottom-4 left-4 right-4 max-w-2xl mx-auto bg-[#171717] text-white rounded-2xl p-4 shadow-2xl border border-[#C6A15B]/40 flex items-center justify-between z-30 animate-fade-in">
           <div>
             <div className="text-xs text-white/70 font-medium">Total Order Amount</div>
-            <div className="font-extrabold text-lg text-[#C6A15B]">${cartTotal.toFixed(2)}</div>
+            <div className="font-extrabold text-lg text-[#C6A15B]">₹{cartTotal.toFixed(2)}</div>
           </div>
 
           <button

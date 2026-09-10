@@ -38,7 +38,7 @@ export async function searchKnowledgeBase(query: string): Promise<string> {
   if (matchedServices.length > 0) {
     context += '\nAvailable Services & Menu Items:\n';
     matchedServices.forEach((s) => {
-      context += `- Item: ${s.name} ($${s.price.toFixed(2)}) - ${s.description} (Dept: ${s.category.department}, ~${s.estimatedMinutes} mins)\n`;
+      context += `- Item: ${s.name} (₹${s.price.toFixed(2)}) - ${s.description} (Dept: ${s.category.department}, ~${s.estimatedMinutes} mins)\n`;
     });
   }
 

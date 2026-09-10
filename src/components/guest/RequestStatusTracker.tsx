@@ -160,7 +160,7 @@ export default function RequestStatusTracker({ roomNumber }: RequestStatusTracke
                     </span>
                   </div>
                   <h3 className="font-bold text-[#171717] text-base flex items-center gap-1.5">
-                    <ChefHat className="w-4 h-4 text-[#C6A15B]" /> Total: ${o.totalAmount.toFixed(2)}
+                    <ChefHat className="w-4 h-4 text-[#C6A15B]" /> Total: ₹{o.totalAmount.toFixed(2)}
                   </h3>
                   <p className="text-xs text-[#7C756B] mt-1 font-medium">
                     Items: {o.items?.map((i: any) => `${i.quantity}x ${i.itemName}`).join(', ')}

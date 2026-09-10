@@ -478,7 +478,7 @@ export default function AdminAnalyticsPage() {
                   <DollarSign className="w-4 h-4 text-[#C9A45C]" />
                 </div>
                 <div className="text-3xl font-extrabold text-[#8A6A2F]">
-                  ${(metrics.totalRevenue || 0).toFixed(2)}
+                  ₹{(metrics.totalRevenue || 0).toFixed(2)}
                 </div>
                 <div className="text-[11px] text-[#526174] font-medium">{metrics.totalOrders} In-Room Dining Orders</div>
               </div>
