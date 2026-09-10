@@ -1,6 +1,6 @@
 'use client';
 
-import { Hotel, LogOut, Wifi, Clock, Phone, Sparkles, Globe, QrCode } from 'lucide-react';
+import { Hotel, LogOut, Wifi, Clock, Phone, Sparkles, Globe, QrCode, Home, Bell, Utensils, Compass, ClipboardList } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { t } from '@/lib/i18n';
 
@@ -33,27 +33,27 @@ export default function GuestHeader({
   };
 
   const languages = [
-    { code: 'en', name: '🇬🇧 English' },
-    { code: 'es', name: '🇪🇸 Español' },
-    { code: 'fr', name: '🇫🇷 Français' },
-    { code: 'de', name: '🇩🇪 Deutsch' },
-    { code: 'ja', name: '🇯🇵 日本語' },
-    { code: 'zh', name: '🇨🇳 中文' },
-    { code: 'ar', name: '🇸🇦 العربية' },
-    { code: 'ru', name: '🇷🇺 Русский' },
-    { code: 'pt', name: '🇵🇹 Português' },
-    { code: 'it', name: '🇮🇹 Italiano' },
-    { code: 'ko', name: '🇰🇷 한국어' },
-    { code: 'hi', name: '🇮🇳 हिंदी (Hindi)' },
-    { code: 'gu', name: '🇮🇳 ગુજરાતી (Gujarati)' },
-    { code: 'mr', name: '🇮🇳 मराठी (Marathi)' },
-    { code: 'bn', name: '🇮🇳 বাংলা (Bengali)' },
-    { code: 'ta', name: '🇮🇳 தமிழ் (Tamil)' },
-    { code: 'te', name: '🇮🇳 తెలుగు (Telugu)' },
+    { code: 'en', name: 'English (UK)' },
+    { code: 'es', name: 'Español' },
+    { code: 'fr', name: 'Français' },
+    { code: 'de', name: 'Deutsch' },
+    { code: 'ja', name: '日本語' },
+    { code: 'zh', name: '中文' },
+    { code: 'ar', name: 'العربية' },
+    { code: 'ru', name: 'Русский' },
+    { code: 'pt', name: 'Português' },
+    { code: 'it', name: 'Italiano' },
+    { code: 'ko', name: '한국어' },
+    { code: 'hi', name: 'हिंदी (Hindi)' },
+    { code: 'gu', name: 'ગુજરાતી (Gujarati)' },
+    { code: 'mr', name: 'મરાઠી (Marathi)' },
+    { code: 'bn', name: 'বাংলা (Bengali)' },
+    { code: 'ta', name: 'தமிழ் (Tamil)' },
+    { code: 'te', name: 'తెలుగు (Telugu)' },
   ];
 
   return (
-    <header className="bg-white text-[#24211E] border-b border-[#E2E8F0] sticky top-0 z-40 shadow-sm">
+    <header className="bg-white text-[#24211E] border-b border-[#E2E8F0] sticky top-0 z-40 shadow-sm font-sans">
       {/* Top Banner */}
       <div className="max-w-5xl mx-auto px-3 sm:px-4 py-2.5 sm:py-3 flex items-center justify-between gap-2">
         <div className="flex items-center gap-2 sm:gap-3 min-w-0">
@@ -133,53 +133,58 @@ export default function GuestHeader({
       <div className="max-w-5xl mx-auto px-2 sm:px-4 flex border-b border-[#E2E8F0] overflow-x-auto no-scrollbar bg-white scroll-smooth">
         <button
           onClick={() => setActiveTab('home')}
-          className={`py-2.5 px-3 sm:px-4 text-xs sm:text-sm font-bold border-b-2 whitespace-nowrap transition flex-1 text-center ${
+          className={`py-2.5 px-3 sm:px-4 text-xs sm:text-sm font-bold border-b-2 whitespace-nowrap transition flex-1 text-center flex items-center justify-center gap-1.5 ${
             activeTab === 'home'
               ? 'border-[#C6A15B] text-[#C6A15B] bg-[#FBF5E8]'
               : 'border-transparent text-[#7C756B] hover:text-[#171717]'
           }`}
         >
-          {t(currentLang, 'tabHome')}
+          <Home className="w-4 h-4 shrink-0" />
+          <span>{t(currentLang, 'tabHome')}</span>
         </button>
         <button
           onClick={() => setActiveTab('amenities')}
-          className={`py-2.5 px-3 sm:px-4 text-xs sm:text-sm font-bold border-b-2 whitespace-nowrap transition flex-1 text-center ${
+          className={`py-2.5 px-3 sm:px-4 text-xs sm:text-sm font-bold border-b-2 whitespace-nowrap transition flex-1 text-center flex items-center justify-center gap-1.5 ${
             activeTab === 'amenities'
               ? 'border-[#C6A15B] text-[#C6A15B] bg-[#FBF5E8]'
               : 'border-transparent text-[#7C756B] hover:text-[#171717]'
           }`}
         >
-          {t(currentLang, 'tabAmenities')}
+          <Bell className="w-4 h-4 shrink-0" />
+          <span>{t(currentLang, 'tabAmenities')}</span>
         </button>
         <button
           onClick={() => setActiveTab('dining')}
-          className={`py-2.5 px-3 sm:px-4 text-xs sm:text-sm font-bold border-b-2 whitespace-nowrap transition flex-1 text-center ${
+          className={`py-2.5 px-3 sm:px-4 text-xs sm:text-sm font-bold border-b-2 whitespace-nowrap transition flex-1 text-center flex items-center justify-center gap-1.5 ${
             activeTab === 'dining'
               ? 'border-[#C6A15B] text-[#C6A15B] bg-[#FBF5E8]'
               : 'border-transparent text-[#7C756B] hover:text-[#171717]'
           }`}
         >
-          {t(currentLang, 'tabDining')}
+          <Utensils className="w-4 h-4 shrink-0" />
+          <span>{t(currentLang, 'tabDining')}</span>
         </button>
         <button
           onClick={() => setActiveTab('explore')}
-          className={`py-2.5 px-3 sm:px-4 text-xs sm:text-sm font-bold border-b-2 whitespace-nowrap transition flex-1 text-center ${
+          className={`py-2.5 px-3 sm:px-4 text-xs sm:text-sm font-bold border-b-2 whitespace-nowrap transition flex-1 text-center flex items-center justify-center gap-1.5 ${
             activeTab === 'explore'
               ? 'border-[#C6A15B] text-[#C6A15B] bg-[#FBF5E8]'
               : 'border-transparent text-[#7C756B] hover:text-[#171717]'
           }`}
         >
-          {t(currentLang, 'tabExplore')}
+          <Compass className="w-4 h-4 shrink-0" />
+          <span>{t(currentLang, 'tabExplore')}</span>
         </button>
         <button
           onClick={() => setActiveTab('tracker')}
-          className={`py-2.5 px-3 sm:px-4 text-xs sm:text-sm font-bold border-b-2 whitespace-nowrap transition flex-1 text-center ${
+          className={`py-2.5 px-3 sm:px-4 text-xs sm:text-sm font-bold border-b-2 whitespace-nowrap transition flex-1 text-center flex items-center justify-center gap-1.5 ${
             activeTab === 'tracker'
               ? 'border-[#C6A15B] text-[#C6A15B] bg-[#FBF5E8]'
               : 'border-transparent text-[#7C756B] hover:text-[#171717]'
           }`}
         >
-          {t(currentLang, 'tabRequests')}
+          <ClipboardList className="w-4 h-4 shrink-0" />
+          <span>{t(currentLang, 'tabRequests')}</span>
         </button>
       </div>
     </header>
