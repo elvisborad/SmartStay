@@ -106,40 +106,41 @@ export default function AIChatDrawer({
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-xs flex justify-end">
-      <div className="w-full max-w-full sm:max-w-md bg-white text-[#172033] h-full flex flex-col justify-between shadow-2xl border-l border-[#E2E8F0] animate-fade-in">
+    <div className="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-xs flex justify-end">
+      <div className="w-full max-w-full sm:max-w-md bg-[#FFFFFF] text-[#24211E] h-full flex flex-col justify-between shadow-2xl border-l border-[#E5DFD5] animate-fade-in font-sans">
         {/* Header */}
-        <div className="px-5 py-4 bg-white border-b border-[#E2E8F0] flex items-center justify-between shadow-xs">
+        <div className="px-5 py-4 bg-[#FFFFFF] border-b border-[#E5DFD5] flex items-center justify-between shadow-xs">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-[#0F9F91] flex items-center justify-center shadow-md">
-              <Bot className="w-5 h-5 text-white" />
+            <div className="w-9 h-9 rounded-xl bg-[#171717] border border-[#C6A15B]/30 flex items-center justify-center shadow-md">
+              <Bot className="w-5 h-5 text-[#C6A15B]" />
             </div>
             <div>
-              <h3 className="font-bold text-sm text-[#172033] flex items-center gap-1.5">
-                SmartStay Concierge <span className="w-2 h-2 rounded-full bg-[#0F9F91] animate-ping" />
+              <h3 className="font-bold text-sm text-[#24211E] flex items-center gap-1.5">
+                SmartStay Concierge <span className="w-2 h-2 rounded-full bg-[#C6A15B] animate-pulse shadow-[0_0_8px_#C6A15B]" />
               </h3>
-              <p className="text-[11px] text-[#526174]">Multilingual RAG & Action Engine</p>
+              <p className="text-[11px] text-[#7C756B] font-medium">Multilingual RAG & Action Engine</p>
             </div>
           </div>
 
           <button
             onClick={onClose}
-            className="p-1.5 text-[#526174] hover:text-[#172033] hover:bg-[#F1F5F9] rounded-lg transition"
+            className="p-1.5 text-[#7C756B] hover:text-[#24211E] hover:bg-[#F8F5EF] rounded-lg transition"
+            title="Close chat"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Chat Messages */}
-        <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-[#F8FAFC]">
+        <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-[#F8F5EF]">
           {messages.map((m) => (
             <div
               key={m.id}
               className={`flex gap-3 ${m.sender === 'user' ? 'justify-end' : 'justify-start'}`}
             >
               {m.sender === 'ai' && (
-                <div className="w-7 h-7 rounded-lg bg-[#E8F7F5] text-[#0F9F91] border border-[#0F9F91]/30 flex items-center justify-center shrink-0 mt-0.5">
-                  <Sparkles className="w-4 h-4" />
+                <div className="w-7 h-7 rounded-lg bg-[#171717] border border-[#C6A15B]/30 text-[#C6A15B] flex items-center justify-center shrink-0 mt-0.5 shadow-xs">
+                  <Sparkles className="w-4 h-4 text-[#C6A15B]" />
                 </div>
               )}
 
@@ -147,8 +148,8 @@ export default function AIChatDrawer({
                 <div
                   className={`p-3.5 rounded-2xl text-xs leading-relaxed shadow-xs ${
                     m.sender === 'user'
-                      ? 'bg-[#0F9F91] text-white rounded-br-none font-medium'
-                      : 'bg-[#E8F7F5] border border-[#0F9F91]/20 text-[#172033] rounded-bl-none font-medium'
+                      ? 'bg-[#171717] text-[#F8F5EF] border border-[#C6A15B]/30 rounded-br-none font-medium'
+                      : 'bg-[#FFFFFF] border border-[#E5DFD5] text-[#24211E] rounded-bl-none font-medium'
                   }`}
                 >
                   {m.text}
@@ -156,45 +157,45 @@ export default function AIChatDrawer({
 
                 {/* Ticket Confirmation Card inside chat */}
                 {m.ticket && (
-                  <div className="bg-[#EAF8EF] border border-[#16A34A]/30 rounded-xl p-3 text-xs space-y-1 text-[#16A34A] shadow-xs">
-                    <div className="font-bold text-[#16A34A] flex items-center gap-1">
-                      <CheckCircle2 className="w-4 h-4 text-[#16A34A]" />
-                      Ticket Created: {m.ticket.ticketNumber}
+                  <div className="bg-[#FFF9EC] border border-[#C6A15B]/40 rounded-xl p-3 text-xs space-y-1 text-[#24211E] shadow-xs">
+                    <div className="font-bold text-[#C6A15B] flex items-center gap-1">
+                      <CheckCircle2 className="w-4 h-4 text-[#C6A15B]" />
+                      Ticket Dispatched: {m.ticket.ticketNumber}
                     </div>
-                    <div className="text-[11px] text-[#526174]">
-                      Dept: <span className="font-semibold text-[#172033]">{m.ticket.department}</span> • Priority: {m.ticket.priority}
+                    <div className="text-[11px] text-[#7C756B]">
+                      Dept: <span className="font-semibold text-[#24211E]">{m.ticket.department}</span> • Priority: {m.ticket.priority}
                     </div>
                   </div>
                 )}
 
-                <div className={`text-[10px] text-[#8290A3] ${m.sender === 'user' ? 'text-right' : 'text-left'}`}>
+                <div className={`text-[10px] text-[#7C756B] ${m.sender === 'user' ? 'text-right' : 'text-left'}`}>
                   {m.timestamp}
                 </div>
               </div>
 
               {m.sender === 'user' && (
-                <div className="w-7 h-7 rounded-lg bg-[#F1F5F9] border border-[#CBD5E1] text-[#526174] flex items-center justify-center shrink-0 mt-0.5">
-                  <User className="w-4 h-4" />
+                <div className="w-7 h-7 rounded-lg bg-[#FFFFFF] border border-[#E5DFD5] text-[#7C756B] flex items-center justify-center shrink-0 mt-0.5 shadow-xs">
+                  <User className="w-4 h-4 text-[#24211E]" />
                 </div>
               )}
             </div>
           ))}
 
           {loading && (
-            <div className="flex gap-2 items-center text-xs text-[#526174] italic bg-white p-3 rounded-xl max-w-[75%] border border-[#E2E8F0] shadow-xs">
-              <Sparkles className="w-4 h-4 text-[#0F9F91] animate-spin" /> SmartStay is processing request...
+            <div className="flex gap-2 items-center text-xs text-[#7C756B] italic bg-[#FFFFFF] p-3 rounded-xl max-w-[75%] border border-[#E5DFD5] shadow-xs">
+              <Sparkles className="w-4 h-4 text-[#C6A15B] animate-spin" /> SmartStay AI is synthesizing response...
             </div>
           )}
           <div ref={messagesEndRef} />
         </div>
 
         {/* Quick Suggestion Chips */}
-        <div className="px-4 py-2 border-t border-[#E2E8F0] bg-[#F1F5F9] flex gap-2 overflow-x-auto text-[11px] no-scrollbar">
+        <div className="px-4 py-2 border-t border-[#E5DFD5] bg-[#F8F5EF] flex gap-2 overflow-x-auto text-[11px] no-scrollbar">
           {quickPrompts.map((prompt, idx) => (
             <button
               key={idx}
               onClick={() => handleSendMessage(prompt)}
-              className="bg-white hover:bg-[#E8F7F5] border border-[#CBD5E1] hover:border-[#0F9F91] text-[#172033] hover:text-[#0F9F91] px-3 py-1.5 rounded-full shrink-0 transition font-medium shadow-xs"
+              className="bg-[#FFFFFF] hover:bg-[#171717] border border-[#E5DFD5] hover:border-[#C6A15B]/40 text-[#24211E] hover:text-[#C6A15B] px-3 py-1.5 rounded-full shrink-0 transition font-medium shadow-xs"
             >
               {prompt}
             </button>
@@ -207,21 +208,21 @@ export default function AIChatDrawer({
             e.preventDefault();
             handleSendMessage();
           }}
-          className="p-4 bg-white border-t border-[#E2E8F0] flex gap-2"
+          className="p-4 bg-[#FFFFFF] border-t border-[#E5DFD5] flex gap-2"
         >
           <input
             type="text"
             value={inputMsg}
             onChange={(e) => setInputMsg(e.target.value)}
-            placeholder="Ask SmartStay anything..."
-            className="flex-1 bg-white border border-[#CBD5E1] focus:border-[#0F9F91] rounded-xl px-4 py-2.5 text-xs text-[#172033] focus:outline-none transition shadow-xs"
+            placeholder="Ask SmartStay AI anything..."
+            className="flex-1 bg-[#FFFFFF] border border-[#E5DFD5] focus:border-[#C6A15B] rounded-xl px-4 py-2.5 text-xs text-[#24211E] focus:outline-none transition shadow-xs font-medium"
           />
           <button
             type="submit"
             disabled={loading || !inputMsg.trim()}
-            className="bg-[#0F9F91] hover:bg-[#0B857A] text-white p-2.5 rounded-xl transition disabled:opacity-50 disabled:bg-[#CBD5E1] shadow-md shadow-[#0F9F91]/20"
+            className="bg-[#171717] hover:bg-[#292724] text-[#C6A15B] border border-[#C6A15B]/30 p-2.5 rounded-xl transition disabled:opacity-50 shadow-md shadow-[#171717]/10"
           >
-            <Send className="w-4 h-4" />
+            <Send className="w-4 h-4 text-[#C6A15B]" />
           </button>
         </form>
       </div>
