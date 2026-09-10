@@ -837,6 +837,7 @@ export default function StaffDashboardPage() {
         isOpen={qrModalOpen}
         onClose={() => setQrModalOpen(false)}
         isStaffMode={true}
+        guestsList={guestsList}
       />
     </div>
   );

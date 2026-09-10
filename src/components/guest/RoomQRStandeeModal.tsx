@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { QrCode, X, Printer, Copy, Check, Hotel, Sparkles } from 'lucide-react';
 
 interface RoomQRStandeeModalProps {
@@ -9,6 +9,7 @@ interface RoomQRStandeeModalProps {
   initialRoomNumber?: string;
   initialGuestName?: string;
   isStaffMode?: boolean;
+  guestsList?: any[];
 }
 
 export default function RoomQRStandeeModal({
@@ -17,10 +18,37 @@ export default function RoomQRStandeeModal({
   initialRoomNumber = '204',
   initialGuestName = 'Alex Sharma',
   isStaffMode = false,
+  guestsList = [],
 }: RoomQRStandeeModalProps) {
   const [roomNumber, setRoomNumber] = useState(initialRoomNumber);
   const [guestName, setGuestName] = useState(initialGuestName);
   const [copied, setCopied] = useState(false);
+  const [dynamicGuests, setDynamicGuests] = useState<any[]>(guestsList);
+
+  // Sync state when initial props or guestsList update
+  useEffect(() => {
+    if (initialRoomNumber) setRoomNumber(initialRoomNumber);
+    if (initialGuestName) setGuestName(initialGuestName);
+  }, [initialRoomNumber, initialGuestName]);
+
+  // Fetch active guests from DB whenever modal opens to catch newly added guests
+  useEffect(() => {
+    if (isOpen) {
+      fetch('/api/staff/guests')
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.success && Array.isArray(data.guests)) {
+            setDynamicGuests(data.guests);
+            // Auto select latest guest if matching current roomNumber
+            const match = data.guests.find((g: any) => String(g.roomNumber) === String(roomNumber));
+            if (match) {
+              setGuestName(match.guestName);
+            }
+          }
+        })
+        .catch((err) => console.error('Error loading guests in QR modal:', err));
+    }
+  }, [isOpen]);
 
   if (!isOpen) return null;
 
@@ -38,6 +66,20 @@ export default function RoomQRStandeeModal({
 
   const handlePrint = () => {
     window.print();
+  };
+
+  const handleRoomSelect = (selectedRoom: string) => {
+    setRoomNumber(selectedRoom);
+    const matched = dynamicGuests.find((g) => String(g.roomNumber) === String(selectedRoom));
+    if (matched) {
+      setGuestName(matched.guestName);
+    } else if (selectedRoom === '204') {
+      setGuestName('Alex Sharma');
+    } else if (selectedRoom === '301') {
+      setGuestName('Sarah Connor');
+    } else {
+      setGuestName('Valued Guest');
+    }
   };
 
   return (
@@ -72,18 +114,23 @@ export default function RoomQRStandeeModal({
               <label className="text-[11px] font-bold text-[#526174] block mb-1">Room Number:</label>
               <select
                 value={roomNumber}
-                onChange={(e) => {
-                  setRoomNumber(e.target.value);
-                  if (e.target.value === '204') setGuestName('Alex Sharma');
-                  else if (e.target.value === '301') setGuestName('Sarah Connor');
-                  else setGuestName('Valued Guest');
-                }}
+                onChange={(e) => handleRoomSelect(e.target.value)}
                 className="w-full bg-white border border-[#CBD5E1] rounded-xl px-2.5 py-1.5 text-xs text-[#172033] font-bold focus:outline-none focus:border-[#0F9F91]"
               >
-                <option value="204">Room 204 (Deluxe King)</option>
-                <option value="301">Suite 301 (Presidential)</option>
-                <option value="101">Room 101 (Executive Twin)</option>
-                <option value="405">Room 405 (Ocean Suite)</option>
+                {dynamicGuests && dynamicGuests.length > 0 ? (
+                  dynamicGuests.map((g) => (
+                    <option key={g.id} value={g.roomNumber}>
+                      Room {g.roomNumber} ({g.guestName}) {g.active ? '' : '[Checked Out]'}
+                    </option>
+                  ))
+                ) : (
+                  <>
+                    <option value="204">Room 204 (Alex Sharma)</option>
+                    <option value="301">Suite 301 (Sarah Connor)</option>
+                    <option value="101">Room 101 (Executive Twin)</option>
+                    <option value="405">Room 405 (Ocean Suite)</option>
+                  </>
+                )}
               </select>
             </div>
 
