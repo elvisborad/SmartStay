@@ -3,6 +3,98 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 import { searchKnowledgeBase, searchKnowledgeBaseDetailed } from '@/lib/ragEngine';
 import { db } from '@/lib/db';
 
+function isInformationalQuery(message: string): boolean {
+  const lowerMsg = message.toLowerCase().trim();
+
+  // Explicit order/action verbs that indicate a operational ticket dispatch request
+  const actionOrderVerbs = [
+    'order',
+    'bring',
+    'send',
+    'deliver',
+    'fetch',
+    'give me',
+    'provide',
+    'clean my',
+    'clean room',
+    'fix',
+    'repair',
+    'replace',
+    'change room',
+    'switch room',
+    'request late',
+    'checkout now',
+    'check out now',
+    'bhejo',
+    'laao',
+    'mangaao',
+    'moklo',
+  ];
+
+  const hasActionOrder = actionOrderVerbs.some((verb) => lowerMsg.includes(verb));
+
+  // Explicit question / inquiry phrases
+  const questionPhrases = [
+    'is breakfast available',
+    'is breakfast included',
+    'is breakfast free',
+    'is available',
+    'is included',
+    'is free',
+    'what time',
+    'when is',
+    'when does',
+    'where is',
+    'where can',
+    'how much',
+    'how do i',
+    'how to',
+    'do you have',
+    'do you serve',
+    'do you offer',
+    'tell me',
+    'can you tell',
+    'can i know',
+    'need to know',
+    'want to know',
+    'wondering if',
+    'information about',
+    'info about',
+    'what are',
+    'what is',
+    'timing',
+    'timings',
+    'hours',
+    'price',
+    'cost',
+    'rate',
+    'menu',
+    'kya',
+    'kab',
+    'kahan',
+    'kitna',
+    'timing kya',
+    'available hai',
+    'chhe',
+  ];
+
+  const hasQuestionPhrase = questionPhrases.some((phrase) => lowerMsg.includes(phrase));
+
+  if (hasQuestionPhrase && !hasActionOrder) {
+    return true;
+  }
+
+  // Question mark or question word prefix with no explicit action order
+  const startsWithQuestionWord = /^(is|are|was|were|what|when|where|how|why|which|do|does|did|can i|could i|kya|kab)\b/.test(lowerMsg);
+  const endsWithQuestion = lowerMsg.includes('?');
+
+  if ((startsWithQuestionWord || endsWithQuestion) && !hasActionOrder) {
+    return true;
+  }
+
+  return false;
+}
+
 export async function POST(request: Request) {
   try {
     const body = await request.json();
@@ -14,8 +106,10 @@ export async function POST(request: Request) {
 
     const lowerMsg = message.toLowerCase();
     const createdTickets: any[] = [];
+    const isQuery = isInformationalQuery(message);
 
-    // 1. Intent Detection & Task Splitting Engine
+    // 1. Intent Detection & Task Splitting Engine (Skipped for pure informational inquiries)
+    if (!isQuery) {
 
     // Intent A: Housekeeping (Towels, Pillows, Cleaning, Toiletries, Iron)
     if (
@@ -312,6 +406,7 @@ export async function POST(request: Request) {
       });
       createdTickets.push(ticket);
     }
+    } // End of if (!isQuery) Intent Engine block
 
     // 2. Fetch Knowledge Base RAG Context
     const ragContext = await searchKnowledgeBase(message);
