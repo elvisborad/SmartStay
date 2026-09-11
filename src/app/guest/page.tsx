@@ -369,7 +369,12 @@ export default function GuestPortalPage() {
 
         {/* TAB 5: MY REQUESTS */}
         {activeTab === 'tracker' && (
-          <RequestStatusTracker roomNumber={session.roomNumber} currentLang={currentLang} key={refreshTrigger} />
+          <RequestStatusTracker
+            roomNumber={session.roomNumber}
+            guestSessionId={session.id}
+            currentLang={currentLang}
+            key={refreshTrigger}
+          />
         )}
       </main>
 

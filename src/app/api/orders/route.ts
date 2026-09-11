@@ -5,8 +5,23 @@ export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
     const roomNumber = searchParams.get('roomNumber');
+    const guestSessionId = searchParams.get('guestSessionId');
 
-    const where = roomNumber ? { roomNumber } : {};
+    let where: any = {};
+    if (guestSessionId) {
+      where.guestSessionId = guestSessionId;
+    } else if (roomNumber) {
+      const activeSession = await db.guestSession.findFirst({
+        where: { roomNumber, active: true },
+        orderBy: { createdAt: 'desc' },
+      });
+
+      if (activeSession) {
+        where.guestSessionId = activeSession.id;
+      } else {
+        where.guestSessionId = 'no_active_session';
+      }
+    }
 
     const orders = await db.order.findMany({
       where,

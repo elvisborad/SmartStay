@@ -6,10 +6,11 @@ import { t } from '@/lib/i18n';
 
 interface RequestStatusTrackerProps {
   roomNumber: string;
+  guestSessionId?: string;
   currentLang?: string;
 }
 
-export default function RequestStatusTracker({ roomNumber, currentLang = 'en' }: RequestStatusTrackerProps) {
+export default function RequestStatusTracker({ roomNumber, guestSessionId, currentLang = 'en' }: RequestStatusTrackerProps) {
   const [tickets, setTickets] = useState<any[]>([]);
   const [orders, setOrders] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -18,13 +19,17 @@ export default function RequestStatusTracker({ roomNumber, currentLang = 'en' }:
     fetchStatus();
     const interval = setInterval(fetchStatus, 4000);
     return () => clearInterval(interval);
-  }, [roomNumber]);
+  }, [roomNumber, guestSessionId]);
 
   const fetchStatus = async () => {
     try {
+      const queryParams = guestSessionId
+        ? `guestSessionId=${guestSessionId}`
+        : `roomNumber=${roomNumber}`;
+
       const [ticketsRes, ordersRes] = await Promise.all([
-        fetch(`/api/tickets?roomNumber=${roomNumber}`),
-        fetch(`/api/orders?roomNumber=${roomNumber}`),
+        fetch(`/api/tickets?${queryParams}`),
+        fetch(`/api/orders?${queryParams}`),
       ]);
       const ticketsData = await ticketsRes.json();
       const ordersData = await ordersRes.json();

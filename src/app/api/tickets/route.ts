@@ -7,16 +7,29 @@ export async function GET(request: Request) {
     const department = searchParams.get('department');
     const roomNumber = searchParams.get('roomNumber');
     const status = searchParams.get('status');
+    const guestSessionId = searchParams.get('guestSessionId');
 
     const where: any = {};
     if (department && department !== 'ALL') {
       where.department = department;
     }
-    if (roomNumber) {
-      where.roomNumber = roomNumber;
-    }
     if (status && status !== 'ALL') {
       where.status = status;
+    }
+
+    if (guestSessionId) {
+      where.guestSessionId = guestSessionId;
+    } else if (roomNumber) {
+      const activeSession = await db.guestSession.findFirst({
+        where: { roomNumber, active: true },
+        orderBy: { createdAt: 'desc' },
+      });
+
+      if (activeSession) {
+        where.guestSessionId = activeSession.id;
+      } else {
+        where.guestSessionId = 'no_active_session';
+      }
     }
 
     const tickets = await db.ticket.findMany({
