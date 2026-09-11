@@ -122,7 +122,7 @@ export default function GuestHeader({
           <Wifi className="w-3 h-3 text-[#C6A15B] shrink-0" /> Guest_WiFi
         </span>
         <span className="flex items-center justify-center gap-1 truncate">
-          <Clock className="w-3 h-3 text-[#D97706] shrink-0" /> 06:30-10:30
+          <Clock className="w-3 h-3 text-[#D97706] shrink-0" /> Breakfast: 06:30-10:30
         </span>
         <span className="flex items-center justify-center gap-1 truncate">
           <Phone className="w-3 h-3 text-[#2563EB] shrink-0" /> Reception: 0
