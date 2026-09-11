@@ -2,8 +2,13 @@
 
 import { useState } from 'react';
 import { MapPin, Clock, Compass, Sparkles, Navigation, Calendar, SunMedium, Landmark, ShoppingBag, Building2 } from 'lucide-react';
+import { t } from '@/lib/i18n';
 
-export default function TouristAttractions() {
+interface TouristAttractionsProps {
+  currentLang?: string;
+}
+
+export default function TouristAttractions({ currentLang = 'en' }: TouristAttractionsProps) {
   const [activePlan, setActivePlan] = useState<boolean>(false);
 
   const attractions = [
@@ -51,9 +56,9 @@ export default function TouristAttractions() {
         <div>
           <h2 className="text-xl font-bold text-[#171717] flex items-center gap-2">
             <Compass className="w-5 h-5 text-[#C6A15B]" />
-            Explore Nearby & Local Attractions
+            {t(currentLang, 'Explore Nearby & Local Attractions')}
           </h2>
-          <p className="text-xs text-[#7C756B] font-medium">Handpicked local destinations around Grand Horizon Hotel</p>
+          <p className="text-xs text-[#7C756B] font-medium">{t(currentLang, 'Handpicked local destinations around Grand Horizon Hotel')}</p>
         </div>
 
         <button
@@ -61,7 +66,7 @@ export default function TouristAttractions() {
           className="bg-[#171717] hover:bg-[#292724] text-white border border-[#C6A15B]/40 font-bold text-xs px-4 py-2.5 rounded-xl transition shadow-md flex items-center gap-2"
         >
           <Sparkles className="w-4 h-4 text-[#C6A15B]" />
-          {activePlan ? 'Hide Itinerary' : 'Plan 4-Hour Tour'}
+          {activePlan ? t(currentLang, 'Hide Itinerary') : t(currentLang, 'Plan 4-Hour Tour')}
         </button>
       </div>
 
@@ -70,7 +75,7 @@ export default function TouristAttractions() {
         <div className="bg-white text-[#24211E] rounded-3xl p-6 space-y-4 border border-[#C6A15B]/40 shadow-xl animate-fade-in">
           <div className="flex items-center justify-between border-b border-[#E2E8F0] pb-3">
             <h3 className="font-bold text-sm text-[#C6A15B] flex items-center gap-2">
-              <Calendar className="w-4 h-4" /> AI Personalized 4-Hour Tour Itinerary
+              <Calendar className="w-4 h-4" /> {t(currentLang, 'AI Personalized 4-Hour Tour Itinerary')}
             </h3>
             <span className="text-[10px] bg-[#FBF5E8] text-[#C6A15B] px-2.5 py-0.5 rounded-full border border-[#C6A15B]/30 font-bold">
               Optimal Schedule
@@ -127,13 +132,13 @@ export default function TouristAttractions() {
                   <IconComp className="w-6 h-6 text-[#C6A15B]" />
                 </div>
                 <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#F8F5EF] text-[#7C756B] border border-[#CBD5E1]">
-                  {item.category}
+                  {t(currentLang, item.category)}
                 </span>
               </div>
 
               <div>
-                <h3 className="font-bold text-[#171717] text-base">{item.name}</h3>
-                <p className="text-xs text-[#7C756B] mt-1 font-medium">{item.desc}</p>
+                <h3 className="font-bold text-[#171717] text-base">{t(currentLang, item.name)}</h3>
+                <p className="text-xs text-[#7C756B] mt-1 font-medium">{t(currentLang, item.desc)}</p>
               </div>
 
               <div className="pt-3 border-t border-[#E2E8F0] flex items-center justify-between text-xs text-[#7C756B]">

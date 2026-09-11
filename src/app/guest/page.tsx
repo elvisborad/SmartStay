@@ -49,6 +49,11 @@ export default function GuestPortalPage() {
   const [waterSuccess, setWaterSuccess] = useState(false);
 
   useEffect(() => {
+    const savedLang = localStorage.getItem('smartstay_lang');
+    if (savedLang) {
+      setLang(savedLang);
+    }
+
     const stored = localStorage.getItem('smartstay_guest_session');
     if (!stored) {
       router.push('/scan');
@@ -343,6 +348,7 @@ export default function GuestPortalPage() {
             roomNumber={session.roomNumber}
             guestName={session.guestName}
             guestSessionId={session.id}
+            currentLang={currentLang}
             onRequestSubmitted={() => setRefreshTrigger((prev) => prev + 1)}
           />
         )}
@@ -353,16 +359,17 @@ export default function GuestPortalPage() {
             roomNumber={session.roomNumber}
             guestName={session.guestName}
             guestSessionId={session.id}
+            currentLang={currentLang}
             onOrderPlaced={() => setRefreshTrigger((prev) => prev + 1)}
           />
         )}
 
         {/* TAB 4: EXPLORE NEARBY */}
-        {activeTab === 'explore' && <TouristAttractions />}
+        {activeTab === 'explore' && <TouristAttractions currentLang={currentLang} />}
 
         {/* TAB 5: MY REQUESTS */}
         {activeTab === 'tracker' && (
-          <RequestStatusTracker roomNumber={session.roomNumber} key={refreshTrigger} />
+          <RequestStatusTracker roomNumber={session.roomNumber} currentLang={currentLang} key={refreshTrigger} />
         )}
       </main>
 

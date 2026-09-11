@@ -7,7 +7,7 @@ import {
   TrendingUp,
   Clock,
   Users,
-  DollarSign,
+  IndianRupee,
   BookOpen,
   Plus,
   RefreshCw,
@@ -21,6 +21,8 @@ import {
   CheckCircle2,
   X,
   UserPlus,
+  BarChart3,
+  Brain,
 } from 'lucide-react';
 
 export default function AdminAnalyticsPage() {
@@ -390,7 +392,7 @@ export default function AdminAnalyticsPage() {
 
           <button
             onClick={handleExportCSV}
-            className="bg-[#0F9F91] hover:bg-[#0B857A] text-white font-bold text-xs px-4 py-2.5 rounded-xl transition flex items-center gap-2 shadow-md shadow-[#0F9F91]/20"
+            className="bg-[#171717] hover:bg-[#292724] text-[#C6A15B] font-bold text-xs px-4 py-2.5 rounded-xl border border-[#C6A15B]/30 transition flex items-center gap-2 shadow-md shadow-[#171717]/20"
           >
             <Download className="w-4 h-4" /> Export CSV Report
           </button>
@@ -400,9 +402,9 @@ export default function AdminAnalyticsPage() {
               fetchAnalytics();
               fetchStaffList();
             }}
-            className="p-2.5 bg-white hover:bg-[#F1F5F9] text-[#526174] hover:text-[#172033] border border-[#CBD5E1] rounded-xl transition text-xs font-semibold shadow-xs"
+            className="p-2.5 bg-white hover:bg-[#F8F5EF] text-[#24211E] hover:text-[#171717] border border-[#E5DFD5] rounded-xl transition text-xs font-semibold shadow-xs"
           >
-            <RefreshCw className="w-4 h-4 text-[#0F9F91]" />
+            <RefreshCw className="w-4 h-4 text-[#C6A15B]" />
           </button>
 
           <button
@@ -417,33 +419,42 @@ export default function AdminAnalyticsPage() {
       </header>
 
       {/* Analytics & Staff Tabs Bar */}
-      <div className="max-w-7xl mx-auto px-6 py-4 flex border-b border-[#E2E8F0] bg-white">
+      <div className="max-w-7xl mx-auto px-6 py-4 flex border-b border-[#E5DFD5] bg-white">
         <button
           onClick={() => setActiveTab('overview')}
-          className={`px-5 py-2.5 rounded-xl text-xs font-bold transition mr-3 ${
-            activeTab === 'overview' ? 'bg-[#0F9F91] text-white shadow-md' : 'bg-[#F1F5F9] text-[#526174] hover:text-[#172033] border border-[#CBD5E1]'
+          className={`px-5 py-2.5 rounded-xl text-xs font-bold transition mr-3 flex items-center gap-2 ${
+            activeTab === 'overview'
+              ? 'bg-[#171717] text-[#C6A15B] border border-[#C6A15B]/40 shadow-md'
+              : 'bg-[#F8F5EF] text-[#7C756B] hover:text-[#171717] border border-[#E5DFD5]'
           }`}
         >
-          📊 Operational Overview & KPIs
+          <BarChart3 className={`w-4 h-4 ${activeTab === 'overview' ? 'text-[#C6A15B]' : 'text-[#7C756B]'}`} />
+          <span>Operational Overview & KPIs</span>
         </button>
         <button
           onClick={() => setActiveTab('kb')}
-          className={`px-5 py-2.5 rounded-xl text-xs font-bold transition mr-3 ${
-            activeTab === 'kb' ? 'bg-[#0F9F91] text-white shadow-md' : 'bg-[#F1F5F9] text-[#526174] hover:text-[#172033] border border-[#CBD5E1]'
+          className={`px-5 py-2.5 rounded-xl text-xs font-bold transition mr-3 flex items-center gap-2 ${
+            activeTab === 'kb'
+              ? 'bg-[#171717] text-[#C6A15B] border border-[#C6A15B]/40 shadow-md'
+              : 'bg-[#F8F5EF] text-[#7C756B] hover:text-[#171717] border border-[#E5DFD5]'
           }`}
         >
-          🧠 AI Knowledge Base Manager (RAG)
+          <Brain className={`w-4 h-4 ${activeTab === 'kb' ? 'text-[#C6A15B]' : 'text-[#7C756B]'}`} />
+          <span>AI Knowledge Base Manager (RAG)</span>
         </button>
         <button
           onClick={() => {
             setActiveTab('staff');
             fetchStaffList();
           }}
-          className={`px-5 py-2.5 rounded-xl text-xs font-bold transition ${
-            activeTab === 'staff' ? 'bg-[#0F9F91] text-white shadow-md' : 'bg-[#F1F5F9] text-[#526174] hover:text-[#172033] border border-[#CBD5E1]'
+          className={`px-5 py-2.5 rounded-xl text-xs font-bold transition flex items-center gap-2 ${
+            activeTab === 'staff'
+              ? 'bg-[#171717] text-[#C6A15B] border border-[#C6A15B]/40 shadow-md'
+              : 'bg-[#F8F5EF] text-[#7C756B] hover:text-[#171717] border border-[#E5DFD5]'
           }`}
         >
-          👥 Staff Accounts & Password Manager
+          <Users className={`w-4 h-4 ${activeTab === 'staff' ? 'text-[#C6A15B]' : 'text-[#7C756B]'}`} />
+          <span>Staff Accounts & Password Manager</span>
         </button>
       </div>
 
@@ -475,9 +486,9 @@ export default function AdminAnalyticsPage() {
               <div className="bg-white border border-[#E2E8F0] rounded-2xl p-5 shadow-sm space-y-2">
                 <div className="flex items-center justify-between text-[#526174] text-xs font-bold">
                   <span>ROOM SERVICE REVENUE</span>
-                  <DollarSign className="w-4 h-4 text-[#C9A45C]" />
+                  <IndianRupee className="w-4 h-4 text-[#C6A15B]" />
                 </div>
-                <div className="text-3xl font-extrabold text-[#8A6A2F]">
+                <div className="text-3xl font-extrabold text-[#171717]">
                   ₹{(metrics.totalRevenue || 0).toFixed(2)}
                 </div>
                 <div className="text-[11px] text-[#526174] font-medium">{metrics.totalOrders} In-Room Dining Orders</div>
@@ -486,10 +497,10 @@ export default function AdminAnalyticsPage() {
               <div className="bg-white border border-[#E2E8F0] rounded-2xl p-5 shadow-sm space-y-2">
                 <div className="flex items-center justify-between text-[#526174] text-xs font-bold">
                   <span>AI AUTO-DISPATCH RATE</span>
-                  <Sparkles className="w-4 h-4 text-[#0F9F91]" />
+                  <Sparkles className="w-4 h-4 text-[#C6A15B]" />
                 </div>
-                <div className="text-3xl font-extrabold text-[#0F9F91]">{metrics.aiResolutionRate}</div>
-                <div className="text-[11px] text-[#0F9F91] font-bold">Instant RAG & Task Creation</div>
+                <div className="text-3xl font-extrabold text-[#171717]">{metrics.aiResolutionRate}</div>
+                <div className="text-[11px] text-[#C6A15B] font-bold">Instant RAG & Task Creation</div>
               </div>
             </div>
 
@@ -519,7 +530,7 @@ export default function AdminAnalyticsPage() {
                 </div>
                 <div className="bg-[#F8FAFC] p-4 rounded-xl border border-[#E2E8F0]">
                   <div className="text-xs text-[#526174] mb-1 font-bold">FRONT DESK</div>
-                  <div className="text-2xl font-extrabold text-[#0F9F91]">
+                  <div className="text-2xl font-extrabold text-[#C6A15B]">
                     {data?.departmentCounts?.FRONT_DESK || 0}
                   </div>
                 </div>
@@ -538,7 +549,7 @@ export default function AdminAnalyticsPage() {
                     className="bg-[#F8FAFC] p-4 rounded-xl border border-[#E2E8F0] flex items-center justify-between text-xs"
                   >
                     <div className="flex items-center gap-3">
-                      <span className="font-mono font-bold text-[#0F9F91] bg-[#E8F7F5] px-2 py-1 rounded border border-[#0F9F91]/30">
+                      <span className="font-mono font-bold text-[#C6A15B] bg-[#171717] px-2.5 py-1 rounded-lg border border-[#C6A15B]/30 shadow-xs">
                         {t.ticketNumber}
                       </span>
                       <div>
@@ -580,7 +591,7 @@ export default function AdminAnalyticsPage() {
 
               <button
                 onClick={() => setShowKbModal(true)}
-                className="bg-[#0F9F91] hover:bg-[#0B857A] text-white font-bold text-xs px-4 py-2.5 rounded-xl transition flex items-center gap-2 shadow-md shadow-[#0F9F91]/20"
+                className="bg-[#171717] hover:bg-[#292724] text-[#C6A15B] font-bold text-xs px-4 py-2.5 rounded-xl border border-[#C6A15B]/30 transition flex items-center gap-2 shadow-md shadow-[#171717]/20"
               >
                 <Plus className="w-4 h-4" /> Add New FAQ / Knowledge Item
               </button>
@@ -588,8 +599,10 @@ export default function AdminAnalyticsPage() {
 
             {/* Add KB Item Modal */}
             {showKbModal && (
-              <form onSubmit={handleAddKb} className="bg-[#F8FAFC] border border-[#0F9F91]/40 rounded-xl p-5 space-y-4 shadow-sm">
-                <h3 className="text-sm font-bold text-[#0F9F91]">Add New FAQ for AI Concierge</h3>
+              <form onSubmit={handleAddKb} className="bg-[#F8F5EF] border border-[#C6A15B]/40 rounded-xl p-5 space-y-4 shadow-sm">
+                <h3 className="text-sm font-bold text-[#171717] flex items-center gap-2">
+                  <Sparkles className="w-4 h-4 text-[#C6A15B]" /> Add New FAQ for AI Concierge
+                </h3>
 
                 <div className="grid grid-cols-2 gap-4">
                   <div>
@@ -598,7 +611,7 @@ export default function AdminAnalyticsPage() {
                       type="text"
                       value={kbCategory}
                       onChange={(e) => setKbCategory(e.target.value)}
-                      className="w-full bg-white border border-[#CBD5E1] focus:border-[#0F9F91] rounded-lg p-2 text-xs text-[#172033]"
+                      className="w-full bg-white border border-[#CBD5E1] focus:border-[#C6A15B] rounded-lg p-2 text-xs text-[#172033]"
                     />
                   </div>
                   <div>
@@ -608,7 +621,7 @@ export default function AdminAnalyticsPage() {
                       value={kbKeywords}
                       onChange={(e) => setKbKeywords(e.target.value)}
                       placeholder="e.g. pool, swimming, hours"
-                      className="w-full bg-white border border-[#CBD5E1] focus:border-[#0F9F91] rounded-lg p-2 text-xs text-[#172033]"
+                      className="w-full bg-white border border-[#CBD5E1] focus:border-[#C6A15B] rounded-lg p-2 text-xs text-[#172033]"
                     />
                   </div>
                 </div>
@@ -620,7 +633,7 @@ export default function AdminAnalyticsPage() {
                     value={kbQuestion}
                     onChange={(e) => setKbQuestion(e.target.value)}
                     placeholder="e.g. What time is the pool open?"
-                    className="w-full bg-white border border-[#CBD5E1] focus:border-[#0F9F91] rounded-lg p-2 text-xs text-[#172033]"
+                    className="w-full bg-white border border-[#CBD5E1] focus:border-[#C6A15B] rounded-lg p-2 text-xs text-[#172033]"
                     required
                   />
                 </div>
@@ -631,7 +644,7 @@ export default function AdminAnalyticsPage() {
                     value={kbAnswer}
                     onChange={(e) => setKbAnswer(e.target.value)}
                     placeholder="e.g. The Infinity Pool on Floor 4 is open daily 07:00 AM - 09:00 PM."
-                    className="w-full bg-white border border-[#CBD5E1] focus:border-[#0F9F91] rounded-lg p-2 text-xs text-[#172033] h-20"
+                    className="w-full bg-white border border-[#CBD5E1] focus:border-[#C6A15B] rounded-lg p-2 text-xs text-[#172033] h-20"
                     required
                   />
                 </div>
@@ -647,7 +660,7 @@ export default function AdminAnalyticsPage() {
                   <button
                     type="submit"
                     disabled={kbSubmitting}
-                    className="px-4 py-2 bg-[#0F9F91] hover:bg-[#0B857A] text-xs text-white font-bold rounded-lg shadow-sm"
+                    className="px-4 py-2 bg-[#171717] hover:bg-[#292724] text-[#C6A15B] font-bold text-xs rounded-lg border border-[#C6A15B]/30 shadow-sm"
                   >
                     Save FAQ Item
                   </button>
@@ -673,7 +686,7 @@ export default function AdminAnalyticsPage() {
 
               <button
                 onClick={() => setShowAddStaffModal(true)}
-                className="bg-[#0F9F91] hover:bg-[#0B857A] text-white font-bold text-xs px-4 py-2.5 rounded-xl transition flex items-center gap-2 shadow-md shadow-[#0F9F91]/20"
+                className="bg-[#171717] hover:bg-[#292724] text-[#C6A15B] font-bold text-xs px-4 py-2.5 rounded-xl border border-[#C6A15B]/30 transition flex items-center gap-2 shadow-md shadow-[#171717]/20"
               >
                 <UserPlus className="w-4 h-4" /> Add New Staff Member
               </button>
@@ -684,7 +697,7 @@ export default function AdminAnalyticsPage() {
               {staffList.map((s: any) => (
                 <div
                   key={s.id}
-                  className="bg-[#F8FAFC] border border-[#E2E8F0] hover:border-[#0F9F91]/40 rounded-2xl p-5 space-y-4 shadow-xs transition"
+                  className="bg-[#F8FAFC] border border-[#E2E8F0] hover:border-[#C6A15B]/50 rounded-2xl p-5 space-y-4 shadow-xs transition"
                 >
                   <div className="flex items-start justify-between">
                     <div>
@@ -708,7 +721,7 @@ export default function AdminAnalyticsPage() {
                   </div>
 
                   <div className="pt-2 border-t border-[#E2E8F0] flex items-center justify-between">
-                    <span className="text-xs font-bold text-[#0F9F91]">
+                    <span className="text-xs font-bold text-[#C6A15B]">
                       Active Tickets: {s._count?.tickets || 0}
                     </span>
                     <button
@@ -717,9 +730,9 @@ export default function AdminAnalyticsPage() {
                         setNewStaffPassword('');
                         setPasswordSuccessMsg('');
                       }}
-                      className="bg-white hover:bg-[#E8F7F5] border border-[#CBD5E1] hover:border-[#0F9F91] text-[#172033] font-bold text-xs px-3 py-1.5 rounded-xl transition flex items-center gap-1.5 shadow-xs"
+                      className="bg-white hover:bg-[#171717] hover:text-[#C6A15B] border border-[#CBD5E1] hover:border-[#C6A15B]/40 text-[#172033] font-bold text-xs px-3 py-1.5 rounded-xl transition flex items-center gap-1.5 shadow-xs"
                     >
-                      <KeyRound className="w-3.5 h-3.5 text-[#0F9F91]" />
+                      <KeyRound className="w-3.5 h-3.5 text-[#C6A15B]" />
                       <span>Set Password</span>
                     </button>
                   </div>
@@ -733,7 +746,7 @@ export default function AdminAnalyticsPage() {
                 <div className="bg-white rounded-3xl p-4 sm:p-6 max-w-md w-full border border-[#E2E8F0] shadow-2xl space-y-4 animate-fade-in max-h-[92vh] overflow-y-auto my-auto">
                   <div className="flex items-center justify-between border-b border-[#E2E8F0] pb-3">
                     <div className="flex items-center gap-2">
-                      <KeyRound className="w-5 h-5 text-[#0F9F91]" />
+                      <KeyRound className="w-5 h-5 text-[#C6A15B]" />
                       <h3 className="font-bold text-base text-[#172033]">
                         Set Password for {selectedStaffForPassword.name}
                       </h3>
@@ -765,7 +778,7 @@ export default function AdminAnalyticsPage() {
                         value={newStaffPassword}
                         onChange={(e) => setNewStaffPassword(e.target.value)}
                         placeholder="Enter new password (e.g. staff123)"
-                        className="w-full bg-[#F8FAFC] border border-[#CBD5E1] focus:border-[#0F9F91] rounded-xl p-3 text-sm text-[#172033] font-medium"
+                        className="w-full bg-[#F8FAFC] border border-[#CBD5E1] focus:border-[#C6A15B] rounded-xl p-3 text-sm text-[#172033] font-medium"
                         required
                         minLength={4}
                       />
@@ -782,7 +795,7 @@ export default function AdminAnalyticsPage() {
                       <button
                         type="submit"
                         disabled={passwordUpdating}
-                        className="px-5 py-2.5 bg-[#0F9F91] hover:bg-[#0B857A] text-xs text-white font-bold rounded-xl shadow-md disabled:opacity-50"
+                        className="px-5 py-2.5 bg-[#171717] hover:bg-[#292724] text-[#C6A15B] font-bold text-xs rounded-xl border border-[#C6A15B]/30 shadow-md disabled:opacity-50"
                       >
                         {passwordUpdating ? 'Updating Password...' : 'Save Staff Password'}
                       </button>
@@ -798,7 +811,7 @@ export default function AdminAnalyticsPage() {
                 <div className="bg-white rounded-3xl p-4 sm:p-6 max-w-lg w-full border border-[#E2E8F0] shadow-2xl space-y-4 animate-fade-in max-h-[92vh] overflow-y-auto my-auto">
                   <div className="flex items-center justify-between border-b border-[#E2E8F0] pb-3">
                     <div className="flex items-center gap-2">
-                      <UserPlus className="w-5 h-5 text-[#0F9F91]" />
+                      <UserPlus className="w-5 h-5 text-[#C6A15B]" />
                       <h3 className="font-bold text-base text-[#172033]">Create New Staff Member</h3>
                     </div>
                     <button
@@ -824,7 +837,7 @@ export default function AdminAnalyticsPage() {
                           value={newStaffName}
                           onChange={(e) => setNewStaffName(e.target.value)}
                           placeholder="e.g. Samuel Green"
-                          className="w-full bg-[#F8FAFC] border border-[#CBD5E1] focus:border-[#0F9F91] rounded-xl p-2.5 text-xs text-[#172033] font-medium"
+                          className="w-full bg-[#F8FAFC] border border-[#CBD5E1] focus:border-[#C6A15B] rounded-xl p-2.5 text-xs text-[#172033] font-medium"
                           required
                         />
                       </div>
@@ -835,7 +848,7 @@ export default function AdminAnalyticsPage() {
                           value={newStaffEmail}
                           onChange={(e) => setNewStaffEmail(e.target.value)}
                           placeholder="samuel.green@grandhorizon.com"
-                          className="w-full bg-[#F8FAFC] border border-[#CBD5E1] focus:border-[#0F9F91] rounded-xl p-2.5 text-xs text-[#172033] font-medium"
+                          className="w-full bg-[#F8FAFC] border border-[#CBD5E1] focus:border-[#C6A15B] rounded-xl p-2.5 text-xs text-[#172033] font-medium"
                           required
                         />
                       </div>
@@ -847,7 +860,7 @@ export default function AdminAnalyticsPage() {
                         <select
                           value={newStaffDept}
                           onChange={(e) => setNewStaffDept(e.target.value)}
-                          className="w-full bg-[#F8FAFC] border border-[#CBD5E1] focus:border-[#0F9F91] rounded-xl p-2.5 text-xs text-[#172033] font-medium"
+                          className="w-full bg-[#F8FAFC] border border-[#CBD5E1] focus:border-[#C6A15B] rounded-xl p-2.5 text-xs text-[#172033] font-medium"
                         >
                           <option value="HOUSEKEEPING">HOUSEKEEPING</option>
                           <option value="MAINTENANCE">MAINTENANCE</option>
@@ -865,7 +878,7 @@ export default function AdminAnalyticsPage() {
                         <select
                           value={newStaffRole}
                           onChange={(e) => setNewStaffRole(e.target.value)}
-                          className="w-full bg-[#F8FAFC] border border-[#CBD5E1] focus:border-[#0F9F91] rounded-xl p-2.5 text-xs text-[#172033] font-medium"
+                          className="w-full bg-[#F8FAFC] border border-[#CBD5E1] focus:border-[#C6A15B] rounded-xl p-2.5 text-xs text-[#172033] font-medium"
                         >
                           <option value="STAFF">STAFF</option>
                           <option value="SUPERVISOR">SUPERVISOR</option>
@@ -881,7 +894,7 @@ export default function AdminAnalyticsPage() {
                         value={newStaffInitialPass}
                         onChange={(e) => setNewStaffInitialPass(e.target.value)}
                         placeholder="Define initial password for staff"
-                        className="w-full bg-[#F8FAFC] border border-[#CBD5E1] focus:border-[#0F9F91] rounded-xl p-2.5 text-xs text-[#172033] font-medium"
+                        className="w-full bg-[#F8FAFC] border border-[#CBD5E1] focus:border-[#C6A15B] rounded-xl p-2.5 text-xs text-[#172033] font-medium"
                         required
                         minLength={4}
                       />
@@ -898,7 +911,7 @@ export default function AdminAnalyticsPage() {
                       <button
                         type="submit"
                         disabled={addStaffSubmitting}
-                        className="px-5 py-2.5 bg-[#0F9F91] hover:bg-[#0B857A] text-xs text-white font-bold rounded-xl shadow-md disabled:opacity-50"
+                        className="px-5 py-2.5 bg-[#171717] hover:bg-[#292724] text-[#C6A15B] font-bold text-xs rounded-xl border border-[#C6A15B]/30 shadow-md disabled:opacity-50"
                       >
                         {addStaffSubmitting ? 'Creating Staff Account...' : 'Create Staff Member'}
                       </button>

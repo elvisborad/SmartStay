@@ -2,11 +2,13 @@
 
 import { useState, useEffect } from 'react';
 import { Utensils, ShoppingBag, Plus, Minus, CheckCircle2, Clock } from 'lucide-react';
+import { t } from '@/lib/i18n';
 
 interface RoomServiceMenuProps {
   roomNumber: string;
   guestName: string;
   guestSessionId: string;
+  currentLang?: string;
   onOrderPlaced: () => void;
 }
 
@@ -14,6 +16,7 @@ export default function RoomServiceMenu({
   roomNumber,
   guestName,
   guestSessionId,
+  currentLang = 'en',
   onOrderPlaced,
 }: RoomServiceMenuProps) {
   const [categories, setCategories] = useState<any[]>([]);
@@ -97,7 +100,7 @@ export default function RoomServiceMenu({
   };
 
   if (loading) {
-    return <div className="text-center py-12 text-[#7C756B] font-medium">Loading In-Room Dining Menu...</div>;
+    return <div className="text-center py-12 text-[#7C756B] font-medium">{t(currentLang, 'Loading In-Room Dining Menu...')}</div>;
   }
 
   return (
@@ -113,15 +116,15 @@ export default function RoomServiceMenu({
         <div>
           <h2 className="text-xl font-bold text-[#171717] flex items-center gap-2">
             <Utensils className="w-5 h-5 text-[#C6A15B]" />
-            Skyline Gourmet Dining Menu
+            {t(currentLang, 'Skyline Gourmet Dining Menu')}
           </h2>
-          <p className="text-xs text-[#7C756B] font-medium">Freshly prepared by Chef Antoine & delivered to Room {roomNumber}</p>
+          <p className="text-xs text-[#7C756B] font-medium">{t(currentLang, 'Freshly prepared by Chef Antoine & delivered to Room ')}{roomNumber}</p>
         </div>
 
         {Object.keys(cart).length > 0 && (
           <div className="bg-[#FBF5E8] text-[#C6A15B] text-xs font-bold px-3.5 py-1.5 rounded-full border border-[#C6A15B]/40 flex items-center gap-1.5 shadow-sm">
             <ShoppingBag className="w-4 h-4 text-[#C6A15B]" />
-            {Object.values(cart).reduce((sum, e) => sum + e.quantity, 0)} Items (₹{cartTotal.toFixed(2)})
+            {Object.values(cart).reduce((sum, e) => sum + e.quantity, 0)} {t(currentLang, 'Items')} (₹{cartTotal.toFixed(2)})
           </div>
         )}
       </div>
@@ -130,7 +133,7 @@ export default function RoomServiceMenu({
       {categories.map((cat) => (
         <div key={cat.id} className="space-y-3">
           <h3 className="text-sm font-bold text-[#7C756B] uppercase tracking-wider border-b border-[#E2E8F0] pb-2">
-            {cat.name}
+            {t(currentLang, cat.name)}
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {cat.items.map((item: any) => {
@@ -141,14 +144,14 @@ export default function RoomServiceMenu({
                   className="bg-white border border-[#E2E8F0] hover:border-[#C6A15B] rounded-2xl p-4 shadow-sm transition flex items-center justify-between gap-4"
                 >
                   <div className="flex-1">
-                    <h4 className="font-bold text-[#171717] text-sm">{item.name}</h4>
-                    <p className="text-xs text-[#7C756B] mt-0.5 line-clamp-2">{item.description}</p>
+                    <h4 className="font-bold text-[#171717] text-sm">{t(currentLang, item.name)}</h4>
+                    <p className="text-xs text-[#7C756B] mt-0.5 line-clamp-2">{t(currentLang, item.description)}</p>
                     <div className="mt-2 flex items-center gap-3">
                       <span className="font-bold text-[#C6A15B] text-sm">
-                        {item.price > 0 ? `₹${item.price.toFixed(2)}` : 'Free'}
+                        {item.price > 0 ? `₹${item.price.toFixed(2)}` : t(currentLang, 'Free')}
                       </span>
                       <span className="text-[11px] text-[#7C756B] flex items-center gap-1 font-medium">
-                        <Clock className="w-3 h-3 text-[#C6A15B]" /> ~{item.estimatedMinutes}m prep
+                        <Clock className="w-3 h-3 text-[#C6A15B]" /> ~{item.estimatedMinutes}m {t(currentLang, 'prep')}
                       </span>
                     </div>
                   </div>
@@ -176,7 +179,7 @@ export default function RoomServiceMenu({
                         onClick={() => updateQuantity(item, 1)}
                         className="bg-[#FBF5E8] hover:bg-[#C6A15B]/20 text-[#C6A15B] border border-[#C6A15B]/40 font-bold text-xs px-3.5 py-2 rounded-xl transition flex items-center gap-1"
                       >
-                        <Plus className="w-3.5 h-3.5" /> Add
+                        <Plus className="w-3.5 h-3.5" /> {t(currentLang, 'Add')}
                       </button>
                     )}
                   </div>
@@ -191,7 +194,7 @@ export default function RoomServiceMenu({
       {Object.keys(cart).length > 0 && (
         <div className="fixed bottom-4 left-4 right-4 max-w-2xl mx-auto bg-[#171717] text-white rounded-2xl p-4 shadow-2xl border border-[#C6A15B]/40 flex items-center justify-between z-30 animate-fade-in">
           <div>
-            <div className="text-xs text-white/70 font-medium">Total Order Amount</div>
+            <div className="text-xs text-white/70 font-medium">{t(currentLang, 'Total Order Amount')}</div>
             <div className="font-extrabold text-lg text-[#C6A15B]">₹{cartTotal.toFixed(2)}</div>
           </div>
 
@@ -201,7 +204,7 @@ export default function RoomServiceMenu({
             className="bg-[#C6A15B] hover:bg-[#A88544] text-white font-bold text-sm px-6 py-3 rounded-xl transition shadow-md flex items-center gap-2 disabled:opacity-50 disabled:bg-[#CBD5E1]"
           >
             <ShoppingBag className="w-4 h-4" />
-            {submitting ? 'Placing Order...' : 'Place Order to Room'}
+            {submitting ? t(currentLang, 'Placing Order...') : t(currentLang, 'Place Order to Room')}
           </button>
         </div>
       )}

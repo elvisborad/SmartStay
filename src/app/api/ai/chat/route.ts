@@ -111,24 +111,46 @@ export async function POST(request: Request) {
     // 1. Intent Detection & Task Splitting Engine (Skipped for pure informational inquiries)
     if (!isQuery) {
 
-    // Intent A: Housekeeping (Towels, Pillows, Cleaning, Toiletries, Iron)
+    // Intent A: Housekeeping (Towels, Pillows, Slippers, Cleaning, Toiletries, Iron, Custom Items)
     if (
       lowerMsg.includes('towel') ||
       lowerMsg.includes('toovel') ||
       lowerMsg.includes('pillow') ||
+      lowerMsg.includes('slipper') ||
+      lowerMsg.includes('slippers') ||
+      lowerMsg.includes('chappal') ||
+      lowerMsg.includes('chappals') ||
+      lowerMsg.includes('flip flop') ||
+      lowerMsg.includes('footwear') ||
       lowerMsg.includes('clean') ||
       lowerMsg.includes('safai') ||
       lowerMsg.includes('iron') ||
       lowerMsg.includes('shampoo') ||
       lowerMsg.includes('blanket') ||
       lowerMsg.includes('toiletries') ||
-      lowerMsg.includes('soap')
+      lowerMsg.includes('soap') ||
+      lowerMsg.includes('adapter') ||
+      lowerMsg.includes('charger') ||
+      lowerMsg.includes('toothbrush') ||
+      lowerMsg.includes('toothpaste') ||
+      lowerMsg.includes('dental') ||
+      lowerMsg.includes('comb') ||
+      lowerMsg.includes('razor') ||
+      lowerMsg.includes('kettle') ||
+      lowerMsg.includes('ice') ||
+      lowerMsg.includes('sewing') ||
+      lowerMsg.includes('robe') ||
+      lowerMsg.includes('bathrobe') ||
+      lowerMsg.includes('other') ||
+      lowerMsg.includes('others')
     ) {
       const count = await db.ticket.count();
       const ticket = await db.ticket.create({
         data: {
           ticketNumber: `TSK-${1000 + count + 1}`,
-          title: 'Housekeeping & Amenities Request',
+          title: lowerMsg.includes('slipper') || lowerMsg.includes('chappal')
+            ? 'In-Room Slippers & Amenities Request'
+            : 'Housekeeping & Amenities Request',
           description: `Guest ${guestName} (Room ${roomNumber}) requested via SmartStay: "${message}"`,
           department: 'HOUSEKEEPING',
           category: 'Amenities',
@@ -398,6 +420,50 @@ export async function POST(request: Request) {
               {
                 action: 'CREATED',
                 notes: 'Automated Room Change ticket created',
+                performedBy: 'SmartStay Concierge',
+              },
+            ],
+          },
+        },
+      });
+      createdTickets.push(ticket);
+    }
+
+    // Intent I: Custom Action Request Fallback (e.g., "I want slippers", "bring me X", "send Y", "others")
+    if (
+      createdTickets.length === 0 &&
+      (
+        lowerMsg.includes('want') ||
+        lowerMsg.includes('bring') ||
+        lowerMsg.includes('send') ||
+        lowerMsg.includes('need') ||
+        lowerMsg.includes('get me') ||
+        lowerMsg.includes('give me') ||
+        lowerMsg.includes('deliver') ||
+        lowerMsg.includes('provide') ||
+        lowerMsg.includes('others') ||
+        lowerMsg.includes('other')
+      )
+    ) {
+      const count = await db.ticket.count();
+      const ticket = await db.ticket.create({
+        data: {
+          ticketNumber: `TSK-${1000 + count + 1}`,
+          title: 'Guest Custom Service & Item Request',
+          description: `Guest ${guestName} (Room ${roomNumber}) requested: "${message}"`,
+          department: 'HOUSEKEEPING',
+          category: 'Special Request',
+          priority: 'MEDIUM',
+          status: 'PENDING',
+          slaMinutes: 10,
+          roomNumber,
+          guestName,
+          guestSessionId: guestSessionId || null,
+          logs: {
+            create: [
+              {
+                action: 'CREATED',
+                notes: 'Parsed & created by SmartStay Custom Request Engine',
                 performedBy: 'SmartStay Concierge',
               },
             ],

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
-import { Sparkles, X, Send, Bot, User, CheckCircle2 } from 'lucide-react';
+import { Sparkles, X, Send, Bot, User, CheckCircle2, Mic, MicOff } from 'lucide-react';
 import { t } from '@/lib/i18n';
 
 interface AIChatDrawerProps {
@@ -41,7 +41,9 @@ export default function AIChatDrawer({
   ]);
   const [inputMsg, setInputMsg] = useState('');
   const [loading, setLoading] = useState(false);
+  const [isListening, setIsListening] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const recognitionRef = useRef<any>(null);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -50,14 +52,100 @@ export default function AIChatDrawer({
   if (!isOpen) return null;
 
   const quickPrompts = [
+    'I want slippers',
     'I need 2 extra bath towels',
     'My AC is blowing warm air',
     'What is the Wi-Fi password?',
     'What time is breakfast served?',
-    'Can I get late check-out?',
+    'Others / Special item request',
   ];
 
+  const toggleVoiceInput = () => {
+    if (typeof window === 'undefined') return;
+
+    const SpeechRecognition =
+      (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+
+    if (!SpeechRecognition) {
+      alert('Voice input is not supported in this browser. Please use Chrome, Edge, or Safari.');
+      return;
+    }
+
+    if (isListening && recognitionRef.current) {
+      try {
+        recognitionRef.current.stop();
+      } catch (e) {
+        // ignore
+      }
+      setIsListening(false);
+      return;
+    }
+
+    try {
+      const recognition = new SpeechRecognition();
+      recognitionRef.current = recognition;
+      recognition.continuous = true;
+      recognition.interimResults = true;
+      recognition.maxAlternatives = 1;
+      recognition.lang =
+        currentLang === 'hi'
+          ? 'hi-IN'
+          : currentLang === 'gu'
+          ? 'gu-IN'
+          : currentLang === 'es'
+          ? 'es-ES'
+          : currentLang === 'fr'
+          ? 'fr-FR'
+          : 'en-IN';
+
+      let accumulatedFinal = '';
+
+      recognition.onstart = () => {
+        setIsListening(true);
+      };
+
+      recognition.onresult = (event: any) => {
+        let interimTranscript = '';
+        for (let i = event.resultIndex; i < event.results.length; ++i) {
+          const transcriptChunk = event.results[i][0]?.transcript || '';
+          if (event.results[i].isFinal) {
+            accumulatedFinal += transcriptChunk + ' ';
+          } else {
+            interimTranscript += transcriptChunk;
+          }
+        }
+        const fullText = (accumulatedFinal + interimTranscript).trim().replace(/\s+/g, ' ');
+        if (fullText) {
+          setInputMsg(fullText);
+        }
+      };
+
+      recognition.onerror = (event: any) => {
+        console.error('Speech recognition error:', event.error);
+        if (event.error !== 'no-speech') {
+          setIsListening(false);
+        }
+      };
+
+      recognition.onend = () => {
+        setIsListening(false);
+      };
+
+      recognition.start();
+    } catch (err) {
+      console.error('Failed to start speech recognition:', err);
+      setIsListening(false);
+    }
+  };
+
   const handleSendMessage = async (textToSend?: string) => {
+    if (isListening && recognitionRef.current) {
+      try {
+        recognitionRef.current.stop();
+      } catch (e) {}
+      setIsListening(false);
+    }
+
     const query = textToSend || inputMsg;
     if (!query.trim()) return;
 
@@ -118,7 +206,7 @@ export default function AIChatDrawer({
               <h3 className="font-bold text-sm text-[#24211E] flex items-center gap-1.5">
                 SmartStay Concierge <span className="w-2 h-2 rounded-full bg-[#C6A15B] animate-pulse shadow-[0_0_8px_#C6A15B]" />
               </h3>
-              <p className="text-[11px] text-[#7C756B] font-medium">Multilingual RAG & Action Engine</p>
+              <p className="text-[11px] text-[#7C756B] font-medium">Multilingual RAG & Voice Action Engine</p>
             </div>
           </div>
 
@@ -202,25 +290,44 @@ export default function AIChatDrawer({
           ))}
         </div>
 
-        {/* Input Bar */}
+        {/* Input Bar with Voice Microphone Button */}
         <form
           onSubmit={(e) => {
             e.preventDefault();
             handleSendMessage();
           }}
-          className="p-4 bg-[#FFFFFF] border-t border-[#E5DFD5] flex gap-2"
+          className="p-4 bg-[#FFFFFF] border-t border-[#E5DFD5] flex gap-2 items-center"
         >
-          <input
-            type="text"
-            value={inputMsg}
-            onChange={(e) => setInputMsg(e.target.value)}
-            placeholder="Ask SmartStay AI anything..."
-            className="flex-1 bg-[#FFFFFF] border border-[#E5DFD5] focus:border-[#C6A15B] rounded-xl px-4 py-2.5 text-xs text-[#24211E] focus:outline-none transition shadow-xs font-medium"
-          />
+          <div className="relative flex-1 flex items-center">
+            <input
+              type="text"
+              value={inputMsg}
+              onChange={(e) => setInputMsg(e.target.value)}
+              placeholder={isListening ? "Listening... Speak now..." : "Ask SmartStay AI anything..."}
+              className={`w-full bg-[#FFFFFF] border rounded-xl pl-4 pr-10 py-2.5 text-xs text-[#24211E] focus:outline-none transition shadow-xs font-medium ${
+                isListening
+                  ? 'border-[#DC2626] ring-2 ring-[#DC2626]/20 bg-[#FEF2F2]'
+                  : 'border-[#E5DFD5] focus:border-[#C6A15B]'
+              }`}
+            />
+            <button
+              type="button"
+              onClick={toggleVoiceInput}
+              title={isListening ? "Stop listening" : "Start voice input"}
+              className={`absolute right-2.5 p-1.5 rounded-lg transition ${
+                isListening
+                  ? 'text-[#DC2626] bg-[#FEE2E2] animate-pulse'
+                  : 'text-[#7C756B] hover:text-[#C6A15B] hover:bg-[#F8F5EF]'
+              }`}
+            >
+              {isListening ? <MicOff className="w-4 h-4 text-[#DC2626]" /> : <Mic className="w-4 h-4 text-[#7C756B]" />}
+            </button>
+          </div>
+
           <button
             type="submit"
             disabled={loading || !inputMsg.trim()}
-            className="bg-[#171717] hover:bg-[#292724] text-[#C6A15B] border border-[#C6A15B]/30 p-2.5 rounded-xl transition disabled:opacity-50 shadow-md shadow-[#171717]/10"
+            className="bg-[#171717] hover:bg-[#292724] text-[#C6A15B] border border-[#C6A15B]/30 p-2.5 rounded-xl transition disabled:opacity-50 shadow-md shadow-[#171717]/10 shrink-0"
           >
             <Send className="w-4 h-4 text-[#C6A15B]" />
           </button>
@@ -229,3 +336,4 @@ export default function AIChatDrawer({
     </div>
   );
 }
+

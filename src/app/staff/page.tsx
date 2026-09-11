@@ -742,29 +742,15 @@ export default function StaffDashboardPage() {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-2 gap-3">
-                  <div>
-                    <label className="block text-[11px] font-bold text-[#24211E] mb-1">Access PIN</label>
-                    <input
-                      type="text"
-                      value={newGuestPin}
-                      onChange={(e) => setNewGuestPin(e.target.value)}
-                      placeholder="Default 1234"
-                      className="w-full bg-[#FFFFFF] border border-[#E5DFD5] focus:border-[#C6A15B] rounded-xl p-2.5 text-xs text-[#24211E] font-medium outline-none"
-                      required
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-[11px] font-bold text-[#24211E] mb-1">Check-Out Date</label>
-                    <input
-                      type="date"
-                      value={newGuestCheckout}
-                      onChange={(e) => setNewGuestCheckout(e.target.value)}
-                      className="w-full bg-[#FFFFFF] border border-[#E5DFD5] focus:border-[#C6A15B] rounded-xl p-2.5 text-xs text-[#24211E] font-medium outline-none"
-                      required
-                    />
-                  </div>
+                <div>
+                  <label className="block text-[11px] font-bold text-[#24211E] mb-1">Check-Out Date</label>
+                  <input
+                    type="date"
+                    value={newGuestCheckout}
+                    onChange={(e) => setNewGuestCheckout(e.target.value)}
+                    className="w-full bg-[#FFFFFF] border border-[#E5DFD5] focus:border-[#C6A15B] rounded-xl p-2.5 text-xs text-[#24211E] font-medium outline-none"
+                    required
+                  />
                 </div>
 
                 <div className="flex justify-end gap-2 pt-1">
@@ -813,8 +799,7 @@ export default function StaffDashboardPage() {
                           )}
                         </div>
                         <div className="text-[11px] text-[#7C756B] font-medium">
-                          PIN: <strong className="text-[#24211E] font-mono">{g.pin}</strong> • Check-out:{' '}
-                          {new Date(g.checkOutDate).toLocaleDateString()}
+                          Check-out: {new Date(g.checkOutDate).toLocaleDateString()}
                         </div>
                       </div>
                     </div>
