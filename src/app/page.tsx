@@ -35,7 +35,6 @@ export default function Home() {
   const [resetting, setResetting] = useState(false);
   const [resetMsg, setResetMsg] = useState('');
   const [activeNav, setActiveNav] = useState('Home');
-  const [showDemoVideo, setShowDemoVideo] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const scrollToSection = (id: string, navName: string) => {
@@ -217,16 +216,6 @@ export default function Home() {
               >
                 Get Started <ArrowRight className="w-4 h-4 text-[#C6A15B]" />
               </Link>
-
-              <button
-                onClick={() => setShowDemoVideo(true)}
-                className="flex items-center gap-2.5 text-xs font-bold bg-white hover:bg-[#F5EFE4] text-[#24211E] px-5 py-3.5 rounded-xl border border-[#CBD5E1] transition shadow-xs"
-              >
-                <div className="w-5 h-5 rounded-full bg-[#FBF5E8] text-[#C6A15B] flex items-center justify-center">
-                  <Play className="w-3 h-3 fill-current ml-0.5" />
-                </div>
-                Watch Demo
-              </button>
             </div>
 
             {/* Trust Metrics Strip */}
@@ -613,43 +602,6 @@ export default function Home() {
           </div>
         </div>
       </footer>
-
-      {/* Video Demo Modal */}
-      {showDemoVideo && (
-        <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-2 sm:p-4 overflow-y-auto">
-          <div className="bg-white rounded-3xl p-4 sm:p-6 max-w-2xl w-full border border-[#E2E8F0] shadow-2xl space-y-4 animate-fade-in max-h-[92vh] overflow-y-auto my-auto">
-            <div className="flex items-center justify-between border-b border-[#E2E8F0] pb-3">
-              <div className="flex items-center gap-2">
-                <Sparkles className="w-5 h-5 text-[#C6A15B]" />
-                <h3 className="font-bold text-base text-[#171717]">SmartStay Platform Walkthrough</h3>
-              </div>
-              <button
-                onClick={() => setShowDemoVideo(false)}
-                className="p-1.5 text-[#7C756B] hover:text-[#171717] hover:bg-[#F5EFE4] rounded-lg"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-
-            <div className="aspect-video bg-[#171717] rounded-2xl flex flex-col items-center justify-center p-6 text-center space-y-3 border border-[#C6A15B]/30">
-              <div className="w-16 h-16 rounded-full bg-[#C6A15B] text-white flex items-center justify-center shadow-lg shadow-[#C6A15B]/40 animate-pulse">
-                <Play className="w-8 h-8 fill-current ml-1" />
-              </div>
-              <div className="text-white font-bold text-base">SIH 2026 Live Demo Mode Active</div>
-              <p className="text-xs text-white/70 max-w-md">
-                Experience contactless QR entry, 1-tap room requests, multi-intent AI Concierge, 8-department staff dispatch, and RAG analytics.
-              </p>
-              <Link
-                href="/scan"
-                onClick={() => setShowDemoVideo(false)}
-                className="bg-[#C6A15B] hover:bg-[#A88544] text-white text-xs font-bold px-5 py-2.5 rounded-xl transition shadow-md"
-              >
-                Launch Live Interactive Demo
-              </Link>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 }

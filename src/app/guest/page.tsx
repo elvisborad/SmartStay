@@ -12,7 +12,6 @@ import LuggageTransferModal from '@/components/guest/LuggageTransferModal';
 import AccessAssistanceModal from '@/components/guest/AccessAssistanceModal';
 import RoomChangeModal from '@/components/guest/RoomChangeModal';
 import RoomQRStandeeModal from '@/components/guest/RoomQRStandeeModal';
-import WelcomeVideoModal from '@/components/guest/WelcomeVideoModal';
 import TouristAttractions from '@/components/guest/TouristAttractions';
 import { t } from '@/lib/i18n';
 import {
@@ -30,7 +29,6 @@ import {
   Compass,
   Zap,
   Sparkle,
-  Film,
 } from 'lucide-react';
 
 export default function GuestPortalPage() {
@@ -47,7 +45,6 @@ export default function GuestPortalPage() {
   const [showAccess, setShowAccess] = useState(false);
   const [showRoomChange, setShowRoomChange] = useState(false);
   const [showQrModal, setShowQrModal] = useState(false);
-  const [showWelcomeVideo, setShowWelcomeVideo] = useState(false);
   const [showWifiAlert, setShowWifiAlert] = useState(false);
   const [waterSuccess, setWaterSuccess] = useState(false);
 
@@ -65,13 +62,6 @@ export default function GuestPortalPage() {
     try {
       const parsed = JSON.parse(stored);
       setSession(parsed);
-
-      // Check if welcome video has been shown in this browser session
-      const hasSeenVideo = sessionStorage.getItem(`smartstay_welcome_video_${parsed.id}`);
-      if (!hasSeenVideo) {
-        setShowWelcomeVideo(true);
-        sessionStorage.setItem(`smartstay_welcome_video_${parsed.id}`, 'true');
-      }
 
       // Verify active status immediately and every 4 seconds
       const checkSessionActive = async () => {
@@ -146,7 +136,6 @@ export default function GuestPortalPage() {
         setActiveTab={setActiveTab}
         openAiChat={() => setIsAiOpen(true)}
         openQrModal={() => setShowQrModal(true)}
-        openVideoModal={() => setShowWelcomeVideo(true)}
         currentLang={currentLang}
         setLang={handleLanguageChange}
       />
@@ -176,20 +165,12 @@ export default function GuestPortalPage() {
                 </p>
               </div>
 
-              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 w-full sm:w-auto shrink-0">
-                <button
-                  onClick={() => setShowWelcomeVideo(true)}
-                  className="bg-[#FBF5E8] hover:bg-[#F5EFE4] text-[#C6A15B] border border-[#C6A15B]/40 font-bold text-xs px-3.5 py-3 rounded-2xl transition flex items-center justify-center gap-1.5 shadow-xs"
-                >
-                  <Film className="w-4 h-4 text-[#C6A15B]" /> Resort Video
-                </button>
-                <button
-                  onClick={() => setIsAiOpen(true)}
-                  className="bg-[#171717] hover:bg-[#292724] text-white border border-[#C6A15B]/40 font-extrabold text-xs sm:text-sm px-5 py-3 rounded-2xl transition shadow-md shadow-[#171717]/20 flex items-center justify-center gap-2 w-full sm:w-auto shrink-0"
-                >
-                  <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-[#C6A15B]" /> {t(currentLang, 'askAi')}
-                </button>
-              </div>
+              <button
+                onClick={() => setIsAiOpen(true)}
+                className="bg-[#171717] hover:bg-[#292724] text-white border border-[#C6A15B]/40 font-extrabold text-xs sm:text-sm px-5 py-3 rounded-2xl transition shadow-md shadow-[#171717]/20 flex items-center justify-center gap-2 w-full sm:w-auto shrink-0"
+              >
+                <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-[#C6A15B]" /> {t(currentLang, 'askAi')}
+              </button>
             </div>
 
             {/* Quick Service Action Buttons Grid */}
@@ -450,13 +431,6 @@ export default function GuestPortalPage() {
         onClose={() => setShowQrModal(false)}
         initialRoomNumber={session.roomNumber}
         initialGuestName={session.guestName}
-      />
-
-      <WelcomeVideoModal
-        isOpen={showWelcomeVideo}
-        onClose={() => setShowWelcomeVideo(false)}
-        guestName={session.guestName}
-        roomNumber={session.roomNumber}
       />
     </div>
   );

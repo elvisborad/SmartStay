@@ -1,6 +1,6 @@
 'use client';
 
-import { Hotel, LogOut, Wifi, Clock, Phone, Sparkles, Globe, QrCode, Home, Bell, Utensils, Compass, ClipboardList, Film } from 'lucide-react';
+import { Hotel, LogOut, Wifi, Clock, Phone, Sparkles, Globe, QrCode, Home, Bell, Utensils, Compass, ClipboardList } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { t } from '@/lib/i18n';
 
@@ -11,7 +11,6 @@ interface GuestHeaderProps {
   setActiveTab: (tab: string) => void;
   openAiChat: () => void;
   openQrModal?: () => void;
-  openVideoModal?: () => void;
   currentLang: string;
   setLang: (lang: string) => void;
 }
@@ -23,7 +22,6 @@ export default function GuestHeader({
   setActiveTab,
   openAiChat,
   openQrModal,
-  openVideoModal,
   currentLang,
   setLang,
 }: GuestHeaderProps) {
@@ -71,18 +69,6 @@ export default function GuestHeader({
         </div>
 
         <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
-          {/* Welcome Video Button */}
-          {openVideoModal && (
-            <button
-              onClick={openVideoModal}
-              title="Watch Hotel Welcome Video"
-              className="flex items-center gap-1 sm:gap-1.5 bg-[#FBF5E8] hover:bg-[#F5EFE4] border border-[#C6A15B]/40 text-[#C6A15B] text-xs font-bold px-2.5 sm:px-3 py-1.5 rounded-xl transition shadow-xs"
-            >
-              <Film className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#C6A15B]" />
-              <span className="hidden sm:inline">Hotel Video</span>
-            </button>
-          )}
-
           {/* Room QR Standee Button */}
           {openQrModal && (
             <button
