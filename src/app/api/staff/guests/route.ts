@@ -1,8 +1,9 @@
 import { NextResponse } from 'next/server';
-import { db } from '@/lib/db';
+import { db, ensureDbInitialized } from '@/lib/db';
 
 export async function GET() {
   try {
+    await ensureDbInitialized();
     const guests = await db.guestSession.findMany({
       where: { active: true },
       orderBy: { createdAt: 'desc' },
@@ -17,6 +18,7 @@ export async function GET() {
 
 export async function POST(request: Request) {
   try {
+    await ensureDbInitialized();
     const body = await request.json();
     const { guestName, roomNumber, pin, checkOutDate } = body;
 

@@ -1,9 +1,10 @@
 import { NextResponse } from 'next/server';
-import { db } from '@/lib/db';
+import { db, ensureDbInitialized } from '@/lib/db';
 import { verifyPassword } from '@/lib/passwords';
 
 export async function POST(request: Request) {
   try {
+    await ensureDbInitialized();
     const { email, password } = await request.json();
 
     if (!email || !password) {

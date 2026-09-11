@@ -1,8 +1,9 @@
 import { NextResponse } from 'next/server';
-import { db } from '@/lib/db';
+import { db, ensureDbInitialized } from '@/lib/db';
 
 export async function GET() {
   try {
+    await ensureDbInitialized();
     const totalTickets = await db.ticket.count();
     const pendingTickets = await db.ticket.count({ where: { status: 'PENDING' } });
     const inProgressTickets = await db.ticket.count({ where: { status: 'IN_PROGRESS' } });
