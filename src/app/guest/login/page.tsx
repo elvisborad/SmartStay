@@ -54,8 +54,8 @@ function GuestLoginContent() {
       <div className="max-w-md w-full space-y-6">
         {/* Logo & Welcome Header */}
         <div className="text-center space-y-2">
-          <div className="w-14 h-14 bg-[#0F9F91] rounded-2xl flex items-center justify-center mx-auto shadow-lg shadow-[#0F9F91]/20">
-            <Hotel className="w-8 h-8 text-white" />
+          <div className="w-14 h-14 bg-[#171717] rounded-2xl flex items-center justify-center mx-auto shadow-lg shadow-[#171717]/20 border border-[#C6A15B]/40 p-1.5">
+            <img src="/logo.png" alt="SmartStay Logo" className="w-full h-full object-contain" />
           </div>
           <h1 className="text-2xl font-extrabold tracking-tight text-[#172033]">Grand Horizon Hotel</h1>
           <p className="text-xs text-[#0F9F91] font-bold flex items-center justify-center gap-1.5 uppercase tracking-widest">

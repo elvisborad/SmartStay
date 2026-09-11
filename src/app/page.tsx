@@ -79,8 +79,8 @@ export default function Home() {
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           {/* Logo */}
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-[#171717] flex items-center justify-center shadow-md shadow-[#171717]/20 border border-[#C6A15B]/40">
-              <Hotel className="w-6 h-6 text-[#C6A15B]" />
+            <div className="w-10 h-10 rounded-xl bg-[#171717] flex items-center justify-center shadow-md shadow-[#171717]/20 border border-[#C6A15B]/40 p-1">
+              <img src="/logo.png" alt="SmartStay Logo" className="w-full h-full object-contain" />
             </div>
             <div>
               <h1 className="font-extrabold text-lg tracking-tight text-[#171717] leading-tight">
@@ -591,8 +591,8 @@ export default function Home() {
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
           {/* Logo Footer */}
           <div className="flex items-center gap-2.5">
-            <div className="w-7 h-7 rounded-lg bg-[#C6A15B] flex items-center justify-center text-[#171717]">
-              <Hotel className="w-4 h-4" />
+            <div className="w-8 h-8 rounded-lg bg-[#171717] flex items-center justify-center border border-[#C6A15B]/40 p-1">
+              <img src="/logo.png" alt="SmartStay Logo" className="w-full h-full object-contain" />
             </div>
             <div>
               <span className="font-bold text-white">SmartStay</span>

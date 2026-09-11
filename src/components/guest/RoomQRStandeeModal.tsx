@@ -160,7 +160,7 @@ export default function RoomQRStandeeModal({
         {/* Acrylic Standee Preview Card */}
         <div className="bg-gradient-to-b from-[#F8F5EF] to-[#FFFFFF] border-2 border-[#C6A15B]/40 rounded-3xl p-3 sm:p-5 text-center space-y-2 sm:space-y-3 shadow-sm relative overflow-y-auto flex-1 min-h-0 no-scrollbar">
           <div className="flex items-center justify-center gap-1.5 text-[10px] font-black text-[#C6A15B] uppercase tracking-widest">
-            <Hotel className="w-3.5 h-3.5 text-[#C6A15B]" /> Grand Horizon Hotel
+            <img src="/logo.png" alt="SmartStay Logo" className="w-5 h-5 object-contain rounded-md" /> Grand Horizon Hotel
           </div>
 
           <div>

@@ -199,8 +199,8 @@ export default function AIChatDrawer({
         {/* Header */}
         <div className="px-5 py-4 bg-[#FFFFFF] border-b border-[#E5DFD5] flex items-center justify-between shadow-xs">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-[#171717] border border-[#C6A15B]/30 flex items-center justify-center shadow-md">
-              <Bot className="w-5 h-5 text-[#C6A15B]" />
+            <div className="w-9 h-9 rounded-xl bg-[#171717] border border-[#C6A15B]/40 flex items-center justify-center shadow-md p-1">
+              <img src="/logo.png" alt="SmartStay Logo" className="w-full h-full object-contain" />
             </div>
             <div>
               <h3 className="font-bold text-sm text-[#24211E] flex items-center gap-1.5">

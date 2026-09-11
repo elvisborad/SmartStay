@@ -271,8 +271,8 @@ export default function AdminAnalyticsPage() {
               <ArrowLeft className="w-5 h-5" />
             </Link>
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-[#C9A45C] flex items-center justify-center shadow-md shadow-[#C9A45C]/20">
-                <Hotel className="w-5 h-5 text-white" />
+              <div className="w-10 h-10 rounded-xl bg-[#171717] border border-[#C9A45C]/40 flex items-center justify-center shadow-md p-1">
+                <img src="/logo.png" alt="SmartStay Logo" className="w-full h-full object-contain" />
               </div>
               <div>
                 <h1 className="font-bold text-lg text-[#172033]">SmartStay Admin Operations Hub</h1>
@@ -372,8 +372,8 @@ export default function AdminAnalyticsPage() {
             <ArrowLeft className="w-5 h-5" />
           </Link>
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-[#C9A45C] flex items-center justify-center shadow-md shadow-[#C9A45C]/20">
-              <Hotel className="w-5 h-5 text-white" />
+            <div className="w-10 h-10 rounded-xl bg-[#171717] border border-[#C9A45C]/40 flex items-center justify-center shadow-md p-1">
+              <img src="/logo.png" alt="SmartStay Logo" className="w-full h-full object-contain" />
             </div>
             <div>
               <h1 className="font-bold text-lg text-[#172033] flex items-center gap-2">

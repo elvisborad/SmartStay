@@ -57,8 +57,8 @@ export default function GuestHeader({
       {/* Top Banner */}
       <div className="max-w-5xl mx-auto px-3 sm:px-4 py-2.5 sm:py-3 flex items-center justify-between gap-2">
         <div className="flex items-center gap-2 sm:gap-3 min-w-0">
-          <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-[#171717] flex items-center justify-center shadow-md shadow-[#171717]/20 border border-[#C6A15B]/40 shrink-0">
-            <Hotel className="w-4 h-4 sm:w-5 sm:h-5 text-[#C6A15B]" />
+          <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-[#171717] flex items-center justify-center shadow-md shadow-[#171717]/20 border border-[#C6A15B]/40 shrink-0 p-1">
+            <img src="/logo.png" alt="SmartStay Logo" className="w-full h-full object-contain" />
           </div>
           <div className="min-w-0">
             <h1 className="font-extrabold text-sm sm:text-base leading-tight flex items-center gap-1.5 text-[#171717] truncate">

@@ -258,8 +258,8 @@ export default function StaffDashboardPage() {
               <ArrowLeft className="w-5 h-5" />
             </Link>
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-[#171717] border border-[#C6A15B]/30 flex items-center justify-center shadow-md">
-                <Hotel className="w-5 h-5 text-[#C6A15B]" />
+              <div className="w-10 h-10 rounded-xl bg-[#171717] border border-[#C6A15B]/40 flex items-center justify-center shadow-md p-1">
+                <img src="/logo.png" alt="SmartStay Logo" className="w-full h-full object-contain" />
               </div>
               <div>
                 <h1 className="font-bold text-lg text-[#24211E]">SmartStay Staff Portal</h1>
@@ -370,8 +370,8 @@ export default function StaffDashboardPage() {
             <ArrowLeft className="w-5 h-5" />
           </Link>
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-[#171717] border border-[#C6A15B]/30 flex items-center justify-center shadow-md">
-              <Hotel className="w-5 h-5 text-[#C6A15B]" />
+            <div className="w-10 h-10 rounded-xl bg-[#171717] border border-[#C6A15B]/40 flex items-center justify-center shadow-md p-1">
+              <img src="/logo.png" alt="SmartStay Logo" className="w-full h-full object-contain" />
             </div>
             <div>
               <h1 className="font-bold text-lg text-[#24211E] flex items-center gap-2">
