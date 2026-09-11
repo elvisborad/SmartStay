@@ -255,7 +255,7 @@ export default function QRScanPage() {
         )}
 
         {/* Scanner Viewport */}
-        <div className="relative w-56 h-56 mx-auto bg-[#0F172A] rounded-2xl border-2 border-dashed border-[#0F9F91]/50 p-2 flex flex-col items-center justify-center overflow-hidden shadow-inner group">
+        <div className="relative w-56 h-56 mx-auto bg-[#171717] rounded-2xl border-2 border-dashed border-[#C6A15B]/50 p-2 flex flex-col items-center justify-center overflow-hidden shadow-inner group">
           {/* Live Camera Feed */}
           <video
             ref={videoRef}
@@ -269,8 +269,8 @@ export default function QRScanPage() {
           {cameraActive && !scanning && !scannedRoom && (
             <>
               {/* Viewfinder Target Frame */}
-              <div className="absolute inset-4 border-2 border-[#0F9F91] rounded-xl pointer-events-none opacity-80" />
-              <div className="absolute inset-x-0 top-1/2 h-0.5 bg-[#0F9F91] shadow-[0_0_8px_#0F9F91] animate-pulse" />
+              <div className="absolute inset-4 border-2 border-[#C6A15B] rounded-xl pointer-events-none opacity-80" />
+              <div className="absolute inset-x-0 top-1/2 h-0.5 bg-[#C6A15B] shadow-[0_0_8px_#C6A15B] animate-pulse" />
               <span className="absolute bottom-2 inset-x-0 text-[10px] text-white bg-black/60 py-1 px-2 mx-auto w-max rounded-md font-medium">
                 Point camera at SmartStay QR Code
               </span>
@@ -279,8 +279,8 @@ export default function QRScanPage() {
 
           {scanning ? (
             <div className="flex flex-col items-center space-y-3 z-10 text-white">
-              <Sparkles className="w-10 h-10 text-[#0F9F91] animate-spin" />
-              <span className="text-xs text-[#0F9F91] font-bold">Verifying QR & Binding Session...</span>
+              <Sparkles className="w-10 h-10 text-[#C6A15B] animate-spin" />
+              <span className="text-xs text-[#C6A15B] font-bold">Verifying QR & Binding Session...</span>
             </div>
           ) : scannedRoom ? (
             <div
@@ -289,12 +289,12 @@ export default function QRScanPage() {
             >
               <CheckCircle2 className="w-12 h-12" />
               <span className="text-sm font-bold text-white">Room {scannedRoom} Verified!</span>
-              <span className="text-[11px] text-[#0F9F91] font-extrabold underline">Click here to enter Portal -&gt;</span>
+              <span className="text-[11px] text-[#C6A15B] font-extrabold underline">Click here to enter Portal -&gt;</span>
             </div>
           ) : !cameraActive ? (
             <div className="flex flex-col items-center justify-center text-center p-4">
-              <QrCode className="w-20 h-20 text-[#0F9F91] group-hover:scale-105 transition-transform" />
-              <span className="text-xs text-[#94A3B8] mt-2 font-medium">
+              <QrCode className="w-20 h-20 text-[#C6A15B] group-hover:scale-105 transition-transform" />
+              <span className="text-xs text-[#A8B2C0] mt-2 font-medium">
                 Camera inactive
               </span>
             </div>

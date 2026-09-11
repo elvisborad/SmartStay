@@ -58,14 +58,14 @@ function GuestLoginContent() {
             <img src="/logo.png" alt="SmartStay Logo" className="w-full h-full object-contain" />
           </div>
           <h1 className="text-2xl font-extrabold tracking-tight text-[#172033]">Grand Horizon Hotel</h1>
-          <p className="text-xs text-[#0F9F91] font-bold flex items-center justify-center gap-1.5 uppercase tracking-widest">
+          <p className="text-xs text-[#C6A15B] font-bold flex items-center justify-center gap-1.5 uppercase tracking-widest">
             <Sparkles className="w-4 h-4" /> SmartStay Contactless Guest Portal
           </p>
         </div>
 
         {/* Exclusive QR Entry Card */}
         <div className="bg-white border border-[#E2E8F0] rounded-3xl p-8 shadow-xl text-center space-y-6">
-          <div className="w-20 h-20 bg-[#E8F7F5] rounded-3xl border-2 border-[#0F9F91]/30 flex items-center justify-center mx-auto text-[#0F9F91]">
+          <div className="w-20 h-20 bg-[#FBF5E8] rounded-3xl border-2 border-[#C6A15B]/30 flex items-center justify-center mx-auto text-[#C6A15B]">
             <QrCode className="w-10 h-10 animate-pulse" />
           </div>
 
@@ -77,8 +77,8 @@ function GuestLoginContent() {
           </div>
 
           {autoStatus && (
-            <div className="p-3.5 rounded-2xl bg-[#E8F7F5] border border-[#0F9F91]/30 text-[#0F9F91] text-xs font-bold flex items-center justify-center gap-2 animate-bounce">
-              <CheckCircle2 className="w-4 h-4 text-[#0F9F91]" />
+            <div className="p-3.5 rounded-2xl bg-[#FBF5E8] border border-[#C6A15B]/30 text-[#8A6A2F] text-xs font-bold flex items-center justify-center gap-2 animate-bounce">
+              <CheckCircle2 className="w-4 h-4 text-[#C6A15B]" />
               {autoStatus}
             </div>
           )}
@@ -92,45 +92,45 @@ function GuestLoginContent() {
           <div className="space-y-3 pt-2">
             <button
               onClick={() => router.push('/scan')}
-              className="w-full bg-[#0F9F91] hover:bg-[#0B857A] text-white font-bold py-3.5 px-6 rounded-2xl transition flex items-center justify-center gap-2 shadow-lg shadow-[#0F9F91]/25 text-sm"
+              className="w-full bg-[#171717] hover:bg-[#292724] text-white border border-[#C6A15B]/40 font-bold py-3.5 px-6 rounded-2xl transition flex items-center justify-center gap-2 shadow-lg shadow-[#171717]/20 text-sm"
             >
-              <QrCode className="w-5 h-5" /> Open QR Scanner Portal
-              <ArrowRight className="w-4 h-4" />
+              <QrCode className="w-5 h-5 text-[#C6A15B]" /> Open QR Scanner Portal
+              <ArrowRight className="w-4 h-4 text-[#C6A15B]" />
             </button>
 
             {/* Simulate Room 204 Instant QR */}
             <div className="pt-4 border-t border-[#E2E8F0] space-y-2 text-left">
               <p className="text-[11px] font-bold text-[#526174] uppercase tracking-wider flex items-center justify-between">
                 <span>Simulate In-Room QR Code Scan:</span>
-                <ShieldCheck className="w-4 h-4 text-[#0F9F91]" />
+                <ShieldCheck className="w-4 h-4 text-[#C6A15B]" />
               </p>
               
               <button
                 onClick={() => handleQRAuth('204', '1234')}
                 disabled={loading}
-                className="w-full text-left p-3.5 rounded-2xl bg-[#F8FAFC] hover:bg-[#E8F7F5] border border-[#CBD5E1] hover:border-[#0F9F91] transition flex items-center justify-between text-xs group text-[#172033] shadow-xs"
+                className="w-full text-left p-3.5 rounded-2xl bg-[#F8FAFC] hover:bg-[#FBF5E8] border border-[#CBD5E1] hover:border-[#C6A15B] transition flex items-center justify-between text-xs group text-[#172033] shadow-xs"
               >
                 <div>
-                  <div className="font-bold text-[#172033] group-hover:text-[#0F9F91]">
+                  <div className="font-bold text-[#172033] group-hover:text-[#C6A15B]">
                     Scan Room 204 QR Code (Alex Sharma)
                   </div>
                   <div className="text-[11px] text-[#526174]">Deluxe King • Session #QR-204-SEC</div>
                 </div>
-                <ArrowRight className="w-4 h-4 text-[#8290A3] group-hover:text-[#0F9F91] group-hover:translate-x-1 transition-all" />
+                <ArrowRight className="w-4 h-4 text-[#8290A3] group-hover:text-[#C6A15B] group-hover:translate-x-1 transition-all" />
               </button>
 
               <button
                 onClick={() => handleQRAuth('301', '3010')}
                 disabled={loading}
-                className="w-full text-left p-3.5 rounded-2xl bg-[#F8FAFC] hover:bg-[#E8F7F5] border border-[#CBD5E1] hover:border-[#0F9F91] transition flex items-center justify-between text-xs group text-[#172033] shadow-xs"
+                className="w-full text-left p-3.5 rounded-2xl bg-[#F8FAFC] hover:bg-[#FBF5E8] border border-[#CBD5E1] hover:border-[#C6A15B] transition flex items-center justify-between text-xs group text-[#172033] shadow-xs"
               >
                 <div>
-                  <div className="font-bold text-[#172033] group-hover:text-[#0F9F91]">
+                  <div className="font-bold text-[#172033] group-hover:text-[#C6A15B]">
                     Scan Suite 301 QR Code (Sarah Connor)
                   </div>
                   <div className="text-[11px] text-[#526174]">Presidential Suite • Session #QR-301-SEC</div>
                 </div>
-                <ArrowRight className="w-4 h-4 text-[#8290A3] group-hover:text-[#0F9F91] group-hover:translate-x-1 transition-all" />
+                <ArrowRight className="w-4 h-4 text-[#8290A3] group-hover:text-[#C6A15B] group-hover:translate-x-1 transition-all" />
               </button>
             </div>
           </div>
