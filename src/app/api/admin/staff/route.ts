@@ -1,9 +1,10 @@
 import { NextResponse } from 'next/server';
-import { db } from '@/lib/db';
+import { db, ensureDbInitialized } from '@/lib/db';
 import { hashPassword } from '@/lib/passwords';
 
 export async function GET() {
   try {
+    await ensureDbInitialized();
     const staffList = await db.staff.findMany({
       select: {
         id: true,
@@ -31,6 +32,7 @@ export async function GET() {
 
 export async function POST(request: Request) {
   try {
+    await ensureDbInitialized();
     const body = await request.json();
     const { name, email, password, role, department, dutyStatus } = body;
 

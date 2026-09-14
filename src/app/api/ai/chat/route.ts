@@ -1,7 +1,9 @@
 import { NextResponse } from 'next/server';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { searchKnowledgeBase, searchKnowledgeBaseDetailed } from '@/lib/ragEngine';
-import { db } from '@/lib/db';
+import { db, ensureDbInitialized } from '@/lib/db';
+
+export const maxDuration = 60;
 
 function isInformationalQuery(message: string): boolean {
   const lowerMsg = message.toLowerCase().trim();
@@ -97,6 +99,7 @@ function isInformationalQuery(message: string): boolean {
 
 export async function POST(request: Request) {
   try {
+    await ensureDbInitialized();
     const body = await request.json();
     const { message, roomNumber, guestName, guestSessionId } = body;
 

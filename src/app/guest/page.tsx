@@ -13,6 +13,7 @@ import AccessAssistanceModal from '@/components/guest/AccessAssistanceModal';
 import RoomChangeModal from '@/components/guest/RoomChangeModal';
 import RoomQRStandeeModal from '@/components/guest/RoomQRStandeeModal';
 import TouristAttractions from '@/components/guest/TouristAttractions';
+import SmartStayIntroVideo from '@/components/guest/SmartStayIntroVideo';
 import { t } from '@/lib/i18n';
 import {
   Sparkles,
@@ -47,6 +48,7 @@ export default function GuestPortalPage() {
   const [showQrModal, setShowQrModal] = useState(false);
   const [showWifiAlert, setShowWifiAlert] = useState(false);
   const [waterSuccess, setWaterSuccess] = useState(false);
+  const [showIntro, setShowIntro] = useState(false);
 
   useEffect(() => {
     const savedLang = localStorage.getItem('smartstay_lang');
@@ -63,20 +65,29 @@ export default function GuestPortalPage() {
       const parsed = JSON.parse(stored);
       setSession(parsed);
 
-      // Verify active status immediately and every 4 seconds
+      // Check if intro video was already played for this guest session
+      const sessId = parsed.id || parsed.roomNumber || 'active_guest';
+      const introPlayedKey = `smartstay_intro_played_${sessId}`;
+      if (localStorage.getItem(introPlayedKey) !== 'true') {
+        setShowIntro(true);
+      }
+
+      // Verify active status immediately and every 10 seconds
       const checkSessionActive = async () => {
-        if (!parsed?.id) return;
+        if (!parsed?.id && !parsed?.roomNumber) return;
         try {
           const res = await fetch('/api/auth/verify-guest-session', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ sessionId: parsed.id }),
+            body: JSON.stringify({ sessionId: parsed.id, roomNumber: parsed.roomNumber }),
           });
-          const data = await res.json();
-          if (!data.active) {
-            localStorage.removeItem('smartstay_guest_session');
-            alert('Your room session has ended. You have been checked out by Front Desk.');
-            window.location.href = '/scan?status=checked_out';
+          if (res.ok) {
+            const data = await res.json();
+            if (data.active === false && data.reason === 'explicit_checkout') {
+              localStorage.removeItem('smartstay_guest_session');
+              alert('Your room session has ended. You have been checked out by Front Desk.');
+              window.location.href = '/scan?status=checked_out';
+            }
           }
         } catch (e) {
           console.error('Session verify check error:', e);
@@ -84,7 +95,7 @@ export default function GuestPortalPage() {
       };
 
       checkSessionActive();
-      const interval = setInterval(checkSessionActive, 4000);
+      const interval = setInterval(checkSessionActive, 10000);
       return () => clearInterval(interval);
     } catch (e) {
       router.push('/scan');
@@ -94,6 +105,14 @@ export default function GuestPortalPage() {
   const handleLanguageChange = (newLang: string) => {
     setLang(newLang);
     localStorage.setItem('smartstay_lang', newLang);
+  };
+
+  const handleIntroComplete = () => {
+    if (session) {
+      const sessId = session.id || session.roomNumber || 'active_guest';
+      localStorage.setItem(`smartstay_intro_played_${sessId}`, 'true');
+    }
+    setShowIntro(false);
   };
 
   if (!session) {
@@ -127,7 +146,9 @@ export default function GuestPortalPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#F8F5EF] text-[#24211E] pb-24 font-sans selection:bg-[#C6A15B] selection:text-white">
+    <>
+      {showIntro && <SmartStayIntroVideo onComplete={handleIntroComplete} />}
+      <div className="min-h-screen bg-[#F8F5EF] text-[#24211E] pb-24 font-sans selection:bg-[#C6A15B] selection:text-white">
       {/* Header */}
       <GuestHeader
         guestName={session.guestName}
@@ -433,5 +454,6 @@ export default function GuestPortalPage() {
         initialGuestName={session.guestName}
       />
     </div>
+    </>
   );
 }

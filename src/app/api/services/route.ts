@@ -1,8 +1,9 @@
 import { NextResponse } from 'next/server';
-import { db } from '@/lib/db';
+import { db, ensureDbInitialized } from '@/lib/db';
 
 export async function GET() {
   try {
+    await ensureDbInitialized();
     const categories = await db.serviceCategory.findMany({
       include: {
         items: {
@@ -22,6 +23,7 @@ export async function GET() {
 
 export async function POST(request: Request) {
   try {
+    await ensureDbInitialized();
     const body = await request.json();
     const { name, description, price, estimatedMinutes, categoryId } = body;
 

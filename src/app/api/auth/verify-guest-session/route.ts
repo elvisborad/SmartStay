@@ -4,23 +4,45 @@ import { db, ensureDbInitialized } from '@/lib/db';
 export async function POST(request: Request) {
   try {
     await ensureDbInitialized();
-    const { sessionId } = await request.json();
+    const body = await request.json();
+    const { sessionId, roomNumber } = body;
 
-    if (!sessionId) {
-      return NextResponse.json({ active: false, error: 'Session ID required' }, { status: 400 });
+    if (!sessionId && !roomNumber) {
+      return NextResponse.json({ active: false, error: 'Session ID or Room Number required' }, { status: 400 });
     }
 
-    const session = await db.guestSession.findUnique({
-      where: { id: sessionId },
-    });
+    let session = sessionId
+      ? await db.guestSession.findUnique({
+          where: { id: sessionId },
+        })
+      : null;
 
-    if (!session || !session.active) {
-      return NextResponse.json({ active: false, reason: 'Guest session checked out' });
+    if (!session && roomNumber) {
+      session = await db.guestSession.findFirst({
+        where: { roomNumber: String(roomNumber).trim(), active: true },
+      });
     }
 
-    return NextResponse.json({ active: true, session });
+    if (session) {
+      if (!session.active) {
+        return NextResponse.json({ active: false, reason: 'explicit_checkout' });
+      }
+      return NextResponse.json({ active: true, session });
+    }
+
+    if (roomNumber) {
+      const inactiveSession = await db.guestSession.findFirst({
+        where: { roomNumber: String(roomNumber).trim(), active: false },
+      });
+      if (inactiveSession) {
+        return NextResponse.json({ active: false, reason: 'explicit_checkout' });
+      }
+    }
+
+    return NextResponse.json({ active: true, session: { id: sessionId, roomNumber } });
   } catch (error: any) {
     console.error('Session verification error:', error);
-    return NextResponse.json({ active: false, error: 'Internal server error' }, { status: 500 });
+    return NextResponse.json({ active: true, error: 'Internal server error' }, { status: 200 });
   }
 }
+
