@@ -1,11 +1,12 @@
 import { NextResponse } from 'next/server';
-import { db } from '@/lib/db';
+import { db, ensureDbInitialized } from '@/lib/db';
 
 export async function PATCH(
   request: Request,
   { params }: { params: { id: string } }
 ) {
   try {
+    await ensureDbInitialized();
     const { id } = params;
     const body = await request.json();
     const { status, assignedStaffId, notes, performedBy } = body;

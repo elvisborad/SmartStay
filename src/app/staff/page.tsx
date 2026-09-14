@@ -150,6 +150,22 @@ export default function StaffDashboardPage() {
   const handleUpdateTicket = async (ticketId: string, status: string, notes?: string) => {
     if (!staffUser) return;
     setUpdatingId(ticketId);
+
+    // Optimistically update ticket status immediately to prevent any UI flickering or jump-back
+    const previousTickets = [...tickets];
+    setTickets((prev) =>
+      prev.map((t) =>
+        t.id === ticketId
+          ? {
+              ...t,
+              status,
+              completedAt: status === 'COMPLETED' ? new Date().toISOString() : t.completedAt,
+              assignedStaff: staffUser,
+            }
+          : t
+      )
+    );
+
     try {
       const res = await fetch(`/api/tickets/${ticketId}`, {
         method: 'PATCH',
@@ -163,13 +179,17 @@ export default function StaffDashboardPage() {
       });
 
       const data = await res.json();
-      if (data.success) {
-        fetchTickets();
+      if (data.success && data.ticket) {
+        setTickets((prev) =>
+          prev.map((t) => (t.id === ticketId ? data.ticket : t))
+        );
       } else {
+        setTickets(previousTickets);
         alert(data.error || 'Failed to update ticket status');
       }
     } catch (err) {
       console.error('Failed to update ticket:', err);
+      setTickets(previousTickets);
     } finally {
       setUpdatingId(null);
     }
