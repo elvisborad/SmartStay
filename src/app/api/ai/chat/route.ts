@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { searchKnowledgeBase, searchKnowledgeBaseDetailed } from '@/lib/ragEngine';
-import { db, ensureDbInitialized } from '@/lib/db';
+import { db, ensureDbInitialized, generateUniqueTicketNumber } from '@/lib/db';
 
 export const maxDuration = 60;
 
@@ -147,10 +147,10 @@ export async function POST(request: Request) {
       lowerMsg.includes('other') ||
       lowerMsg.includes('others')
     ) {
-      const count = await db.ticket.count();
+      const ticketNumber = await generateUniqueTicketNumber();
       const ticket = await db.ticket.create({
         data: {
-          ticketNumber: `TSK-${1000 + count + 1}`,
+          ticketNumber,
           title: lowerMsg.includes('slipper') || lowerMsg.includes('chappal')
             ? 'In-Room Slippers & Amenities Request'
             : 'Housekeeping & Amenities Request',
@@ -179,10 +179,10 @@ export async function POST(request: Request) {
 
     // Intent B: Water Request (Bottled water, drinking water)
     if (lowerMsg.includes('water') || lowerMsg.includes('paani') || lowerMsg.includes('pani') || lowerMsg.includes('પાણી')) {
-      const count = await db.ticket.count();
+      const ticketNumber = await generateUniqueTicketNumber();
       const ticket = await db.ticket.create({
         data: {
-          ticketNumber: `TSK-${1000 + count + 1}`,
+          ticketNumber,
           title: 'Fresh Bottled Water Request',
           description: `Guest ${guestName} requested drinking water for Room ${roomNumber}. Prompt: "${message}"`,
           department: 'HOUSEKEEPING',
@@ -223,10 +223,10 @@ export async function POST(request: Request) {
       lowerMsg.includes('pizza') ||
       lowerMsg.includes('juice')
     ) {
-      const count = await db.ticket.count();
+      const ticketNumber = await generateUniqueTicketNumber();
       const ticket = await db.ticket.create({
         data: {
-          ticketNumber: `TSK-${1000 + count + 1}`,
+          ticketNumber,
           title: 'In-Room Dining / Beverage Order',
           description: `Guest ${guestName} (Room ${roomNumber}) ordered via SmartStay: "${message}"`,
           department: 'KITCHEN',
@@ -263,10 +263,10 @@ export async function POST(request: Request) {
       lowerMsg.includes('remote') ||
       lowerMsg.includes('leak')
     ) {
-      const count = await db.ticket.count();
+      const ticketNumber = await generateUniqueTicketNumber();
       const ticket = await db.ticket.create({
         data: {
-          ticketNumber: `TSK-${1000 + count + 1}`,
+          ticketNumber,
           title: 'Maintenance & Electronics Repair',
           description: `Guest ${guestName} (Room ${roomNumber}) reported issue: "${message}"`,
           department: 'MAINTENANCE',
@@ -299,10 +299,10 @@ export async function POST(request: Request) {
       lowerMsg.includes('late check') ||
       lowerMsg.includes('extend stay')
     ) {
-      const count = await db.ticket.count();
+      const ticketNumber = await generateUniqueTicketNumber();
       const ticket = await db.ticket.create({
         data: {
-          ticketNumber: `TSK-${1000 + count + 1}`,
+          ticketNumber,
           title: 'Late Check-out Request',
           description: `Guest ${guestName} requested late check-out for Room ${roomNumber}. Prompt: "${message}"`,
           department: 'FRONT_DESK',
@@ -334,10 +334,10 @@ export async function POST(request: Request) {
       lowerMsg.includes('porter') ||
       lowerMsg.includes('suitcase')
     ) {
-      const count = await db.ticket.count();
+      const ticketNumber = await generateUniqueTicketNumber();
       const ticket = await db.ticket.create({
         data: {
-          ticketNumber: `TSK-${1000 + count + 1}`,
+          ticketNumber,
           title: 'Luggage Transfer & Porter Assistance',
           description: `Guest ${guestName} requested luggage assistance for Room ${roomNumber}. Prompt: "${message}"`,
           department: 'BELL_DESK',
@@ -369,10 +369,10 @@ export async function POST(request: Request) {
       lowerMsg.includes('keycard') ||
       lowerMsg.includes('lock room')
     ) {
-      const count = await db.ticket.count();
+      const ticketNumber = await generateUniqueTicketNumber();
       const ticket = await db.ticket.create({
         data: {
-          ticketNumber: `TSK-${1000 + count + 1}`,
+          ticketNumber,
           title: 'Access Assistance & Keycard Verification',
           description: `Guest ${guestName} (Room ${roomNumber}) reported locked room or lost key: "${message}"`,
           department: 'SECURITY',
@@ -404,10 +404,10 @@ export async function POST(request: Request) {
       lowerMsg.includes('switch room') ||
       lowerMsg.includes('another room')
     ) {
-      const count = await db.ticket.count();
+      const ticketNumber = await generateUniqueTicketNumber();
       const ticket = await db.ticket.create({
         data: {
-          ticketNumber: `TSK-${1000 + count + 1}`,
+          ticketNumber,
           title: 'Room Change Request',
           description: `Guest ${guestName} (Room ${roomNumber}) requested room change: "${message}"`,
           department: 'FRONT_DESK',
@@ -448,10 +448,10 @@ export async function POST(request: Request) {
         lowerMsg.includes('other')
       )
     ) {
-      const count = await db.ticket.count();
+      const ticketNumber = await generateUniqueTicketNumber();
       const ticket = await db.ticket.create({
         data: {
-          ticketNumber: `TSK-${1000 + count + 1}`,
+          ticketNumber,
           title: 'Guest Custom Service & Item Request',
           description: `Guest ${guestName} (Room ${roomNumber}) requested: "${message}"`,
           department: 'HOUSEKEEPING',

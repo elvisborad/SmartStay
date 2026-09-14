@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { db, ensureDbInitialized } from '@/lib/db';
+import { db, ensureDbInitialized, generateUniqueTicketNumber } from '@/lib/db';
 
 export async function GET(request: Request) {
   try {
@@ -60,8 +60,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Missing required fields (title, department, roomNumber, guestName).' }, { status: 400 });
     }
 
-    const count = await db.ticket.count();
-    const ticketNumber = `TSK-${1000 + count + 1}`;
+    const ticketNumber = await generateUniqueTicketNumber();
 
     const newTicket = await db.ticket.create({
       data: {

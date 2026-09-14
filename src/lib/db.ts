@@ -350,3 +350,20 @@ export async function ensureDbInitialized() {
   }
 }
 
+export async function generateUniqueTicketNumber(): Promise<string> {
+  const count = await db.ticket.count();
+  let candidateNum = 1000 + count + 1;
+
+  while (true) {
+    const candidate = `TSK-${candidateNum}`;
+    const exists = await db.ticket.findUnique({
+      where: { ticketNumber: candidate },
+    });
+    if (!exists) {
+      return candidate;
+    }
+    candidateNum++;
+  }
+}
+
+

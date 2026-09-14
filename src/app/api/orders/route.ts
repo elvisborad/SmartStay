@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { db, ensureDbInitialized } from '@/lib/db';
+import { db, ensureDbInitialized, generateUniqueTicketNumber } from '@/lib/db';
 
 export async function GET(request: Request) {
   try {
@@ -85,8 +85,7 @@ export async function POST(request: Request) {
       include: { items: true },
     });
 
-    const ticketCount = await db.ticket.count();
-    const ticketNumber = `TSK-${1000 + ticketCount + 1}`;
+    const ticketNumber = await generateUniqueTicketNumber();
 
     await db.ticket.create({
       data: {
