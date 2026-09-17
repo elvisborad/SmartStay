@@ -22,6 +22,21 @@ interface Message {
   timestamp: string;
 }
 
+function cleanSpeechTranscript(rawText: string): string {
+  if (!rawText) return '';
+  const words = rawText.trim().split(/\s+/);
+  const cleanedWords: string[] = [];
+  for (let i = 0; i < words.length; i++) {
+    if (i === 0 || words[i].toLowerCase() !== words[i - 1].toLowerCase()) {
+      cleanedWords.push(words[i]);
+    }
+  }
+  let text = cleanedWords.join(' ');
+  // Deduplicate repeated multi-word phrase loops (e.g. "I want to I want to" -> "I want to")
+  text = text.replace(/\b(\w+(?:\s+\w+){1,3})\s+\1\b/gi, '$1');
+  return text.trim();
+}
+
 export default function AIChatDrawer({
   isOpen,
   onClose,
@@ -84,7 +99,7 @@ export default function AIChatDrawer({
     try {
       const recognition = new SpeechRecognition();
       recognitionRef.current = recognition;
-      recognition.continuous = true;
+      recognition.continuous = false;
       recognition.interimResults = true;
       recognition.maxAlternatives = 1;
       recognition.lang =
@@ -113,9 +128,10 @@ export default function AIChatDrawer({
             interimTranscript += transcriptChunk;
           }
         }
-        const fullText = (finalTranscript + interimTranscript).trim().replace(/\s+/g, ' ');
-        if (fullText) {
-          setInputMsg(fullText);
+        const rawFullText = (finalTranscript + interimTranscript).trim().replace(/\s+/g, ' ');
+        const cleanedText = cleanSpeechTranscript(rawFullText);
+        if (cleanedText) {
+          setInputMsg(cleanedText);
         }
       };
 
