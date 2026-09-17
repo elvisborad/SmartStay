@@ -45,7 +45,7 @@ export async function GET() {
         totalOrders,
         totalRevenue: orderSum._sum.totalAmount || 0,
         averageSlaMinutes: 18.5,
-        aiResolutionRate: '84%',
+        aiResolutionRate: '74%',
       },
       departmentCounts: {
         HOUSEKEEPING: hkCount,
