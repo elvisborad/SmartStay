@@ -1,5 +1,6 @@
 import './globals.css';
 import type { Metadata } from 'next';
+import { Analytics } from '@vercel/analytics/next';
 
 export const metadata: Metadata = {
   title: 'SmartStay - Smart Hotel Concierge & Service Automation Platform',
@@ -27,6 +28,7 @@ export default function RootLayout({
       </head>
       <body className="antialiased text-slate-900 bg-slate-50 min-h-screen">
         {children}
+        <Analytics />
       </body>
     </html>
   );
