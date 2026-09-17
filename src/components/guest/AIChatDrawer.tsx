@@ -98,23 +98,22 @@ export default function AIChatDrawer({
           ? 'fr-FR'
           : 'en-IN';
 
-      let accumulatedFinal = '';
-
       recognition.onstart = () => {
         setIsListening(true);
       };
 
       recognition.onresult = (event: any) => {
+        let finalTranscript = '';
         let interimTranscript = '';
-        for (let i = event.resultIndex; i < event.results.length; ++i) {
+        for (let i = 0; i < event.results.length; ++i) {
           const transcriptChunk = event.results[i][0]?.transcript || '';
           if (event.results[i].isFinal) {
-            accumulatedFinal += transcriptChunk + ' ';
+            finalTranscript += transcriptChunk + ' ';
           } else {
             interimTranscript += transcriptChunk;
           }
         }
-        const fullText = (accumulatedFinal + interimTranscript).trim().replace(/\s+/g, ' ');
+        const fullText = (finalTranscript + interimTranscript).trim().replace(/\s+/g, ' ');
         if (fullText) {
           setInputMsg(fullText);
         }
