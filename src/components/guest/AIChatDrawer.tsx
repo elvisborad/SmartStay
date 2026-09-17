@@ -64,6 +64,21 @@ export default function AIChatDrawer({
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
+  useEffect(() => {
+    return () => {
+      if (recognitionRef.current) {
+        try {
+          recognitionRef.current.onstart = null;
+          recognitionRef.current.onresult = null;
+          recognitionRef.current.onerror = null;
+          recognitionRef.current.onend = null;
+          recognitionRef.current.stop();
+        } catch (e) {}
+        recognitionRef.current = null;
+      }
+    };
+  }, []);
+
   if (!isOpen) return null;
 
   const quickPrompts = [
@@ -86,14 +101,20 @@ export default function AIChatDrawer({
       return;
     }
 
-    if (isListening && recognitionRef.current) {
+    if (recognitionRef.current) {
+      const wasListening = isListening;
       try {
+        recognitionRef.current.onstart = null;
+        recognitionRef.current.onresult = null;
+        recognitionRef.current.onerror = null;
+        recognitionRef.current.onend = null;
         recognitionRef.current.stop();
       } catch (e) {
         // ignore
       }
+      recognitionRef.current = null;
       setIsListening(false);
-      return;
+      if (wasListening) return;
     }
 
     try {
@@ -120,16 +141,49 @@ export default function AIChatDrawer({
       recognition.onresult = (event: any) => {
         let finalTranscript = '';
         let interimTranscript = '';
+
         for (let i = 0; i < event.results.length; ++i) {
-          const transcriptChunk = event.results[i][0]?.transcript || '';
-          if (event.results[i].isFinal) {
-            finalTranscript += transcriptChunk + ' ';
+          const result = event.results[i];
+          const transcript = (result[0]?.transcript || '').trim();
+          if (!transcript) continue;
+
+          if (result.isFinal) {
+            if (!finalTranscript) {
+              finalTranscript = transcript;
+            } else {
+              if (transcript.toLowerCase().startsWith(finalTranscript.toLowerCase())) {
+                finalTranscript = transcript;
+              } else if (!finalTranscript.toLowerCase().includes(transcript.toLowerCase())) {
+                finalTranscript += ' ' + transcript;
+              }
+            }
           } else {
-            interimTranscript += transcriptChunk;
+            if (!interimTranscript) {
+              interimTranscript = transcript;
+            } else {
+              if (transcript.toLowerCase().startsWith(interimTranscript.toLowerCase())) {
+                interimTranscript = transcript;
+              } else if (!interimTranscript.toLowerCase().includes(transcript.toLowerCase())) {
+                interimTranscript += ' ' + transcript;
+              }
+            }
           }
         }
-        const rawFullText = (finalTranscript + interimTranscript).trim().replace(/\s+/g, ' ');
-        const cleanedText = cleanSpeechTranscript(rawFullText);
+
+        let fullText = finalTranscript;
+        if (interimTranscript) {
+          if (!finalTranscript) {
+            fullText = interimTranscript;
+          } else if (interimTranscript.toLowerCase().startsWith(finalTranscript.toLowerCase())) {
+            fullText = interimTranscript;
+          } else if (finalTranscript.toLowerCase().includes(interimTranscript.toLowerCase())) {
+            fullText = finalTranscript;
+          } else {
+            fullText = finalTranscript + ' ' + interimTranscript;
+          }
+        }
+
+        const cleanedText = cleanSpeechTranscript(fullText);
         if (cleanedText) {
           setInputMsg(cleanedText);
         }
@@ -139,25 +193,33 @@ export default function AIChatDrawer({
         console.error('Speech recognition error:', event.error);
         if (event.error !== 'no-speech') {
           setIsListening(false);
+          recognitionRef.current = null;
         }
       };
 
       recognition.onend = () => {
         setIsListening(false);
+        recognitionRef.current = null;
       };
 
       recognition.start();
     } catch (err) {
       console.error('Failed to start speech recognition:', err);
       setIsListening(false);
+      recognitionRef.current = null;
     }
   };
 
   const handleSendMessage = async (textToSend?: string) => {
-    if (isListening && recognitionRef.current) {
+    if (recognitionRef.current) {
       try {
+        recognitionRef.current.onstart = null;
+        recognitionRef.current.onresult = null;
+        recognitionRef.current.onerror = null;
+        recognitionRef.current.onend = null;
         recognitionRef.current.stop();
       } catch (e) {}
+      recognitionRef.current = null;
       setIsListening(false);
     }
 
